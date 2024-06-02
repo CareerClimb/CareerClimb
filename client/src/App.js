@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+// Import libraries
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { createTheme } from "@mui/material/styles";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { themeSettings } from "theme";
+import LoginPage from "scenes/loginPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const mode = useSelector((state) => state.mode);
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]); // Create a theme object based on the mode
+  const isAuth = Boolean(useSelector((state) => state.token)); // Determine if the user is authenticated
+
+  return <div className="app">
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+        </Routes>
+      </ThemeProvider>
+    </BrowserRouter>
+  </div>
 }
 
 export default App;
