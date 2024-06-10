@@ -4,7 +4,7 @@ import {
     IconButton,
     Typography,
     useTheme,
-    useMediaQuery,
+    useMediaQuery
 } from "@mui/material";
 import {
     DarkMode,
@@ -23,6 +23,7 @@ const TopBar = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
+    
     return (
         <Box
             display="flex"
@@ -48,18 +49,54 @@ const TopBar = () => {
                     Your Logo
                 </Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{ gap: '48px', 
+                                                          color: theme.palette.mode === "light" ? 'black' : 'white'}}>
                 <IconButton onClick={() => dispatch(setMode())} sx={{ fontSize: 20 }}>
                     {theme.palette.mode === "light" ? <DarkMode fontSize="inherit" /> : <LightMode fontSize="inherit" />}
                 </IconButton>
                 <Box
-                    onClick={() => navigate('/account')} // Change the path as needed
+                    onClick={() => navigate('/home')}
                     sx={{ ml: 2, cursor: 'pointer' }}
                 >
-                    <Typography variant="h6" sx={{ fontSize: '1.25rem' }}>
-                        Account
+                    <Typography variant="h6" sx={{ fontSize: '1rem'}}>
+                        Home
                     </Typography>
                 </Box>
+                <Box
+                    onClick={() => navigate('/about')}
+                    sx={{ ml: 2, cursor: 'pointer' }}
+                >
+                    <Typography variant="h6" sx={{ fontSize: '1rem'}}>
+                        About
+                    </Typography>
+                </Box>
+                <Box
+                    onClick={() => navigate('/register')}
+                    sx={{ ml: 2, cursor: 'pointer'}}
+                >
+                    <Typography variant="h6" sx={{ fontSize: '1rem'}}>
+                        Register
+                    </Typography>
+                </Box>
+                <Box
+                    onClick={() => navigate('/login')}
+                    sx={{
+                        ml: 2,
+                        cursor: 'pointer',
+                        fontSize: '1rem',
+                        borderRadius: 50,
+                        padding: "14px 24px",
+                        color: theme.palette.mode === "light" ? 'white' : 'black',
+                        backgroundColor: theme.palette.mode === "light" ? 'black' : 'white',
+                        "&:hover": {
+                            backgroundColor: theme.palette.mode === "light" ? 'gray' : 'lightgray',
+                        }
+                    }}
+                    variant="contained"
+                >
+                    Log In
+                </Box>
+                
             </Box>
         </Box>
     );

@@ -8,14 +8,9 @@ import {
     useMediaQuery,
 } from "@mui/material";
 import {
-    DarkMode,
-    LightMode,
     Menu,
     Close
 } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { setMode, setLogout } from "state";
-import { useNavigate } from "react-router-dom";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -24,10 +19,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 const BottomBar = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
     const [open, setOpen] = useState(false);
-    const navigate = useNavigate();
 
     return (
         <Box
@@ -58,7 +50,7 @@ const BottomBar = () => {
                             {open ? <Close /> : <Menu />}
                         </IconButton>
                     ) : null}
-                    <Typography variant="h6" component="div" fontSize={20}>
+                    <Typography variant="h6" component="div" sx={{fontSize: 20, color: theme.palette.mode === "light" ? 'black' : 'white'}}>
                         CareerClimb
                     </Typography>
                 </Box>
