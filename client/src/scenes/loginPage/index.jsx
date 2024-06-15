@@ -1,5 +1,6 @@
 // Import packages
 import { Box, Typography, useTheme, useMediaQuery, Button } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 import BottomBar from 'scenes/bottomBar';
 import TopBar from 'scenes/topBar';
 import React from 'react';
@@ -9,6 +10,7 @@ const LoginPage = () => {
   const theme = useTheme();
   const { palette } = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -59,15 +61,15 @@ const LoginPage = () => {
           <Button
             variant="contained"
             color="primary"
-            sx={{ marginTop: 2,
-              m: "2rem 0",
-              // p: "1rem",
+            sx={{
+              marginTop: 2,
+              m: '2rem 0',
               backgroundColor: palette.primary.main,
               color: palette.background.alt,
-              borderRadius: "20px",
-              "&:hover": { color: palette.primary.main },
-             }}
-            
+              borderRadius: '20px',
+              '&:hover': { color: palette.primary.main },
+            }}
+            onClick={() => navigate('/home')}
           >
             Start your Climb Today
           </Button>
