@@ -6,7 +6,7 @@ import TopBar from 'scenes/topBar';
 import React from 'react';
 import Form from './Form';
 
-const LoginPage = () => {
+const LandingPage = () => {
   const theme = useTheme();
   const { palette } = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -80,4 +80,4 @@ const LoginPage = () => {
   );
 }
 
-export default LoginPage;
+export default LandingPage;
