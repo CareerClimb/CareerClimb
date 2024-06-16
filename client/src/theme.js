@@ -21,7 +21,7 @@ export const colorTokens = {
     200: "#99DF99",
     300: "#66D066",
     400: "#33C033",
-    500: "#00B000",
+    500: "#1A6001", // changed to the new green color
     600: "#009000",
     700: "#007000",
     800: "#005000",
@@ -41,7 +41,6 @@ export const colorTokens = {
   },
 };
 
-  
 // Material UI theme settings
 export const themeSettings = (mode) => {
   return {
@@ -88,30 +87,30 @@ export const themeSettings = (mode) => {
           }),
     },
     typography: {
-      fontFamily: ["Rubik", "sans-serif"].join(","),
+      fontFamily: ["NATS", "sans-serif"].join(","),
       fontSize: 12,
       h1: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["NATS", "sans-serif"].join(","),
         fontSize: 40,
       },
       h2: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["NATS", "sans-serif"].join(","),
         fontSize: 32,
       },
       h3: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["NATS", "sans-serif"].join(","),
         fontSize: 24,
       },
       h4: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["NATS", "sans-serif"].join(","),
         fontSize: 20,
       },
       h5: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["NATS", "sans-serif"].join(","),
         fontSize: 16,
       },
       h6: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["NATS", "sans-serif"].join(","),
         fontSize: 14,
       },
     },
