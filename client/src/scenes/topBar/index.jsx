@@ -41,12 +41,14 @@ const TopBar = () => {
             p={2}
             zIndex={1000} // Ensure it stays above other content
         >
-            <Box display="flex" alignItems="center">
-                {isMobile ? (
-                    <IconButton onClick={() => setOpen(!open)}>
-                        {open ? <Close /> : <Menu />}
-                    </IconButton>
-                ) : null}
+            <Box 
+                onClick={() => navigate('/')}
+                display="flex" 
+                alignItems="center"
+                sx={{
+                    cursor: 'pointer'
+                
+                }}>
                 <Typography variant="h4" sx={{ ml: 2, fontWeight: 'bold' }}>
                     CC.
                 </Typography>
@@ -60,8 +62,8 @@ const TopBar = () => {
                 <Box
                     onClick={() => navigate('/about')}
                     sx={{ ml: 2, 
-                        cursor: 'pointer',
-                        '&:hover': {color: palette.primary.main}}}
+                          cursor: 'pointer',
+                          '&:hover': {color: palette.primary.main}}}
                 >
                     <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 'bold'}}>
                         About

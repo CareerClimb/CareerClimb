@@ -45,11 +45,6 @@ const BottomBar = () => {
                 width="100%"
             >
                 <Box display="flex" alignItems="center">
-                    {isMobile ? (
-                        <IconButton onClick={() => setOpen(!open)}>
-                            {open ? <Close /> : <Menu />}
-                        </IconButton>
-                    ) : null}
                     <Typography variant="h6" component="div" sx={{fontSize: 20, color: theme.palette.mode === "light" ? 'black' : 'white'}}>
                         CareerClimb
                     </Typography>

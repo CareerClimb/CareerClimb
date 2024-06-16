@@ -187,7 +187,7 @@ const RegisterForm = ({ setPageType }) => {
                                 borderRadius: "50px",
                                 width: "100%",
                                 height: '56px', // Match the height of the TextFields
-                                fontSize: '1rem', // Match the font size of the TextFields
+                                fontSize: '20px', // Match the font size of the TextFields
                                 textTransform: 'none',
                                 border: `3px solid ${palette.primary.main}`,
                                 '&:hover': {

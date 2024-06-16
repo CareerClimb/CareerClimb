@@ -77,7 +77,7 @@ const LandingPage = () => {
                   borderRadius: "50px",
                   width: "50%",
                   height: '56px', 
-                  fontSize: '1rem', 
+                  fontSize: '20px', 
                   textTransform: 'none',
                   border: `3px solid ${palette.primary.main}`,
                   '&:hover': {
