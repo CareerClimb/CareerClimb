@@ -4,14 +4,11 @@ import {
     IconButton,
     Typography,
     useTheme,
-    useMediaQuery,
     Button
 } from "@mui/material";
 import {
     DarkMode,
-    LightMode,
-    Menu,
-    Close
+    LightMode
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { setMode } from "state";
@@ -20,9 +17,9 @@ import { useNavigate } from "react-router-dom";
 const TopBar = () => {
     const theme = useTheme();
     const { palette } = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+    // const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const dispatch = useDispatch();
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
     
