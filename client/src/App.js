@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { createTheme } from "@mui/material/styles";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { themeSettings } from "theme";
-import LoginPage from "scenes/loginPage";
+import LandingPage from "scenes/landingPage";
 import MainPage from "scenes/mainPage";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<MainPage />} />
         </Routes>
       </ThemeProvider>

@@ -4,7 +4,8 @@ import {
     IconButton,
     Typography,
     useTheme,
-    useMediaQuery
+    useMediaQuery,
+    Button
 } from "@mui/material";
 import {
     DarkMode,
@@ -18,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 const TopBar = () => {
     const theme = useTheme();
+    const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
@@ -39,13 +41,15 @@ const TopBar = () => {
             p={2}
             zIndex={1000} // Ensure it stays above other content
         >
-            <Box display="flex" alignItems="center">
-                {isMobile ? (
-                    <IconButton onClick={() => setOpen(!open)}>
-                        {open ? <Close /> : <Menu />}
-                    </IconButton>
-                ) : null}
-                <Typography variant="h6" sx={{ ml: 2, fontWeight: 'bold' }}>
+            <Box 
+                onClick={() => navigate('/')}
+                display="flex" 
+                alignItems="center"
+                sx={{
+                    cursor: 'pointer'
+                
+                }}>
+                <Typography variant="h4" sx={{ ml: 2, fontWeight: 'bold' }}>
                     CC.
                 </Typography>
             </Box>
@@ -54,48 +58,61 @@ const TopBar = () => {
                 <IconButton onClick={() => dispatch(setMode())} sx={{ fontSize: 20 }}>
                     {theme.palette.mode === "light" ? <DarkMode fontSize="inherit" /> : <LightMode fontSize="inherit" />}
                 </IconButton>
-    
+
                 <Box
                     onClick={() => navigate('/about')}
-                    sx={{ ml: 2, cursor: 'pointer' }}
+                    sx={{ ml: 2, 
+                          cursor: 'pointer',
+                          '&:hover': {color: palette.primary.main}}}
                 >
-                    <Typography variant="h6" sx={{ fontSize: '1rem'}}>
+                    <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 'bold'}}>
                         About
                     </Typography>
                 </Box>
                 <Box
                     onClick={() => navigate('/register')}
-                    sx={{ ml: 2, cursor: 'pointer'}}
+                    sx={{ ml: 2, 
+                        cursor: 'pointer',
+                        '&:hover': {color: palette.primary.main}}}
                 >
-                    <Typography variant="h6" sx={{ fontSize: '1rem'}}>
+                    <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 'bold'}}>
                         Contant
                     </Typography>
                 </Box>
                 <Box
                     onClick={() => navigate('/register')}
-                    sx={{ ml: 2, cursor: 'pointer'}}
+                    sx={{ ml: 2, 
+                          cursor: 'pointer',
+                          '&:hover': {color: palette.primary.main}}}
                 >
-                    <Typography variant="h6" sx={{ fontSize: '1rem'}}>
+                    <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 'bold'}}>
                         Register
                     </Typography>
                 </Box>
-                <Box
-                    onClick={() => navigate('/login')}
-                    sx={{
-                        ml: 2,
-                        cursor: 'pointer',
-                        fontSize: '1rem',
-                        borderRadius: 50,
-                        padding: "14px 24px",
-                        color: theme.palette.mode === "light" ? 'white' : 'black',
-                        backgroundColor: theme.palette.mode === "light" ? 'black' : 'white',
-                        "&:hover": {
-                            backgroundColor: theme.palette.mode === "light" ? 'gray' : 'lightgray',
-                        }
-                    }}
-                    variant="contained"
-                >
-                    Log In
+                <Box textAlign="center">
+                    <Button
+                        type="button"
+                        sx={{
+                            ml: 2,
+                            cursor: 'pointer',
+                            fontSize: '1rem',
+                            fontWeight: 'bold',
+                            padding: "14px 24px",
+                            backgroundColor: palette.primary.main,
+                            color: palette.background.alt,
+                            borderRadius: '50px',
+                            variant: 'contained',
+                            textTransform: 'none', // Add this line to prevent all caps
+                            border: `3px solid ${palette.primary.main}`, // Add border color same as the primary color
+                            '&:hover': {
+                                color: palette.primary.main,
+                                backgroundColor: palette.background.default,
+                                borderColor: palette.primary.main, // Add border color on hover
+                            }
+                        }}
+                        >
+                            Log In
+                    </Button>
                 </Box>
                 
             </Box>
