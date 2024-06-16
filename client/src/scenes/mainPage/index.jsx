@@ -7,6 +7,7 @@ import PostsWidget from 'scenes/widgets/PostsWidget';
 
 const MainPage = () => {
     const theme = useTheme();
+    const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
 return (
@@ -23,13 +24,13 @@ return (
             padding: isMobile ? 8 : 15,
         }}
       >
-            <Typography variant="h2" gutterBottom>
+            <Typography variant="h1" fontSize='62px' fontWeight='bold' marginBottom="3px">
                 CareerClimb.
             </Typography>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h4" marginBottom='1.5rem' fontFamily="Roboto" color={palette.neutral.medium}>
                 Welcome! Search for the jobs you are looking for.
             </Typography>
-            <SearchBar />
+            <SearchBar />   
             <PostsWidget />
         </Box>
     </Box>
