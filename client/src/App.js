@@ -7,6 +7,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { themeSettings } from "theme";
 import LandingPage from "scenes/landingPage";
 import MainPage from "scenes/mainPage";
+import LoginPage from "scenes/loginPage";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<MainPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
