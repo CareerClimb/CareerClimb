@@ -91,6 +91,7 @@ const TopBar = () => {
                 </Box>
                 <Box textAlign="center">
                     <Button
+                        onClick={() => navigate('/login')}
                         type="button"
                         sx={{
                             ml: 2,

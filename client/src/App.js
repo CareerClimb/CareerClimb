@@ -8,6 +8,7 @@ import { themeSettings } from "theme";
 import LandingPage from "scenes/landingPage";
 import MainPage from "scenes/mainPage";
 import LoginPage from "scenes/loginPage";
+import RegisterPage from "scenes/registerPage";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
