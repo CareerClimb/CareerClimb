@@ -68,7 +68,7 @@ const RegisterForm = ({ setPageType }) => {
             }) => (
                 <form onSubmit={handleSubmit}>
                     <Box textAlign="center">
-                        <Typography variant="h1" fontSize='62px' fontWeight='medium' marginBottom="3px">
+                        <Typography variant="h1" fontSize='62px' fontWeight='bold' marginBottom="3px">
                             Register
                         </Typography>
                         <Typography variant="h4" marginBottom='1.5rem' fontFamily="Roboto" color={palette.neutral.medium}>
@@ -95,6 +95,13 @@ const RegisterForm = ({ setPageType }) => {
                                 borderRadius: "50px",
                                 '& .MuiOutlinedInput-root': {
                                     borderRadius: '50px',
+                                    fontSize: '20px', // Change the font size for the input text
+                                },
+                                '& .MuiInputLabel-root': {
+                                    fontSize: '1.2rem', // Change the font size for the label
+                                },
+                                '& .MuiFormHelperText-root': {
+                                    fontSize: '0.9rem', // Change the font size for the helper text
                                 },
                             }}
                         />
@@ -111,6 +118,13 @@ const RegisterForm = ({ setPageType }) => {
                                 borderRadius: "50px",
                                 '& .MuiOutlinedInput-root': {
                                     borderRadius: '50px',
+                                    fontSize: '20px', // Change the font size for the input text
+                                },
+                                '& .MuiInputLabel-root': {
+                                    fontSize: '1.2rem', // Change the font size for the label
+                                },
+                                '& .MuiFormHelperText-root': {
+                                    fontSize: '0.9rem', // Change the font size for the helper text
                                 },
                             }}
                         />
@@ -128,6 +142,13 @@ const RegisterForm = ({ setPageType }) => {
                                 borderRadius: "50px",
                                 '& .MuiOutlinedInput-root': {
                                     borderRadius: '50px',
+                                    fontSize: '20px', // Change the font size for the input text
+                                },
+                                '& .MuiInputLabel-root': {
+                                    fontSize: '1.2rem', // Change the font size for the label
+                                },
+                                '& .MuiFormHelperText-root': {
+                                    fontSize: '0.9rem', // Change the font size for the helper text
                                 },
                             }}
                         />
@@ -145,30 +166,37 @@ const RegisterForm = ({ setPageType }) => {
                                 borderRadius: "50px",
                                 '& .MuiOutlinedInput-root': {
                                     borderRadius: '50px',
+                                    fontSize: '20px', // Change the font size for the input text
+                                },
+                                '& .MuiInputLabel-root': {
+                                    fontSize: '1.2rem', // Change the font size for the label
+                                },
+                                '& .MuiFormHelperText-root': {
+                                    fontSize: '0.9rem', // Change the font size for the helper text
                                 },
                             }}
                         />
                     </Box>
                     <Box width="100%" textAlign="center">
                         <Button
-                                type="submit"
-                                sx={{
-                                    m: "2rem 0",
-                                    backgroundColor: palette.primary.main,
-                                    color: palette.background.alt,
-                                    borderRadius: "50px",
-                                    width: "100%",
-                                    height: '56px', // Match the height of the TextFields
-                                    fontSize: '1rem', // Match the font size of the TextFields
-                                    textTransform: 'none',
-                                    border: `3px solid ${palette.primary.main}`,
-                                    '&:hover': {
-                                        color: palette.primary.main,
-                                        backgroundColor: palette.background.default,
-                                        borderColor: palette.primary.main,
-                                    }
-                                }}
-                            >
+                            type="submit"
+                            sx={{
+                                m: "2rem 0",
+                                backgroundColor: palette.primary.main,
+                                color: palette.background.alt,
+                                borderRadius: "50px",
+                                width: "100%",
+                                height: '56px', // Match the height of the TextFields
+                                fontSize: '1rem', // Match the font size of the TextFields
+                                textTransform: 'none',
+                                border: `3px solid ${palette.primary.main}`,
+                                '&:hover': {
+                                    color: palette.primary.main,
+                                    backgroundColor: palette.background.default,
+                                    borderColor: palette.primary.main,
+                                }
+                            }}
+                        >
                                 Create an Account
                             </Button>
                         

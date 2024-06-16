@@ -36,8 +36,18 @@ const LandingPage = () => {
             alignItems: 'center',
             flex: 1,
             padding: isMobile ? 2 : 4,
-            borderRight: isMobile ? 'none' : '1px solid #ccc',
-            borderBottom: isMobile ? '1px solid #ccc' : 'none',
+            // borderRight: isMobile ? 'none' : '1px solid #ccc',
+            // borderBottom: isMobile ? '1px solid #ccc' : 'none',
+            position: 'relative', // Position relative for the pseudo-element
+            '&::after': {
+              content: '""', 
+              position: 'absolute',
+              right: 0, 
+              top: 0,
+              bottom: '200px', 
+              width: '1px', 
+              backgroundColor: '#ccc', 
+          },
           }}
         >
           <ResgisterForm />
@@ -52,24 +62,30 @@ const LandingPage = () => {
             padding: isMobile ? 2 : 4,
           }}
         >
-          <Typography variant="h2" gutterBottom>
-            CareerClimb
+          <Typography variant="h1" fontSize='62px' fontWeight='bold' marginBottom="3px">
+            CareerClimb.
           </Typography>
-          <Typography variant="body1" gutterBottom>
-            Welcome! Begin your journey
+          <Typography variant="h4" marginBottom='1.5rem' fontFamily="Roboto" color={palette.neutral.medium}>
+            Welcome! To begin your journey
           </Typography>
           <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              marginTop: 2,
-              m: '2rem 0',
-              backgroundColor: palette.primary.main,
-              color: palette.background.alt,
-              borderRadius: '20px',
-              '&:hover': { color: palette.primary.main },
-            }}
             onClick={() => navigate('/home')}
+            type="submit"
+              sx={{
+                  backgroundColor: palette.primary.main,
+                  color: palette.background.alt,
+                  borderRadius: "50px",
+                  width: "50%",
+                  height: '56px', 
+                  fontSize: '1rem', 
+                  textTransform: 'none',
+                  border: `3px solid ${palette.primary.main}`,
+                  '&:hover': {
+                      color: palette.primary.main,
+                      backgroundColor: palette.background.default,
+                      borderColor: palette.primary.main,
+                  }
+              }}
           >
             Start your Climb Today
           </Button>
