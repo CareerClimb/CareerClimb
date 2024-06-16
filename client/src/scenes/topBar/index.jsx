@@ -45,8 +45,8 @@ const TopBar = () => {
                         {open ? <Close /> : <Menu />}
                     </IconButton>
                 ) : null}
-                <Typography variant="h6" sx={{ ml: 2 }}>
-                    Your Logo
+                <Typography variant="h6" sx={{ ml: 2, fontWeight: 'bold' }}>
+                    CC.
                 </Typography>
             </Box>
             <Box display="flex" alignItems="center" sx={{ gap: '48px', 
@@ -54,20 +54,21 @@ const TopBar = () => {
                 <IconButton onClick={() => dispatch(setMode())} sx={{ fontSize: 20 }}>
                     {theme.palette.mode === "light" ? <DarkMode fontSize="inherit" /> : <LightMode fontSize="inherit" />}
                 </IconButton>
-                <Box
-                    onClick={() => navigate('/home')}
-                    sx={{ ml: 2, cursor: 'pointer' }}
-                >
-                    <Typography variant="h6" sx={{ fontSize: '1rem'}}>
-                        Home
-                    </Typography>
-                </Box>
+    
                 <Box
                     onClick={() => navigate('/about')}
                     sx={{ ml: 2, cursor: 'pointer' }}
                 >
                     <Typography variant="h6" sx={{ fontSize: '1rem'}}>
                         About
+                    </Typography>
+                </Box>
+                <Box
+                    onClick={() => navigate('/register')}
+                    sx={{ ml: 2, cursor: 'pointer'}}
+                >
+                    <Typography variant="h6" sx={{ fontSize: '1rem'}}>
+                        Contant
                     </Typography>
                 </Box>
                 <Box
