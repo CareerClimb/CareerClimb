@@ -30,7 +30,7 @@ return (
             <Typography variant="h4" marginBottom='1.5rem' fontFamily="Roboto" color={palette.neutral.medium}>
                 Welcome! Search for the jobs you are looking for.
             </Typography>
-            <SearchBar />
+            <SearchBar />   
             <PostsWidget />
         </Box>
     </Box>
