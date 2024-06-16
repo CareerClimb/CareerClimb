@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import BottomBar from 'scenes/bottomBar';
 import TopBar from 'scenes/topBar';
 import React from 'react';
-import Form from './Form';
+import ResgisterForm from 'scenes/forms/registerForm';
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -40,7 +40,7 @@ const LandingPage = () => {
             borderBottom: isMobile ? '1px solid #ccc' : 'none',
           }}
         >
-          <Form />
+          <ResgisterForm />
         </Box>
         <Box
           sx={{
