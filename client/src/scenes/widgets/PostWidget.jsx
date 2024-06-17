@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 
-const PostWidget = ({ title, postedTime, company, salary, description }) => {
+const PostWidget = ({ title, postedTime, company, location, salary, description }) => {
   const theme = useTheme();
   const isNonMobile = useMediaQuery('(min-width:600px)');
   
@@ -47,7 +47,7 @@ const PostWidget = ({ title, postedTime, company, salary, description }) => {
         }}
       >
         <Typography variant="body1" component="div">
-          {company}
+          {company} ({location})
         </Typography>
         <Typography variant="body1" component="div">
           {salary}
