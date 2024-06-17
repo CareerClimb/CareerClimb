@@ -1,7 +1,8 @@
 // PostsWidget.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import PostWidget from './PostWidget';
+import JobDescription from 'components/JobDescription';
 
 const jobPosts = [
   {
@@ -71,7 +72,19 @@ const jobPosts = [
 ];
 
 const PostsWidget = () => {
-  return (
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+
+  const handleJobClick = (job) => {
+    setSelectedJob(job);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+   return (
     <Box
       sx={{
         maxHeight: '70vh', // Adjust the height as needed
@@ -81,15 +94,22 @@ const PostsWidget = () => {
       }}
     >
       {jobPosts.map((job, index) => (
-        <PostWidget
+        <Box
           key={index}
-          title={job.title}
-          postedTime={job.postedTime}
-          company={job.company}
-          salary={job.salary}
-          description={job.description}
-        />
+          sx={{ cursor: 'pointer', marginBottom: '20px' }}
+          onClick={() => handleJobClick(job)}
+        >
+          <PostWidget
+            title={job.title}
+            postedTime={job.postedTime}
+            company={job.company}
+            salary={job.salary}
+            description={job.description}
+          />
+        </Box>
       ))}
+      {/* Modal for displaying job details */}
+      <JobDescription open={openModal} handleClose={handleCloseModal} job={selectedJob} />
     </Box>
   );
 };
