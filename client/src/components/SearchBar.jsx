@@ -1,4 +1,3 @@
-// SearchBar.jsx
 import React from 'react';
 import { Box, Button, TextField, useTheme, useMediaQuery } from '@mui/material';
 
@@ -12,13 +11,14 @@ const SearchBar = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: '20px',
+        width: isNonMobile ? '800px' : '95%', // Slightly smaller width than the PostWidget
       }}
     >
       <TextField
         variant="outlined"
         placeholder="Enter job title or keyword"
         sx={{
+          flexGrow: 1, // Allow TextField to take the remaining space
           padding: "14px 24px",
           borderRadius: "50px",
           '& .MuiOutlinedInput-root': {
@@ -31,12 +31,11 @@ const SearchBar = () => {
           '& .MuiFormHelperText-root': {
               fontSize: '0.9rem', // Change the font size for the helper text
           },
-      }}
+        }}
       />
       <Button
         type="submit"
         sx={{
-            m: "2rem 0",
             backgroundColor: palette.primary.main,
             color: palette.background.alt,
             borderRadius: "50px",
