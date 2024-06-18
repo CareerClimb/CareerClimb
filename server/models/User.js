@@ -8,12 +8,6 @@ const UserSchema = new mongoose.Schema(
             required: true,
             min: 3,
             max: 50,
-            validate: {
-                validator: function(value) {
-                    return /\s/.test(value);
-                },
-                message: 'Invalid Full Name. Must contain first name and last name separated by a space.',
-            },
         },
         email: {
             type: String,
