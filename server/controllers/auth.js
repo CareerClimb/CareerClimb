@@ -12,6 +12,13 @@ export const register = async (req, res) => {
                 email, 
                 password } = req.body;
 
+        // Ensure user does not already exist
+        const existingUser = await User.findOne({email: email});
+        if (existingUser) {
+            return res.status(400).json({msg: "User already exists"});
+        }
+
+        // Register the actual user
         const salt = await bcrpyt.genSalt(); // Generate a salt encrypted password
         const hashedPassword = await bcrpyt.hash(password, salt); // Hash the password
 
@@ -23,8 +30,8 @@ export const register = async (req, res) => {
 
         const savedUser = await newUser.save(); // Save the user to the database
         res.status(201).json(savedUser); // Return the saved user
-    } catch (error) {
-        res.status(500).json({error: error.message}); // Return an error
+    } catch (err) {
+        res.status(500).json({error: err.message}); // Return an error
     }
 };
 
