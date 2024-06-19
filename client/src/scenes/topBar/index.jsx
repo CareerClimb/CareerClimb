@@ -44,7 +44,7 @@ const TopBar = () => {
                 alignItems="center"
                 sx={{
                     cursor: 'pointer'
-                
+
                 }}>
                 <Typography variant="h4" sx={{ ml: 2, fontWeight: 'bold' }}>
                     CC.

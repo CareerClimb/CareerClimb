@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 import TopBar from 'scenes/topBar';
-import SearchBar from 'components/SearchBar';
-import PostsWidget from 'scenes/widgets/PostsWidget';
 import BottomBar from 'scenes/bottomBar';
+import CenterContent from 'scenes/mainPage/CenterContent';
+import FilterMenu from 'components/FilterMenu';
 
 const MainPage = () => {
     const theme = useTheme();
@@ -23,22 +23,25 @@ const MainPage = () => {
             <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: 'column',
+                    flexDirection: 'row',
                     justifyContent: 'center',
-                    alignItems: 'center',
-                    flexGrow: 1, // Take up remaining space
-                    mt: '80px', // Add margin top to avoid overlap with TopBar
-                    textAlign: 'center',
+                    minHeight: '100vh',
+                    textAlign: 'center'
                 }}
             >
-                <Typography variant="h1" fontSize='62px' fontWeight='bold' marginBottom="3px">
-                    CareerClimb.
-                </Typography>
-                <Typography variant="h4" fontFamily="Roboto" color={palette.neutral.medium}>
-                    Welcome! Search for the jobs you are looking for.
-                </Typography>
-                <SearchBar />
-                <PostsWidget />
+                <Box // absolute positoning of the filter menu 
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        mt: '95px', // Add margin top to avoid overlap with TopBar
+                        position: 'absolute',
+                        left : '0%',
+                        textAlign: 'center',
+                    }}
+                >
+                    <FilterMenu />
+                </Box> 
+                <CenterContent />
             </Box>
             <BottomBar />
         </Box>

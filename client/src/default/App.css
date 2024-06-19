@@ -28,6 +28,14 @@
   color: #61dafb;
 }
 
+.filtermenu-icon {
+  fill: black;
+}
+
+.dark-mode .filtermenu-icon {
+  fill: white;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
