@@ -10,8 +10,6 @@ const CompanyFilter = () => {
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    
-
     return (
         <Box
             sx={{
