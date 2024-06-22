@@ -37,6 +37,7 @@ const MainPage = () => {
                         position: 'absolute',
                         left : '0%',
                         textAlign: 'center',
+                        width: '230px'
                     }}
                 >
                     <FilterMenu />

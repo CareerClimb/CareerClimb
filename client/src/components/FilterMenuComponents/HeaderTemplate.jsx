@@ -20,9 +20,8 @@ const FilterMenu = ( {Icon , title}) => {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between', // items are packed to opposite ends of flex direction
-                height: '22px',
-                width: '120%',
-                ml: 2,
+                height: '100%',
+                ml: 2
             }}
         >
             <Box
