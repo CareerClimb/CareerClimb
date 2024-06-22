@@ -7,10 +7,9 @@ import SalaryFilter from './FilterMenuComponents/SalaryFilter';
 import ExperienceFilter from './FilterMenuComponents/ExperienceFilter';
 import LocationFilter from './FilterMenuComponents/LocationFilter';
 import CompanyFilter from './FilterMenuComponents/CompanyFilter';
-import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
 import FilterMenuDivider from './FilterMenuComponents/FilterMenuDivider';
-import { ReactComponent as JobIconSvg } from '.././assets/briefcase.svg';
-import { ReactComponent as PlusButtonSVG } from '.././assets/plusbutton.svg';
+import JobTitleFilter from './FilterMenuComponents/JobTitleFilter';
+
 
 
 
@@ -25,7 +24,7 @@ const FilterMenu = () => {
     };
       
     return (
-        <Box // menu content
+        <Box 
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -35,29 +34,17 @@ const FilterMenu = () => {
                 border: checked ? `1px solid ${theme.palette.divider}` : 'none',
                 pb: '10px',
                 zIndex: 5,
-                width: '135%'
             }}  
         >
             <FilterButton onClick={handleClick}/>
-            <Collapse // content to show/hide 
+            <Collapse 
                 orientation="horizontal" 
                 in = {checked}
                 timeout = {10} // 10 ms animation
             >
+                {/* content to show/hide  */}
                 <FilterMenuDivider/> 
-                <Box // Job Type Header
-                    sx = {{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between', // items are packed to opposite ends of flex direction
-                        height: '22px',
-                        width: '125%',
-                    }}
-                >
-                    <HeaderTemplate Icon={JobIconSvg} title={"Job Type"} />
-                    <PlusButtonSVG style={{ width: '22px', height: '22px'}} > </PlusButtonSVG> 
-                </Box>
-                <FilterMenuDivider/>
+                <JobTitleFilter/>
                 <CompanyFilter/>
                 <LocationFilter/>
                 <ExperienceFilter/>

@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import fs from 'fs';
 import toml from 'toml';
 import authRoutes from "./routes/auth.js";
+import autofillRoutes from "./routes/autofill.js"
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -33,6 +34,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 /* ROUTES */
 app.use("/auth", authRoutes);
+app.use("/autocomplete", autofillRoutes);
 
 /* MONGOOSE SETUP */
 mongoose

@@ -5,3 +5,7 @@
 
 # local files
 config.toml
+
+# static local files 
+./controllers/jobs.csv
+./controllers/titles.xslx

@@ -18,7 +18,7 @@ const SalaryFilter = () => {
     const increment = 20000;
     const values = [10000]
     
-    // populate values for dropdown list
+    // populate values for salary dropdown list
     for (let value = startValue; value <= endValue; value += increment) {
         values.push(value);
     }
@@ -28,6 +28,7 @@ const SalaryFilter = () => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
+                width: '200px'
             }}
         >
             <HeaderTemplate title={'Salary'}/>   

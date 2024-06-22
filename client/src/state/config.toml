@@ -1,3 +1,0 @@
-MONGO_URL="mongodb+srv://careerclimbcontact:0b6PTAdwXDa0n99Y@careerclimb.jbtrqkr.mongodb.net/?retryWrites=true&w=majority&appName=CareerClimb"
-JWT_SECRET="9b1c4a27f01b7f8a63b1f5f7796343d1d212b0b6d48e8a3033e94d0276aee4ff4fe0944019d54d2b5b0d44bc4a3f92a2b96b7e9244e1e3b0f20b084f8f93g2d8"
-PORT=3001
