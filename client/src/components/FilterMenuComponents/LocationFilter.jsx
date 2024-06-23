@@ -4,7 +4,7 @@ import { Box, Autocomplete, TextField, MenuItem, InputLabel, Typography, useThem
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
 import { ReactComponent as LocationIconSvg } from '../../assets/locationpin.svg';
 import FilterMenuDivider from './FilterMenuDivider';
-import AutofillController  from '../AutofillController';
+import AutofillController  from '../../controllers/AutofillController';
 
 
 

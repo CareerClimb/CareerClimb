@@ -4,9 +4,10 @@ class AutofillController {
         This class queries public APIs to generate autofill information.
     */
 
-    
+    /*  Class attributes   */
     LIMIT = '5';
 
+    /*   Class Methods    */
     isValidInput(inputStr) {
         // Must be a non-empty string
         if (inputStr === '' ) {
@@ -21,6 +22,7 @@ class AutofillController {
             This method receives a string and returns an array of potential autofill names.
             API Documentation: https://docs.locationiq.com/reference/autocomplete-2
                 It queries Cities/Countries/States/Provinces/Regions     
+
             Input: (String)
             Return: (Array of Strings)
         */
@@ -33,7 +35,7 @@ class AutofillController {
         const locationKey = 'pk.3edcc157dfc136bfa03dcd10d87dfca7'; // our api key
         const options = {method: 'GET', headers: {accept: 'application/json'}};  
 
-        // API call to get location autofill. 
+        // API call for autofill candidates. 
         const response = await fetch('https://us1.locationiq.com/v1/autocomplete?q='+String(prefix)+'&tag=place%3Acity%2C%20place%3Atown%2C%20place%3A%20country%2C%20place%3A%20province%2C%20place%3A%20state%2C%20place%3A%20region&limit='+this.LIMIT+'&accept-language=en&key='+locationKey, options)
             .then(response => response.json())
             .then(response => response.map(doc => doc.display_place)) // extract location name
@@ -51,10 +53,11 @@ class AutofillController {
 
     async fetchJobTitles(prefix) {
         /*
-        This method queries local nodeJS API to generate autofill information.
-        Data stored on MongoDB
-        Input: (String)
-        Return: (Array of Strings)
+            This method queries our nodeJS server to generate autofill information.
+            Data stored on MongoDB. Requires connection to the nodejs server.
+
+            Input: (String)
+            Return: (Array of Strings)
         */
         // input validation
         if (!this.isValidInput(prefix)) {
@@ -81,10 +84,11 @@ class AutofillController {
 
     async fetchCompany(prefix) {
         /*
-        This method receives a string and returns an array of potential autofill names.
-        API Documentation: https://docs.brandfetch.com/reference/search-brand
-        Input: (String)
-        Return: (Array of Strings)
+            This method receives a string and returns an array of potential autofill names.
+            API Documentation: https://docs.brandfetch.com/reference/search-brand
+            
+            Input: (String)
+            Return: (Array of Strings)
         */
 
         // input validation
@@ -92,6 +96,7 @@ class AutofillController {
             return [];
         }
 
+        // Customize Query/Request Type
         const options = {
             method: 'GET',
             headers: {

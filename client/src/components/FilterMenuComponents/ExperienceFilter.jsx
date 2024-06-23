@@ -36,8 +36,7 @@ const ExperienceFilter = () => {
                     labelId="ExperienceList"
                     id="List"
                     onChange={handleChange}
-                    onClick={(event) => {event.preventDefault()}}
-                    MenuProps={{ disableScrollLock: true}}
+                    MenuProps={{ disableScrollLock: true}} 
                 >
                     {values.map((value) => (  // Maps a list of salary values to menu items
                         <MenuItem key={value} value={value}>{value}</MenuItem>

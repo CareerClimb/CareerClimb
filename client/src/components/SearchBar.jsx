@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from "react";
 import { Box, Autocomplete, Button, TextField, useTheme, useMediaQuery } from '@mui/material';
-import AutofillController from './AutofillController';
+import AutofillController from '../controllers/AutofillController';
 
 const SearchBar = () => {
   const { palette } = useTheme();

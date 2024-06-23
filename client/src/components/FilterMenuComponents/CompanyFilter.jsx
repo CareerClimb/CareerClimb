@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Box, Autocomplete, TextField, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormControl, Select } from '@mui/material';
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
 import FilterMenuDivider from './FilterMenuDivider';
-import AutofillController  from '../AutofillController';
+import AutofillController  from '../../controllers/AutofillController';
 
 
 
@@ -40,8 +40,6 @@ const CompanyFilter = () => {
                 freeSolo  // Allow any input value (not restricted to autofill values)
                 onInputChange={onChangeCompany}
                 options = {options}
-                fullWidth
-                sx = {{ display: 'inline-block', flexGrow: 1 }}
                 renderInput={(params) => (
                     <TextField {...params} variant="outlined" fullWidth size="small"
                         sx = {{
