@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, TextField, Typography, useTheme, useMediaQuery, Select } from '@mui/material';
+import { Box, Collapse, TextField, Typography, useTheme, useMediaQuery, Select } from '@mui/material';
 import { useState } from "react";
-import Collapse from '@mui/material/Collapse';
+import { createContext } from "react";
 import FilterButton from 'components/FilterButton';
 import SalaryFilter from './FilterMenuComponents/SalaryFilter';
 import ExperienceFilter from './FilterMenuComponents/ExperienceFilter';
