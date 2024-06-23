@@ -18,7 +18,7 @@ const initialValuesLogin = {
 };
 
 // Define the LoginForm component
-const LoginForm = ({ setPageType }) => {
+const LoginForm = () => {
     const { palette } = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,6 +30,20 @@ const LoginForm = ({ setPageType }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values),
         });
+
+        if (loggedInResponse.status === 404) {
+            alert("User not found");
+            onSubmitProps.resetForm();
+            return;
+        } else if (loggedInResponse.status === 400) {
+            alert("Invalid credentials");
+            onSubmitProps.resetForm();
+            return;
+        } else if (loggedInResponse.status === 500) { 
+            alert("An error occurred");
+            onSubmitProps.resetForm();
+            return;
+        }
         const loggedIn = await loggedInResponse.json();
         onSubmitProps.resetForm();
         if (loggedIn) {
