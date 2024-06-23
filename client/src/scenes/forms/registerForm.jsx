@@ -58,7 +58,7 @@ const RegisterForm = () => {
         
 
         if (savedUser) {
-            navigate("/home");
+            navigate("/login");
         }
     };
 
