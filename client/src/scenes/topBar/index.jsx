@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
     Box,
     IconButton,
@@ -10,19 +10,26 @@ import {
     DarkMode,
     LightMode
 } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
-import { setMode } from "state";
+import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 
 const TopBar = () => {
     const theme = useTheme();
     const { palette } = useTheme();
-    // const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const dispatch = useDispatch();
-    // const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
-    
+    const user = useSelector((state) => state.user);
+
+    const handleLogout = () => {
+        dispatch(setLogout());
+        navigate('/');
+    };
+
+    const handleLogin = () => {
+        navigate('/login');
+    };
+
     return (
         <Box
             display="flex"
@@ -44,7 +51,6 @@ const TopBar = () => {
                 alignItems="center"
                 sx={{
                     cursor: 'pointer'
-
                 }}>
                 <Typography variant="h4" sx={{ ml: 2, fontWeight: 'bold' }}>
                     CC.
@@ -88,7 +94,7 @@ const TopBar = () => {
                 </Box>
                 <Box textAlign="center">
                     <Button
-                        onClick={() => navigate('/login')}
+                        onClick={user ? handleLogout : handleLogin}
                         type="button"
                         sx={{
                             ml: 2,
@@ -108,11 +114,10 @@ const TopBar = () => {
                                 borderColor: palette.primary.main, // Add border color on hover
                             }
                         }}
-                        >
-                            Log In
+                    >
+                        {user ? 'Log out' : 'Log in'}
                     </Button>
                 </Box>
-                
             </Box>
         </Box>
     );
