@@ -8,7 +8,7 @@ import AutofillController  from '../../controllers/AutofillController';
 
 
 
-const LocationFilter = () => {
+const LocationFilter = ({filters, handleFilterChange}) => {
 
     const theme = useTheme();
     const { palette } = useTheme();
@@ -16,9 +16,13 @@ const LocationFilter = () => {
     const [options, setOptions] = useState([]);
 
     const onChangeLocation = async (prefix) => {
+        // save filter
+        filters.location = prefix;
+        handleFilterChange(filters);
+
         // query autofill options
         const autofill = new AutofillController();
-        const array = await autofill.fetchLocation(prefix.target.value);  
+        const array = await autofill.fetchLocation(prefix);  
 
         // display autofill options
         try { setOptions(array); } 
@@ -38,10 +42,11 @@ const LocationFilter = () => {
         >
             <HeaderTemplate Icon={LocationIconSvg} title={'Location'}/> 
             <Autocomplete // Wrapper to display autofill options
-                freeSolo  // Allow any input value (not restricted to autofill values)
-                onInputChange={onChangeLocation}
+                freeSolo  // Allow any input value 
+                onInputChange={(e, prefix) => onChangeLocation(prefix)} // pass string entered by user instead of event object
                 options = {options}
                 fullWidth
+                value = {filters.location}
                 renderInput={(params) => (
                     <TextField {...params} variant="outlined" fullWidth size="small"
                         sx = {{

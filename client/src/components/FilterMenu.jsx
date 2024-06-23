@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Collapse, TextField, Typography, useTheme, useMediaQuery, Select } from '@mui/material';
 import { useState } from "react";
-import { createContext } from "react";
 import FilterButton from 'components/FilterButton';
 import SalaryFilter from './FilterMenuComponents/SalaryFilter';
 import ExperienceFilter from './FilterMenuComponents/ExperienceFilter';
@@ -11,16 +10,15 @@ import FilterMenuDivider from './FilterMenuComponents/FilterMenuDivider';
 import JobTitleFilter from './FilterMenuComponents/JobTitleFilter';
 
 
-
-
-const FilterMenu = () => {
+const FilterMenu = ({filters, handleFilterChange}) => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [checked, setChecked] = useState(false);
 
     const handleClick = () => {
-          setChecked((prev) => !prev);
+          // hide/unhide filter menu
+          setChecked((checked) => !checked); 
     };
       
     return (
@@ -44,11 +42,11 @@ const FilterMenu = () => {
             >
                 {/* content to show/hide  */}
                 <FilterMenuDivider/> 
-                <JobTitleFilter/>
-                <CompanyFilter/>
-                <LocationFilter/>
-                <ExperienceFilter/>
-                <SalaryFilter/>
+                <JobTitleFilter filters={filters}/>
+                <CompanyFilter filters={filters} handleFilterChange={handleFilterChange}/>
+                <LocationFilter filters={filters} handleFilterChange={handleFilterChange}/>
+                <ExperienceFilter filters={filters} handleFilterChange={handleFilterChange}/>
+                <SalaryFilter filters={filters} handleFilterChange={handleFilterChange}/>
             </Collapse>
 
 

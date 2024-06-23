@@ -3,12 +3,7 @@ import { Box, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormCon
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
 
 
-const SalaryFilter = () => {
-    const [salary, setSalary] = React.useState('');
-
-    const handleChange = (event) => {
-      setSalary(event.target.salary);
-    };
+const SalaryFilter = ({filters, handleFilterChange}) => {
 
     const theme = useTheme();
     const { palette } = useTheme();
@@ -16,7 +11,14 @@ const SalaryFilter = () => {
     const startValue = 50000;
     const endValue = 200000;
     const increment = 20000;
-    const values = [10000]
+    const values = [0]
+
+    const handleChange = (event) => {
+        // save filter
+        filters.salary = event.target.value;
+        handleFilterChange(filters);
+        console.log(filters.salary);
+    };
     
     // populate values for salary dropdown list
     for (let value = startValue; value <= endValue; value += increment) {
@@ -44,6 +46,7 @@ const SalaryFilter = () => {
                 <Select
                     labelId="SalaryList"
                     id="List"
+                    defaultValue = {filters.salary}
                     onChange={handleChange}
                     MenuProps={{ disableScrollLock: true}}
                 >

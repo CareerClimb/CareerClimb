@@ -21,6 +21,7 @@ class FilterModel {
         this.#experience = experience;
         this.#salary = salary;
     }
+
     
     get jobTypes() {
         return this.#jobTypes;

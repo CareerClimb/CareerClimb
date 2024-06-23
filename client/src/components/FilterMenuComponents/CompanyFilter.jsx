@@ -7,7 +7,7 @@ import AutofillController  from '../../controllers/AutofillController';
 
 
 
-const CompanyFilter = () => {
+const CompanyFilter = ({filters, handleFilterChange}) => {
 
     const theme = useTheme();
     const { palette } = useTheme();
