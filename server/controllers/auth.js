@@ -1,6 +1,6 @@
 // Import packages
 import bcrpyt from 'bcrypt'; // For encryption
-import jws from 'jsonwebtoken'; // For authentication
+import jwt from 'jsonwebtoken'; // For authentication
 import User from '../models/User.js'; // User model
 import fs from 'fs';
 import toml from 'toml';
@@ -55,6 +55,7 @@ export const login = async (req, res) => {
         delete user.password;  // Delete the password from the user object to make sure it does not get sent anywhere
         res.status(200).json({token, user}); // Send the token and the user object to the client
     } catch (err) {
+        console.log('Error occurred during registration:', err); // Log the error for debugging
         res.status(500).json({error: err.message});
     }
 };
