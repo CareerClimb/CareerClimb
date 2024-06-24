@@ -77,7 +77,7 @@ class AutofillController {
                 return []; // query error, or no matching names
             });
 
-        console.log(response);
+        console.log("React AutofillController job titles: ", response);
         return response;
     }
 

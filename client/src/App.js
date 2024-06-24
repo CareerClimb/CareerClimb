@@ -18,12 +18,18 @@ function App() {
   const isAuth = Boolean(useSelector((state) => state.token)); // Determine if the user is authenticated
   const [filters, setFilters] = useState(new FilterModel());
 
-  const handleFilterChange = (newFilter) => {
-      // Update filters with new value for the filtertype.
-      // Everything else remains the same.
-      console.log(newFilter)
-      setFilters(newFilter) 
-  }
+  const handleFilterChange = (filter) => {
+      // create shallow copy of filter
+      // to trigger rerendering of components. weird react things :p 
+      // https://stackoverflow.com/questions/25937369/react-component-not-re-rendering-on-state-change
+      setFilters(prevFilters => ({
+          ...prevFilters,   // fill with old data
+          ...filter         // overwrite only what is needed
+      }));
+
+      console.log("app filter: ", filter);
+      // TODO: if logged in, update user's filters on mongodb 
+  };
 
   return <div className="app">
     <BrowserRouter>

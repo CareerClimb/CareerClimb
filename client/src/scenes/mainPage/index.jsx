@@ -4,8 +4,7 @@ import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 import TopBar from 'scenes/topBar';
 import BottomBar from 'scenes/bottomBar';
 import CenterContent from 'scenes/mainPage/CenterContent';
-import FilterMenu from 'components/FilterMenu';
-import FilterModel from '../../models/FilterModel.jsx'
+import FilterMenu from './FilterMenu';
 
 const MainPage = ({filters, handleFilterChange}) => {
     const theme = useTheme();
@@ -31,20 +30,8 @@ const MainPage = ({filters, handleFilterChange}) => {
                     textAlign: 'center'
                 }}
             >
-                <Box // absolute positoning of the filter menu 
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        mt: '95px', // Add margin top to avoid overlap with TopBar
-                        position: 'absolute',
-                        left : '0%',
-                        textAlign: 'center',
-                        width: '230px'
-                    }}
-                >
-                    <FilterMenu filters={filters} handleFilterChange={handleFilterChange}/>
-                </Box> 
-                <CenterContent />
+                <FilterMenu filters={filters} handleFilterChange={handleFilterChange}/>
+                <CenterContent filters={filters} handleFilterChange={handleFilterChange}/>
             </Box>
             <BottomBar />
         </Box>

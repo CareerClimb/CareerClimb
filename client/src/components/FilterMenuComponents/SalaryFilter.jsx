@@ -17,7 +17,6 @@ const SalaryFilter = ({filters, handleFilterChange}) => {
         // save filter
         filters.salary = event.target.value;
         handleFilterChange(filters);
-        console.log(filters.salary);
     };
     
     // populate values for salary dropdown list
@@ -30,18 +29,18 @@ const SalaryFilter = ({filters, handleFilterChange}) => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: '200px'
+                width: '280px'
             }}
         >
             <HeaderTemplate title={'Salary'}/>   
-            <FormControl                
+            <FormControl size="small"           
                 sx = {{
                     alignItems: 'left',
                     ml: 2,
                     mr: 2,
                     mb: 1,
                     width: '100%'
-                }} size="small"
+                }} 
             >
                 <Select
                     labelId="SalaryList"
@@ -49,10 +48,13 @@ const SalaryFilter = ({filters, handleFilterChange}) => {
                     defaultValue = {filters.salary}
                     onChange={handleChange}
                     MenuProps={{ disableScrollLock: true}}
+                    sx = {{ textAlign: 'left'}}
                 >
-                    {values.map((value) => (  // Maps a list of salary values to menu items
-                        <MenuItem key={value} value={value}>+${value.toLocaleString()}/Year</MenuItem>
-                    ))}
+                    {
+                        values.map((value) => (  // Maps a list of salary values to menu items
+                            <MenuItem key={value} value={value} sx={{ textAlign: 'left'}}> +${value.toLocaleString()}/Year </MenuItem>
+                        ))
+                    }
                 </Select>
             </FormControl>
         </Box>

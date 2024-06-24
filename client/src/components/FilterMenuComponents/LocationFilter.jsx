@@ -37,7 +37,7 @@ const LocationFilter = ({filters, handleFilterChange}) => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: '100%'
+                width: '280px'
             }}
         >
             <HeaderTemplate Icon={LocationIconSvg} title={'Location'}/> 

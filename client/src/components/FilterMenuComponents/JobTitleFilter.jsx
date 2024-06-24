@@ -18,25 +18,17 @@ const JobTitleFilter = () => {
 
 
     return (
-        <Box
-            sx={{
+        <Box // Job Type Header
+            sx = {{
+                display: 'flex',
                 flexDirection: 'row',
-                width: '100%'
+                justifyContent: 'space-between', // items are packed to opposite ends of flex direction
+                height: '22px',
+                width: '105%'
             }}
         >
-            <Box // Job Type Header
-                sx = {{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between', // items are packed to opposite ends of flex direction
-                    height: '22px',
-                    width: '105%'
-                }}
-            >
-                <HeaderTemplate Icon={JobIconSvg} title={"Job Type"} />
-                <PlusButtonSVG style={{ width: '22px', height: '22px'}} > </PlusButtonSVG> 
-            </Box>
-            <FilterMenuDivider/>
+            <HeaderTemplate Icon={JobIconSvg} title={"Job Type"} />
+            <PlusButtonSVG style={{ width: '22px', height: '22px'}} > </PlusButtonSVG> 
         </Box>
     );
 };

@@ -33,6 +33,7 @@ const CompanyFilter = ({filters, handleFilterChange}) => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
+                width: '280px'
             }}
         >
             <HeaderTemplate title={'Company'}/>  
@@ -50,7 +51,6 @@ const CompanyFilter = ({filters, handleFilterChange}) => {
                     />
                 )}
             />
-            <FilterMenuDivider/>
         </Box>
     );
 };

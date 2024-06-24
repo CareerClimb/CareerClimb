@@ -14,7 +14,6 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
         // save filter
         filters.experience = event.target.value;
         handleFilterChange(filters);
-        console.log(filters.experience);
     };
 
     return (
@@ -22,12 +21,12 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
+                width: '280px'
             }}
         >
             <HeaderTemplate title={'Experience'}/>   
             <FormControl size="small"             
                 sx = {{
-                    alignItems: 'left',
                     ml: 2,
                     mb: 1,
                     mr: 2,
@@ -39,10 +38,11 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
                     id="List"
                     defaultValue = {filters.experience}
                     onChange={handleChange}
-                    MenuProps={{ disableScrollLock: true}} 
+                    MenuProps={{ disableScrollLock: true}}
+                    sx = {{ textAlign: 'left'}} 
                 >
                     {values.map((value) => (  // Maps a list of salary values to menu items
-                        <MenuItem key={value} value={value}>{value}</MenuItem>
+                        <MenuItem key={value} value={value} sx={{ textAlign: 'left'}} >{value}</MenuItem>
                     ))}
                 </Select>
             </FormControl>

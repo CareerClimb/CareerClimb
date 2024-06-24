@@ -19,8 +19,8 @@ export const jobAutoComplete = async (req, res) => {
         // WHERE jobtitle LIKE "prefix*"
         const regex = new RegExp(`^${prefix}`, 'i');                                    // Case-insensitive regex for "prefix*"
         const jobtitlesquery = await JobTitle.find({ jobTitle: regex }).limit(LIMIT);   // Query mongodb
-        jobtitlesquery.map((doc) => doc.jobTitle);  // extract an array of job titles
-        res.status(200).json({array: jobtitlesquery});     // Success. Return an array of job titles
+        const jobtitles = jobtitlesquery.map((doc) => doc.jobTitle);  // extract an array of job titles
+        res.status(200).json({array: jobtitles});                     // Success. Return an array of job titles
     } catch(error) {
         console.error(error);
         res.status(500).json({error: err.message}); // Return an error
