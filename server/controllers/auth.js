@@ -1,26 +1,25 @@
 // Import packages
-import bcrpyt from 'bcrypt'; // For encryption
+import bcrypt from 'bcrypt'; // For encryption
 import jwt from 'jsonwebtoken'; // For authentication
 import User from '../models/User.js'; // User model
 import fs from 'fs';
 import toml from 'toml';
+import { toast } from 'react-toastify';
 
 // Register a new user
 export const register = async (req, res) => {
     try {
-        const { fullName, 
-                email, 
-                password } = req.body;
-
+        const { fullName, email, password } = req.body;
+        console.log(req.body);
         // Ensure user does not already exist
-        const existingUser = await User.findOne({email: email});
+        const existingUser = await User.findOne({ email: email });
         if (existingUser) {
-            return res.status(400).json({msg: "User already exists"});
+            return res.status(400).json({ msg: "User already exists" });
         }
 
-        // Register the actual user
-        const salt = await bcrpyt.genSalt(); // Generate a salt encrypted password
-        const hashedPassword = await bcrpyt.hash(password, salt); // Hash the password
+        // Generate a salt and hash the password
+        const salt = await bcrypt.genSalt(10); // Ensure a rounds value is provided (default is 10)
+        const hashedPassword = await bcrypt.hash(password, salt); // Ensure password and salt are provided
 
         const newUser = new User({
             fullName,
@@ -31,7 +30,8 @@ export const register = async (req, res) => {
         const savedUser = await newUser.save(); // Save the user to the database
         res.status(201).json(savedUser); // Return the saved user
     } catch (err) {
-        res.status(500).json({error: err.message}); // Return an error
+        // console.log(err); // Log the error
+        res.status(500).json({ error: err.message }); // Return an error
     }
 };
 
@@ -55,7 +55,6 @@ export const login = async (req, res) => {
         delete user.password;  // Delete the password from the user object to make sure it does not get sent anywhere
         res.status(200).json({token, user}); // Send the token and the user object to the client
     } catch (err) {
-        console.log('Error occurred during registration:', err); // Log the error for debugging
         res.status(500).json({error: err.message});
     }
 };

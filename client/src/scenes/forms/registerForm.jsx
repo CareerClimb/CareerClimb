@@ -21,7 +21,7 @@ const initialValuesRegister = {
 
 
 // Define the RegisterForm component
-const RegisterForm = ({ setPageType }) => {
+const RegisterForm = () => {
     const { palette } = useTheme();
     const navigate = useNavigate();
     const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -36,11 +36,26 @@ const RegisterForm = ({ setPageType }) => {
             "http://localhost:3001/auth/register",
             {
                 method: "POST",
-                body: formData,
-            }
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            }   
         );
+        
+        if (savedUserResponse.status === 400) {
+            alert("User already exists");
+            onSubmitProps.resetForm();
+            return;
+        } else if (savedUserResponse.status !== 201) {
+            alert("An error occurred. Please try again.");
+            onSubmitProps.resetForm();
+            return;
+        } 
+
         const savedUser = await savedUserResponse.json();
         onSubmitProps.resetForm();
+        
 
         if (savedUser) {
             navigate("/login");
@@ -48,7 +63,7 @@ const RegisterForm = ({ setPageType }) => {
     };
 
     const handleFormSubmit = async (values, onSubmitProps) => {
-        await register(values, onSubmitProps);
+        await register(values, onSubmitProps);  
     };
 
     return (
