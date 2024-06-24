@@ -2,8 +2,6 @@ import React from 'react';
 import { useState } from "react";
 import { Box, Autocomplete, TextField, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormControl, Select } from '@mui/material';
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
-import FilterMenuDivider from './FilterMenuDivider';
-import AutofillController  from '../../controllers/AutofillController';
 import { ReactComponent as JobIconSvg } from '../../assets/briefcase.svg';
 import { ReactComponent as PlusButtonSVG } from '../../assets/plusbutton.svg';
 

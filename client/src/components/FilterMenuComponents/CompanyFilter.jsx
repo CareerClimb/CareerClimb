@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from "react";
 import { Box, Autocomplete, TextField, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormControl, Select } from '@mui/material';
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
-import FilterMenuDivider from './FilterMenuDivider';
 import AutofillController  from '../../controllers/AutofillController';
 
 
@@ -13,18 +12,30 @@ const CompanyFilter = ({filters, handleFilterChange}) => {
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [options, setOptions] = useState([]);
+    
 
     const onChangeCompany = async (prefix) => {
-        // query autofill options
-        const autofill = new AutofillController();
-        const array = await autofill.fetchCompany(prefix.target.value);
+        // Input Validation
+        if (prefix === undefined || prefix === null) {
+            console.error("Error: MisInput in Company TextField: ", prefix);
+            return;
+        }        
 
-        // display autofill options
-        try { setOptions(array); } 
-        catch(err) {
+        //Display autofill options
+        try { 
+            const autofill = new AutofillController();
+            const array = await autofill.fetchCompanies(prefix);
+            setOptions(array);  
+        } catch(err) {
             console.error(err);
-            setOptions([]);
+            setOptions([]); // no autofill options
         }
+
+        // Shallow copy filter and update company
+        const newFilters = {...filters, company: prefix };
+
+        // Update state with new filters object
+        handleFilterChange(newFilters);
     }
 
 
@@ -39,8 +50,9 @@ const CompanyFilter = ({filters, handleFilterChange}) => {
             <HeaderTemplate title={'Company'}/>  
             <Autocomplete // Wrapper to display autofill options
                 freeSolo  // Allow any input value (not restricted to autofill values)
-                onInputChange={onChangeCompany}
+                onInputChange={(e, prefix) => onChangeCompany(prefix)}
                 options = {options}
+                inputValue = {filters.company}
                 renderInput={(params) => (
                     <TextField {...params} variant="outlined" fullWidth size="small"
                         sx = {{

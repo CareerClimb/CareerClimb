@@ -13,23 +13,43 @@ const LocationFilter = ({filters, handleFilterChange}) => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState([]);       // Store autofill options
+    const [inputValue, setInputValue] = useState(''); // Store user Input
+
 
     const onChangeLocation = async (prefix) => {
-        // save filter
-        filters.location = prefix;
-        handleFilterChange(filters);
-
-        // query autofill options
-        const autofill = new AutofillController();
-        const array = await autofill.fetchLocation(prefix);  
-
-        // display autofill options
-        try { setOptions(array); } 
-        catch(err) {
+        // Query and display autofill options
+        try { 
+            const autofill = new AutofillController();
+            const array = await autofill.fetchLocations(prefix);
+            setOptions(array); 
+        } catch(err) {
             console.error(err);
             setOptions([]);
         }
+
+        // Save TextField value
+        setInputValue(prefix);
+
+    };
+
+    const onOptionsClick = async (value) => {
+        // Function called when user selects an autofill option or clicks enter
+        // Validate Input
+        if (!value) {
+            return;
+        }
+        
+        // Create a new array of locations
+        const newLocations = [...filters.locations, value] // append value 
+
+        // Update filters state with new array
+        const newFilters = {...filters, locations: newLocations}; // Overwrite locations attribute
+        handleFilterChange(newFilters);
+        
+        // Clear UI
+        setInputValue(''); // Clear SearchBar
+        setOptions([]);    // Clear Autofill Options
     }
 
     return (
@@ -43,23 +63,22 @@ const LocationFilter = ({filters, handleFilterChange}) => {
             <HeaderTemplate Icon={LocationIconSvg} title={'Location'}/> 
             <Autocomplete // Wrapper to display autofill options
                 freeSolo  // Allow any input value 
-                onInputChange={(e, prefix) => onChangeLocation(prefix)} // pass string entered by user instead of event object
+                inputValue = {inputValue} // Value displayed in TextField
+                onInputChange={(e, prefix) => onChangeLocation(prefix)} // user edits textfield input
+                onChange={(e, prefix) => onOptionsClick(prefix)}  // user pressed enter or selected autofill option
                 options = {options}
                 fullWidth
-                value = {filters.location}
                 renderInput={(params) => (
                     <TextField {...params} variant="outlined" fullWidth size="small"
                         sx = {{
                             alignItems: 'left',
                             ml: 2,
                             mr: 2,
-                            mb: 1,
                             width: '100%'
                         }}
                     />
                 )}
             />
-            <FilterMenuDivider/>
         </Box>
     );
 };

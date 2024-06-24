@@ -19,16 +19,10 @@ function App() {
   const [filters, setFilters] = useState(new FilterModel());
 
   const handleFilterChange = (filter) => {
-      // create shallow copy of filter
-      // to trigger rerendering of components. weird react things :p 
-      // https://stackoverflow.com/questions/25937369/react-component-not-re-rendering-on-state-change
-      setFilters(prevFilters => ({
-          ...prevFilters,   // fill with old data
-          ...filter         // overwrite only what is needed
-      }));
-
-      console.log("app filter: ", filter);
-      // TODO: if logged in, update user's filters on mongodb 
+      // Update filters
+      setFilters(filter);
+      console.log("App Filters: ", filter)
+      // TODO: if logged in, push filter settings to mongodb 
   };
 
   return <div className="app">

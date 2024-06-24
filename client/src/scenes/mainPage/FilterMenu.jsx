@@ -9,7 +9,7 @@ import CompanyFilter from '../../components/FilterMenuComponents/CompanyFilter';
 import FilterMenuDivider from '../../components/FilterMenuComponents/FilterMenuDivider';
 import JobTitleFilter from '../../components/FilterMenuComponents/JobTitleFilter';
 import JobTitleContent from '../../components/FilterMenuComponents/JobTitleContent';
-import CompanyTitleContent from '../../components/FilterMenuComponents/CompanyTitleContent';
+import LocationTitleContent from '../../components/FilterMenuComponents/LocationTitleContent';
 
 
 const FilterMenu = ({filters, handleFilterChange}) => {
@@ -54,9 +54,10 @@ const FilterMenu = ({filters, handleFilterChange}) => {
                 <JobTitleContent filters={filters} handleFilterChange={handleFilterChange}/>
                 <FilterMenuDivider/>
                 <CompanyFilter filters={filters} handleFilterChange={handleFilterChange}/>
-                <CompanyTitleContent filters={filters} handleFilterChange={handleFilterChange}/>
                 <FilterMenuDivider/>
                 <LocationFilter filters={filters} handleFilterChange={handleFilterChange}/>
+                <LocationTitleContent filters={filters} handleFilterChange={handleFilterChange}/>
+                <FilterMenuDivider/>
                 <ExperienceFilter filters={filters} handleFilterChange={handleFilterChange}/>
                 <SalaryFilter filters={filters} handleFilterChange={handleFilterChange}/>
             </Collapse>

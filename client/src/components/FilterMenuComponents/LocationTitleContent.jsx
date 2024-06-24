@@ -3,18 +3,17 @@ import { Box, useMediaQuery, useTheme } from '@mui/material';
 import DeletableChip from 'components/DeletableChip';
 
 
-
-const CompanyTitleContent = ({filters, handleFilterChange}) => {
+const LocationTitleContent = ({filters, handleFilterChange}) => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     
     const handleDelete = (chiplabel) => {
         // Shallow copy array excluding the deleted element
-        const newCompanies = filters.companies.filter((title) => title !== chiplabel); 
+        const newLocations = filters.locations.filter((title) => title !== chiplabel); 
         
-        // Create new filters object with updated companies array
-        const newFilters = { ...filters, companies: newCompanies };
+        // Create new filters object with updated array
+        const newFilters = { ...filters, locations: newLocations };
         
         // Update state with new filters object
         handleFilterChange(newFilters);
@@ -28,13 +27,13 @@ const CompanyTitleContent = ({filters, handleFilterChange}) => {
                 flexWrap: 'wrap',
                 width: '280px',                
                 ml: 2,
-                mb: 2,
+                mb: 1, // add margin if non-empty
                 mt: 2,
                 gap: 1,
             }}  
         >
-            {   filters.companies && // Render if not undefined/null
-                filters.companies.map((title) => ( // Maps a list of titles into chip components
+            {   filters.locations && // Render if not undefined/null
+                filters.locations.map((title) => ( // Maps a list of titles into chip components
                     <DeletableChip label={title} handleDelete={handleDelete} />
                 ))
             }
@@ -44,4 +43,4 @@ const CompanyTitleContent = ({filters, handleFilterChange}) => {
     );
 };
 
-export default CompanyTitleContent;
+export default LocationTitleContent;

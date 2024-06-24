@@ -9,15 +9,15 @@ class AutofillController {
 
     /*   Class Methods    */
     isValidInput(inputStr) {
-        // Must be a non-empty string
-        if (inputStr === '' ) {
+        // checks for undefined/null/empty-string
+        if (!inputStr) {
             return false;
         }
 
         return true;
     }
 
-    async fetchLocation(prefix) {
+    async fetchLocations(prefix) {
         /* 
             This method receives a string and returns an array of potential autofill names.
             API Documentation: https://docs.locationiq.com/reference/autocomplete-2
@@ -76,13 +76,12 @@ class AutofillController {
                 console.error(err);
                 return []; // query error, or no matching names
             });
-
-        console.log("React AutofillController job titles: ", response);
+        
         return response;
     }
 
 
-    async fetchCompany(prefix) {
+    async fetchCompanies(prefix) {
         /*
             This method receives a string and returns an array of potential autofill names.
             API Documentation: https://docs.brandfetch.com/reference/search-brand

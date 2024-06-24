@@ -6,49 +6,41 @@ import AutofillController from '../controllers/AutofillController';
 const SearchBar = ({filters, handleFilterChange}) => {
   const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [options, setOptions] = useState([]);       // store autofill options
-  const [inputValue, setInputValue] = useState(''); // store value entered by user
+  const [options, setOptions] = useState([]);       // Store autofill options
+  const [inputValue, setInputValue] = useState(''); // Store user Input
 
   const onChangeJobTitle = async (event, prefix) => {
-    /* Autofill behaviour  */
-    // Query autofill options
-    const autofill = new AutofillController();
-    console.log("prefix: ", prefix);
-    const array = await autofill.fetchJobTitles(prefix);
-
-    // Display autofill options
-    try { setOptions(array); } 
-    catch(err) {
+    // Query and display autofill options
+    try {     
+      const autofill = new AutofillController();
+      const array = await autofill.fetchJobTitles(prefix)
+      setOptions(array); 
+    } catch(err) {
       console.error(err);
       setOptions([]); // error, display nothing
     }
 
     // Save TextField value
-    console.log("prefix post: ", prefix);
     setInputValue(prefix);
   };
 
-
   const buttonClick = () => {
-    /* Submit button behaviour */
-    // Validate input
-    if (!inputValue || typeof inputValue !== 'string') { 
+    // Validate input: Checks if null/undefined/empty-string
+    if (!inputValue) { 
       console.error("SearchBar Error: Input must be a non-empty string");
-      console.log("type of input: ", typeof inputValue);
-      console.log("inputValue: ", inputValue);
       return;
     }
 
     // Create a new array of job types
-    const newJobTypes = [...filters.jobTypes, inputValue];
+    const newJobTypes = [...filters.jobTypes, inputValue]; // append value 
 
     // Update filters state with new array
-    const newFilters = {...filters, jobTypes: newJobTypes}; // Same state, but overwrites jobTypes attribute
+    const newFilters = {...filters, jobTypes: newJobTypes}; // Overwrite jobTypes attribute
     handleFilterChange(newFilters);
 
-    // Clear Autofill & Input value 
-    setInputValue(''); 
-    setOptions([]);    
+    // Clear UI
+    setInputValue(''); // Clear SearchBar
+    setOptions([]);    // Clear Autofill Options
   };
 
   return (
@@ -64,9 +56,8 @@ const SearchBar = ({filters, handleFilterChange}) => {
         freeSolo    // Allow any input value
         onInputChange={onChangeJobTitle}
         options = {options}
-        value={inputValue}
+        inputValue={inputValue}
         sx = {{ flexGrow: 1 }}  // match parent size
-        
         renderInput={(params) => ( // text input functionality
           <TextField {...params}
             variant="outlined"
@@ -87,6 +78,7 @@ const SearchBar = ({filters, handleFilterChange}) => {
               },
             }}
           />
+
         )}
 
       />
