@@ -4,28 +4,52 @@ import { Box, Autocomplete, TextField, MenuItem, InputLabel, Typography, useThem
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
 import { ReactComponent as LocationIconSvg } from '../../assets/locationpin.svg';
 import FilterMenuDivider from './FilterMenuDivider';
-import AutofillController  from '../AutofillController';
+import AutofillController  from '../../controllers/AutofillController';
 
 
 
-const LocationFilter = () => {
+const LocationFilter = ({filters, handleFilterChange}) => {
 
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState([]);       // Store autofill options
+    const [inputValue, setInputValue] = useState(''); // Store user Input
+
 
     const onChangeLocation = async (prefix) => {
-        // query autofill options
-        const autofill = new AutofillController();
-        const array = await autofill.fetchLocation(prefix.target.value);  
-
-        // display autofill options
-        try { setOptions(array); } 
-        catch(err) {
+        // Query and display autofill options
+        try { 
+            const autofill = new AutofillController();
+            const array = await autofill.fetchLocations(prefix);
+            setOptions(array); 
+        } catch(err) {
             console.error(err);
             setOptions([]);
         }
+
+        // Save TextField value
+        setInputValue(prefix);
+
+    };
+
+    const onOptionsClick = async (value) => {
+        // Function called when user selects an autofill option or clicks enter
+        // Validate Input
+        if (!value) {
+            return;
+        }
+        
+        // Create a new array of locations
+        const newLocations = [...filters.locations, value] // append value 
+
+        // Update filters state with new array
+        const newFilters = {...filters, locations: newLocations}; // Overwrite locations attribute
+        handleFilterChange(newFilters);
+        
+        // Clear UI
+        setInputValue(''); // Clear SearchBar
+        setOptions([]);    // Clear Autofill Options
     }
 
     return (
@@ -33,13 +57,15 @@ const LocationFilter = () => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: '100%'
+                width: '280px'
             }}
         >
             <HeaderTemplate Icon={LocationIconSvg} title={'Location'}/> 
             <Autocomplete // Wrapper to display autofill options
-                freeSolo  // Allow any input value (not restricted to autofill values)
-                onInputChange={onChangeLocation}
+                freeSolo  // Allow any input value 
+                inputValue = {inputValue} // Value displayed in TextField
+                onInputChange={(e, prefix) => onChangeLocation(prefix)} // user edits textfield input
+                onChange={(e, prefix) => onOptionsClick(prefix)}  // user pressed enter or selected autofill option
                 options = {options}
                 fullWidth
                 renderInput={(params) => (
@@ -48,13 +74,11 @@ const LocationFilter = () => {
                             alignItems: 'left',
                             ml: 2,
                             mr: 2,
-                            mb: 1,
                             width: '100%'
                         }}
                     />
                 )}
             />
-            <FilterMenuDivider/>
         </Box>
     );
 };

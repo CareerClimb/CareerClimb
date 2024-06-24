@@ -11,7 +11,7 @@ const FilterMenuDivider = () => {
         <Box
             sx={{
             margin: '10px 10px',
-            width: '100%',
+            width: '103%',
             borderBottom: `1px solid ${theme.palette.divider}`,
             }}
         />

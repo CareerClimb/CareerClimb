@@ -1,25 +1,47 @@
 import React from 'react';
 import { useState } from "react";
 import { Box, Autocomplete, Button, TextField, useTheme, useMediaQuery } from '@mui/material';
-import AutofillController from './AutofillController';
+import AutofillController from '../controllers/AutofillController';
 
-const SearchBar = () => {
+const SearchBar = ({filters, handleFilterChange}) => {
   const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState([]);       // Store autofill options
+  const [inputValue, setInputValue] = useState(''); // Store user Input
 
-  const onChangeJobTitle = async (prefix) => {
-    // Query autofill options
-    const autofill = new AutofillController();
-    const array = await autofill.fetchJobTitles(prefix.target.value);
-
-    // Display autofill options
-    try { setOptions(array); } 
-    catch(err) {
+  const onChangeJobTitle = async (event, prefix) => {
+    // Query and display autofill options
+    try {     
+      const autofill = new AutofillController();
+      const array = await autofill.fetchJobTitles(prefix)
+      setOptions(array); 
+    } catch(err) {
       console.error(err);
-      setOptions([]);
+      setOptions([]); // error, display nothing
     }
-  }
+
+    // Save TextField value
+    setInputValue(prefix);
+  };
+
+  const buttonClick = () => {
+    // Validate input: Checks if null/undefined/empty-string
+    if (!inputValue) { 
+      console.error("SearchBar Error: Input must be a non-empty string");
+      return;
+    }
+
+    // Create a new array of job types
+    const newJobTypes = [...filters.jobTypes, inputValue]; // append value 
+
+    // Update filters state with new array
+    const newFilters = {...filters, jobTypes: newJobTypes}; // Overwrite jobTypes attribute
+    handleFilterChange(newFilters);
+
+    // Clear UI
+    setInputValue(''); // Clear SearchBar
+    setOptions([]);    // Clear Autofill Options
+  };
 
   return (
     <Box
@@ -34,8 +56,8 @@ const SearchBar = () => {
         freeSolo    // Allow any input value
         onInputChange={onChangeJobTitle}
         options = {options}
+        inputValue={inputValue}
         sx = {{ flexGrow: 1 }}  // match parent size
-        
         renderInput={(params) => ( // text input functionality
           <TextField {...params}
             variant="outlined"
@@ -56,12 +78,14 @@ const SearchBar = () => {
               },
             }}
           />
+
         )}
 
       />
 
       <Button
         type="submit"
+        onClick = {buttonClick}
         sx={{
             backgroundColor: palette.primary.main,
             color: palette.background.alt,

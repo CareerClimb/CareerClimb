@@ -3,12 +3,7 @@ import { Box, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormCon
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
 
 
-const SalaryFilter = () => {
-    const [salary, setSalary] = React.useState('');
-
-    const handleChange = (event) => {
-      setSalary(event.target.salary);
-    };
+const SalaryFilter = ({filters, handleFilterChange}) => {
 
     const theme = useTheme();
     const { palette } = useTheme();
@@ -16,7 +11,13 @@ const SalaryFilter = () => {
     const startValue = 50000;
     const endValue = 200000;
     const increment = 20000;
-    const values = [10000]
+    const values = [0]
+
+    const handleChange = (event) => {
+        // save filter
+        filters.salary = event.target.value;
+        handleFilterChange(filters);
+    };
     
     // populate values for salary dropdown list
     for (let value = startValue; value <= endValue; value += increment) {
@@ -28,28 +29,32 @@ const SalaryFilter = () => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: '200px'
+                width: '280px'
             }}
         >
             <HeaderTemplate title={'Salary'}/>   
-            <FormControl                
+            <FormControl size="small"           
                 sx = {{
                     alignItems: 'left',
                     ml: 2,
                     mr: 2,
                     mb: 1,
                     width: '100%'
-                }} size="small"
+                }} 
             >
                 <Select
                     labelId="SalaryList"
                     id="List"
+                    defaultValue = {filters.salary}
                     onChange={handleChange}
                     MenuProps={{ disableScrollLock: true}}
+                    sx = {{ textAlign: 'left'}}
                 >
-                    {values.map((value) => (  // Maps a list of salary values to menu items
-                        <MenuItem key={value} value={value}>+${value.toLocaleString()}/Year</MenuItem>
-                    ))}
+                    {
+                        values.map((value) => (  // Maps a list of salary values to menu items
+                            <MenuItem key={value} value={value} sx={{ textAlign: 'left'}}> +${value.toLocaleString()}/Year </MenuItem>
+                        ))
+                    }
                 </Select>
             </FormControl>
         </Box>

@@ -4,8 +4,9 @@ import JobTitle from '../models/JobTitle.js';
 const { Schema, model } = mongoose;
 
 
-/*  Autofill job titles based on a given prefix */
-// app.get(path, (req, res) => {})
+/*  Autofill job titles based on a given prefix 
+    This is the intermediary function between react and mongodb
+*/
 export const jobAutoComplete = async (req, res) => {
     /*
         Returns a list of job titles that matches a given prefix
@@ -18,8 +19,8 @@ export const jobAutoComplete = async (req, res) => {
         // WHERE jobtitle LIKE "prefix*"
         const regex = new RegExp(`^${prefix}`, 'i');                                    // Case-insensitive regex for "prefix*"
         const jobtitlesquery = await JobTitle.find({ jobTitle: regex }).limit(LIMIT);   // Query mongodb
-        console.log(jobtitlesquery);
-        res.status(200).json({array: jobtitlesquery.map((doc) => doc.jobTitle)});     // Success. Return an array of job titles
+        const jobtitles = jobtitlesquery.map((doc) => doc.jobTitle);  // extract an array of job titles
+        res.status(200).json({array: jobtitles});                     // Success. Return an array of job titles
     } catch(error) {
         console.error(error);
         res.status(500).json({error: err.message}); // Return an error
