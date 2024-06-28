@@ -26,7 +26,7 @@ const JobTitleFilter = () => {
             }}
         >
             <HeaderTemplate Icon={JobIconSvg} title={"Job Type"} />
-            <PlusButtonSVG style={{ width: '22px', height: '22px'}} > </PlusButtonSVG> 
+            {/* TODO LATER:  <PlusButtonSVG style={{ width: '22px', height: '22px'}} > </PlusButtonSVG>  */}
         </Box>
     );
 };
