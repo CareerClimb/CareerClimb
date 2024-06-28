@@ -34,7 +34,7 @@ const FilterMenu = ({filters, handleFilterChange}) => {
                 width: '320px',
                 zIndex: 5,
                 mt: '95px', // Add margin top to avoid overlap with TopBar
-                left : '0%',
+                left : '5%',
                 
                 // display effects only when filter is toggled on 
                 boxShadow: checked ? '0 8px 16px rgba(0, 0, 0, 0.1)' : 'none',    

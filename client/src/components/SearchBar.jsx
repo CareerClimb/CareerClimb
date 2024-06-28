@@ -9,7 +9,20 @@ const SearchBar = ({filters, handleFilterChange}) => {
   const [options, setOptions] = useState([]);       // Store autofill options
   const [inputValue, setInputValue] = useState(''); // Store user Input
 
+  
+  const clearUI = () => {
+    // Delay to let other asynchronous functions / renderings finish. Fixes a bug where searchbar doesn't clear.
+    setTimeout(() => {
+        // Clear UI
+        setInputValue('');  // Clear SearchBar
+        setOptions([]);     // Clear Autofill Options
+    }, 15); // ms delay
+  }
+
   const onChangeJobTitle = async (event, prefix) => {
+    // Save TextField value
+    setInputValue(prefix);
+
     // Query and display autofill options
     try {     
       const autofill = new AutofillController();
@@ -19,30 +32,27 @@ const SearchBar = ({filters, handleFilterChange}) => {
       console.error(err);
       setOptions([]); // error, display nothing
     }
-
-    // Save TextField value
-    setInputValue(prefix);
   };
 
-  const buttonClick = () => {
+  const buttonClick = (value) => {
     // Validate input: Checks if null/undefined/empty-string
-    if (!inputValue) { 
+    if (!value) { 
       console.error("SearchBar Error: Input must be a non-empty string");
       return;
     }
 
     // Create a new array of job types
-    const newJobTypes = [...filters.jobTypes, inputValue]; // append value 
+    const newJobTypes = [...filters.jobTypes, value]; // append value 
 
     // Update filters state with new array
     const newFilters = {...filters, jobTypes: newJobTypes}; // Overwrite jobTypes attribute
     handleFilterChange(newFilters);
 
-    // Clear UI
-    setInputValue(''); // Clear SearchBar
-    setOptions([]);    // Clear Autofill Options
+    // Clear SearchBar / Autofill options
+    clearUI();
   };
 
+  
   return (
     <Box
       sx={{
@@ -55,9 +65,11 @@ const SearchBar = ({filters, handleFilterChange}) => {
       <Autocomplete // Wrapper to display autofill options
         freeSolo    // Allow any input value
         onInputChange={onChangeJobTitle}
+        onChange={(e, prefix) => buttonClick(prefix)} // user pressed enter or selected autofill option
         options = {options}
         inputValue={inputValue}
         sx = {{ flexGrow: 1 }}  // match parent size
+        filterOptions={(x) => x} // disable filtering by this MUI 
         renderInput={(params) => ( // text input functionality
           <TextField {...params}
             variant="outlined"
@@ -85,7 +97,7 @@ const SearchBar = ({filters, handleFilterChange}) => {
 
       <Button
         type="submit"
-        onClick = {buttonClick}
+        onClick = {() => buttonClick(inputValue)}
         sx={{
             backgroundColor: palette.primary.main,
             color: palette.background.alt,

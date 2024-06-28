@@ -19,9 +19,10 @@ function App() {
   const [filters, setFilters] = useState(new FilterModel());
 
   const handleFilterChange = (filter) => {
-      // Update filters
+      // Update filters state
       setFilters(filter);
       console.log("App Filters: ", filter)
+
       // TODO: if logged in, push filter settings to mongodb 
   };
 

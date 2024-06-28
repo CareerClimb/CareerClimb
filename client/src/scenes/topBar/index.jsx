@@ -52,7 +52,7 @@ const TopBar = () => {
                 sx={{
                     cursor: 'pointer'
                 }}>
-                <Typography variant="h4" sx={{ ml: 2, fontWeight: 'bold' }}>
+                <Typography variant="h4" sx={{ ml: 0, fontWeight: 'bold' }}>
                     CC.
                 </Typography>
             </Box>
