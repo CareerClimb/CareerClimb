@@ -52,7 +52,7 @@ const SalaryFilter = ({filters, handleFilterChange}) => {
                 >
                     {
                         values.map((value) => (  // Maps a list of salary values to menu items
-                            <MenuItem key={value} value={value} sx={{ textAlign: 'left'}}> +${value.toLocaleString()}/Year </MenuItem>
+                            <MenuItem key={value} value={value} sx={{ textAlign: 'left'}}> +${value.toLocaleString()} </MenuItem>
                         ))
                     }
                 </Select>

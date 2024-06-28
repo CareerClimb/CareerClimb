@@ -8,7 +8,16 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const values = ['Internship', 'Entry Level', 'Intermediate' ,'Senior Level', 'Director', 'Executive']
+    const values = ['Internship', 'Entry Level', 'Intermediate', 'Senior Level', 'Director', 'Executive'];
+    const valuesMap = {
+        'Internship': '0 Years',
+        'Entry Level': '0-2 Years',
+        'Intermediate': '2-5 Years',
+        'Senior Level': '≥ 5 Years',
+        'Director': '≥ 5 Years',
+        'Executive': '≥ 5 Years'
+    }
+
     
     const handleChange = (event) => {
         // save filter
@@ -42,7 +51,10 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
                     sx = {{ textAlign: 'left'}} 
                 >
                     {values.map((value) => (  // Maps a list of salary values to menu items
-                        <MenuItem key={value} value={value} sx={{ textAlign: 'left'}} >{value}</MenuItem>
+                        <MenuItem key={value} value={value} sx={{ display: 'flex', justifyContent: 'space-between'}} >
+                                <Box component="span">{value}</Box>
+                                <Box component="span">{valuesMap[value]}</Box>
+                        </MenuItem>
                     ))}
                 </Select>
             </FormControl>
