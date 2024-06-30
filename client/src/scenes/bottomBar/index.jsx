@@ -26,10 +26,8 @@ const BottomBar = () => {
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollPos = window.pageYOffset;
-            const pageHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            // const isVisible = currentScrollPos === 0 || currentScrollPos >= pageHeight;
-            // const isVisible = prevScrollPos > currentScrollPos || currentScrollPos === 0 || currentScrollPos >= pageHeight;
-            const isVisible = prevScrollPos > currentScrollPos;
+            const pageHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight - 50;
+            const isVisible = prevScrollPos > currentScrollPos || currentScrollPos >= pageHeight;
 
             setPrevScrollPos(currentScrollPos);
             setVisible(isVisible);
