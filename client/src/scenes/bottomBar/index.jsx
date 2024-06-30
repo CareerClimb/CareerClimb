@@ -41,21 +41,26 @@ const BottomBar = () => {
 
     return (
         <Box
-            display="flex"
+            style={{
+                    opacity: visible ? 1 : 0,
+                    visibility: visible ? 'visible' : 'hidden',
+                    transition: 'opacity 0.5s ease',
+                }}
             flexDirection="column"
             justifyContent="flex-start"
             alignItems="center"
             position="fixed"    
-            bottom={visible ? 0 : -100}
+            bottom={0}
             left="5%"
             width="90%"
-            height={visible ? "10%" : "0"}
+            height="10%"
             bgcolor="background.default"
             color="text.primary"
             p={2.5}
-            borderTop={visible ? "1px solid" : "none"}
+            borderTop = "1px solid"            
             borderColor="text.primary"
-            transition="bottom 0.3s ease-in-out"
+            opacity={visible ? 0 : 0} // Adjust opacity instead of display for smooth transition
+            transition="opacity 1.0s ease" // Smooth transition for opacity
         >
             <Box
                 display="flex"  
