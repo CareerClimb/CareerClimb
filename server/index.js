@@ -12,6 +12,7 @@ import fs from 'fs';
 import toml from 'toml';
 import authRoutes from "./routes/auth.js";
 import autofillRoutes from "./routes/autofill.js"
+import jobRoutes from './routes/jobs.js';
 import Job from "./models/Job.js";
 import { jobs } from "./data/index.js";
 
@@ -37,6 +38,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 /* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/autocomplete", autofillRoutes);
+app.use('/jobs', jobRoutes);
 
 /* MONGOOSE SETUP */
 mongoose
