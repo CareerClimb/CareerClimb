@@ -5,6 +5,6 @@
 
 # local files
 config.toml
-./venv
+venv/
 
 
