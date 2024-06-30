@@ -5,7 +5,6 @@
 
 # local files
 config.toml
+./venv
 
-# static local files 
-./controllers/jobs.csv
-./controllers/titles.xslx
+
