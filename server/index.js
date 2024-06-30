@@ -12,6 +12,8 @@ import fs from 'fs';
 import toml from 'toml';
 import authRoutes from "./routes/auth.js";
 import autofillRoutes from "./routes/autofill.js"
+import Job from "./models/Job.js";
+import { jobs } from "./data/index.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -44,5 +46,8 @@ mongoose
     })
     .then(() => {
         app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+
+        /* ADD DATA ONE TIME */
+        // Job.insertMany(jobs);
     })
     .catch((error) => console.log(`${error} did not connect`));
