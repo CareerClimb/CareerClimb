@@ -12,6 +12,9 @@ import fs from 'fs';
 import toml from 'toml';
 import authRoutes from "./routes/auth.js";
 import autofillRoutes from "./routes/autofill.js"
+import jobRoutes from './routes/jobs.js';
+import Job from "./models/Job.js";
+import { jobs } from "./data/index.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -35,6 +38,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 /* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/autocomplete", autofillRoutes);
+app.use('/jobs', jobRoutes);
 
 /* MONGOOSE SETUP */
 mongoose
@@ -44,5 +48,8 @@ mongoose
     })
     .then(() => {
         app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+
+        /* ADD DATA ONE TIME */
+        // Job.insertMany(jobs);
     })
     .catch((error) => console.log(`${error} did not connect`));
