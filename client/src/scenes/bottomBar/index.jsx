@@ -26,6 +26,9 @@ const BottomBar = () => {
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollPos = window.pageYOffset;
+            const pageHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            // const isVisible = currentScrollPos === 0 || currentScrollPos >= pageHeight;
+            // const isVisible = prevScrollPos > currentScrollPos || currentScrollPos === 0 || currentScrollPos >= pageHeight;
             const isVisible = prevScrollPos > currentScrollPos;
 
             setPrevScrollPos(currentScrollPos);
@@ -44,7 +47,7 @@ const BottomBar = () => {
             style={{
                     opacity: visible ? 1 : 0,
                     visibility: visible ? 'visible' : 'hidden',
-                    transition: 'opacity 0.5s ease',
+                    transition: 'opacity 0.5s ease-in-out',
                 }}
             flexDirection="column"
             justifyContent="flex-start"
@@ -59,8 +62,6 @@ const BottomBar = () => {
             p={2.5}
             borderTop = "1px solid"            
             borderColor="text.primary"
-            opacity={visible ? 0 : 0} // Adjust opacity instead of display for smooth transition
-            transition="opacity 1.0s ease" // Smooth transition for opacity
         >
             <Box
                 display="flex"  
