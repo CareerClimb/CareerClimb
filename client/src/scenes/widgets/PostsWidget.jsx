@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, useTheme } from '@mui/material';
 import PostWidget from './PostWidget';
 import JobDescription from 'components/JobDescription';
 import axios from 'axios';
 
 const PostsWidget = () => {
+  const { palette } = useTheme();
   const [openModal, setOpenModal] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
   const [jobPosts, setJobPosts] = useState([]);
@@ -78,8 +79,8 @@ const PostsWidget = () => {
         maxHeight: '70vh', // Adjust the height as needed
         // overflowY: 'auto', // Uncomment this line to add a vertical scrollbar
         padding: '20px',
-        backgroundColor: 'background.paper',
-      }}
+        backgroundColor: 'background.paper'
+        }}
     >
       {currentPosts.map((job, index) => (
         <Box
@@ -98,11 +99,58 @@ const PostsWidget = () => {
         </Box>
       ))}
       {/* Pagination buttons */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Button variant="contained" onClick={prevPage} disabled={currentPage === 1}>
+      <Box sx={{ display: 'flex', 
+                 justifyContent: 'center', 
+                 marginTop: '20px'}}
+                 >
+        <Button 
+          onClick={prevPage} 
+          disabled={currentPage === 1}
+          type="button"
+          sx={{
+            ml: 2,
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            fontWeight: 'bold',
+            padding: "14px 24px",
+            backgroundColor: palette.primary.main,
+            color: palette.background.alt,
+            borderRadius: '50px',
+            variant: 'contained',
+            textTransform: 'none', // Add this line to prevent all caps
+            border: `3px solid ${palette.primary.main}`, // Add border color same as the primary color
+            '&:hover': {
+                color: palette.primary.main,
+                backgroundColor: palette.background.default,
+                borderColor: palette.primary.main, // Add border color on hover
+            }
+        }}>
+
           Previous
         </Button>
-        <Button variant="contained" onClick={nextPage} style={{ marginLeft: '10px' }}>
+        {/* <Button variant="contained" onClick={nextPage} style={{ marginLeft: '10px' }}> */}
+        <Button 
+          onClick={nextPage} 
+          disabled={currentPosts.length < postsPerPage}
+          sx={{
+            ml: 2,
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            fontWeight: 'bold',
+            padding: "14px 24px",
+            backgroundColor: palette.primary.main,
+            color: palette.background.alt,
+            borderRadius: '50px',
+            variant: 'contained',
+            textTransform: 'none', // Add this line to prevent all caps
+            border: `3px solid ${palette.primary.main}`, // Add border color same as the primary color
+            '&:hover': {
+                color: palette.primary.main,
+                backgroundColor: palette.background.default,
+                borderColor: palette.primary.main, // Add border color on hover
+            }
+        }}>
+
           Next
         </Button>
       </Box>
