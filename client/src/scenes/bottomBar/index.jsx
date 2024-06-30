@@ -1,5 +1,5 @@
 // Import packages
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Box,
     IconButton,
@@ -20,6 +20,24 @@ const BottomBar = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const [open, setOpen] = useState(false);
+    const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+    const [visible, setVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset;
+            const isVisible = prevScrollPos > currentScrollPos;
+
+            setPrevScrollPos(currentScrollPos);
+            setVisible(isVisible);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [prevScrollPos]);
 
     return (
         <Box
@@ -28,15 +46,16 @@ const BottomBar = () => {
             justifyContent="flex-start"
             alignItems="center"
             position="fixed"    
-            bottom={0}
+            bottom={visible ? 0 : -100}
             left="5%"
             width="90%"
-            height="10%"
+            height={visible ? "10%" : "0"}
             bgcolor="background.default"
             color="text.primary"
             p={2.5}
-            borderTop="1px solid"
+            borderTop={visible ? "1px solid" : "none"}
             borderColor="text.primary"
+            transition="bottom 0.3s ease-in-out"
         >
             <Box
                 display="flex"  
