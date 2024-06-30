@@ -16,8 +16,8 @@ const CenterContent = ({filters, handleFilterChange}) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                mt: '80px', // Add margin top to avoid overlap with TopBar
-                textAlign: 'center'
+                marginTop: '80px',
+                textAlign: 'center',
             }}
         >
             <Typography variant="h1" fontSize='62px' fontWeight='bold' marginBottom="3px">

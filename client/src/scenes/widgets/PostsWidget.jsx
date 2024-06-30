@@ -101,7 +101,8 @@ const PostsWidget = () => {
       {/* Pagination buttons */}
       <Box sx={{ display: 'flex', 
                  justifyContent: 'center', 
-                 marginTop: '20px'}}
+                 marginTop: '20px',
+                 paddingBottom: '150px'}}
                  >
         <Button 
           onClick={prevPage} 
