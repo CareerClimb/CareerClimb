@@ -9,7 +9,8 @@ call venv\Scripts\activate
 
 :: Install dependencies
 pip install --upgrade pip
-pip install -U python-jobspy
+python -m pip install -U python-jobspy
+python -m pip install "pymongo[srv]"
 
 :: Run the Python script
 python3 ./python_scripts/scrapeJobs.py

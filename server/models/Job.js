@@ -5,9 +5,9 @@ const JobSchema = new mongoose.Schema(
     {
         _id: mongoose.Schema.Types.ObjectId, // Unique identifier for each job posting
         JobPostingID: {
-            type: Number,
-            required: true,
-            max: 50,
+            type: String,
+            max: 100,
+            required: false,
             unique: true,
         },
         title: {
@@ -40,6 +40,11 @@ const JobSchema = new mongoose.Schema(
             required: false,
             max:50,
         },
+        state: {
+            type: String,
+            required: false,
+            max:50,
+        },
         city: {
             type: String,
             required: false,
@@ -57,7 +62,7 @@ const JobSchema = new mongoose.Schema(
         link: {
             type: String,
             required: false,
-            max:50,
+            max:150,
         }
     },
     { timestamps: true }

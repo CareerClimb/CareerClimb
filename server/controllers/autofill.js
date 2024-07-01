@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import XLSX from 'xlsx';
 import JobTitle from '../models/JobTitle.js';
-const { Schema, model } = mongoose;
 
+const { Schema, model } = mongoose;
 
 /*  Autofill job titles based on a given prefix 
     This is the intermediary function between react and mongodb
@@ -28,7 +28,7 @@ export const jobAutoComplete = async (req, res) => {
 }
 
 
-/*     
+     
 const exportstuff = async () => {
     // exports a excel info into mongodb
     const workbook = XLSX.readFile('./titles.xlsx');
@@ -66,4 +66,3 @@ const viewstuff = async () => {
     }
 
 }
-*/ 

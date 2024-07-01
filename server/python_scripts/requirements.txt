@@ -2,7 +2,7 @@
 # async-timeout==4.0.3
 # jobspy==0.29.0
 # numpy==1.26.4
-# pandas==2.2.2
+pandas==2.2.2
 # python-dateutil==2.9.0.post0
 # pytz==2024.1
 # redis==5.0.7
