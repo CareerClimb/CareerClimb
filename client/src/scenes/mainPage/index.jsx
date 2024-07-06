@@ -1,3 +1,4 @@
+// Import packages
 import React, { useRef } from 'react';
 import { useState } from "react";
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';

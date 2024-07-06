@@ -1,3 +1,5 @@
+// Import packages
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
     Box,
@@ -52,7 +54,7 @@ const TopBar = () => {
                 sx={{
                     cursor: 'pointer'
                 }}>
-                <Typography variant="h4" sx={{ ml: 2, fontWeight: 'bold' }}>
+                <Typography variant="h4" sx={{ ml: 0, fontWeight: 'bold' }}>
                     CC.
                 </Typography>
             </Box>

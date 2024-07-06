@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from "react";
 import { Box, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormControl, Select } from '@mui/material';
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
 import FilterMenuDivider from './FilterMenuDivider';
@@ -8,9 +9,22 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const values = ['Internship', 'Entry Level', 'Intermediate' ,'Senior Level', 'Director', 'Executive']
-    
+    const [selectedValue, setSelectedValue] = useState('');
+
+    // Experience Labels
+    const values = ['Internship', 'Entry Level', 'Intermediate', 'Senior Level', 'Director', 'Executive'];
+    const valuesMap = {
+        'Internship': '0 Years',
+        'Entry Level': '0-2 Years',
+        'Intermediate': '2-5 Years',
+        'Senior Level': '≥ 5 Years',
+        'Director': '≥ 5 Years',
+        'Executive': '≥ 5 Years'
+    }
+
     const handleChange = (event) => {
+        // save selection 
+        setSelectedValue(event.target.value);
         // save filter
         filters.experience = event.target.value;
         handleFilterChange(filters);
@@ -37,12 +51,17 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
                     labelId="ExperienceList"
                     id="List"
                     defaultValue = {filters.experience}
+                    value = {selectedValue}
                     onChange={handleChange}
                     MenuProps={{ disableScrollLock: true}}
                     sx = {{ textAlign: 'left'}} 
+                    renderValue={() => selectedValue} // Renders only what's saved in the state
                 >
                     {values.map((value) => (  // Maps a list of salary values to menu items
-                        <MenuItem key={value} value={value} sx={{ textAlign: 'left'}} >{value}</MenuItem>
+                        <MenuItem key={value} value={value} sx={{ display: 'flex', justifyContent: 'space-between'}} >
+                                <Box component="span">{value}</Box>
+                                <Box component="span">{valuesMap[value]}</Box>
+                        </MenuItem>
                     ))}
                 </Select>
             </FormControl>

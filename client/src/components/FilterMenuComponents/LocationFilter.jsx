@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Box, Autocomplete, TextField, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormControl, Select } from '@mui/material';
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
 import { ReactComponent as LocationIconSvg } from '../../assets/locationpin.svg';
-import FilterMenuDivider from './FilterMenuDivider';
 import AutofillController  from '../../controllers/AutofillController';
 
 
@@ -17,7 +16,19 @@ const LocationFilter = ({filters, handleFilterChange}) => {
     const [inputValue, setInputValue] = useState(''); // Store user Input
 
 
+    const clearUI = () => {
+        // Delay to let other asynchronous functions / renderings finish. Fixes a bug where searchbar doesn't clear.
+        setTimeout(() => {
+            // Clear UI
+            setInputValue('');  // Clear SearchBar
+            setOptions([]);     // Clear Autofill Options
+        }, 15); // ms delay
+    }
+
     const onChangeLocation = async (prefix) => {
+        // Save TextField value
+        setInputValue(prefix);
+
         // Query and display autofill options
         try { 
             const autofill = new AutofillController();
@@ -28,12 +39,9 @@ const LocationFilter = ({filters, handleFilterChange}) => {
             setOptions([]);
         }
 
-        // Save TextField value
-        setInputValue(prefix);
-
     };
 
-    const onOptionsClick = async (value) => {
+    const onOptionsClick = (value) => {
         // Function called when user selects an autofill option or clicks enter
         // Validate Input
         if (!value) {
@@ -43,13 +51,14 @@ const LocationFilter = ({filters, handleFilterChange}) => {
         // Create a new array of locations
         const newLocations = [...filters.locations, value] // append value 
 
-        // Update filters state with new array
-        const newFilters = {...filters, locations: newLocations}; // Overwrite locations attribute
+        // Overwrite locations attribute
+        const newFilters = {...filters, locations: newLocations}; 
+
+        // Update Filter State
         handleFilterChange(newFilters);
         
-        // Clear UI
-        setInputValue(''); // Clear SearchBar
-        setOptions([]);    // Clear Autofill Options
+        // Clear SearchBar / Autofill options
+        clearUI();
     }
 
     return (
