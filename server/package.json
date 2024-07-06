@@ -25,8 +25,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "preinstall": "echo 'Installing Python Dependencies...' && pip install -r python_scripts/requirements.txt",
-    "setup-python": "node ./python_scripts/setupPythonEnv.js"
+    "setup-python": "node ./python_scripts/setupPythonEnv.mjs"
   },
   "keywords": [],
   "author": "",

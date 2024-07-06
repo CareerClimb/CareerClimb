@@ -1,70 +1,110 @@
 import json
 from jobspy import scrape_jobs
+import sys
 import pandas as pd 
 from pymongo.mongo_client import MongoClient
 
-
-def scraper(search_term="Computer Science", location="USA"):
-    jobs = scrape_jobs(
-        search_term=search_term,
-        location=location # required for indeed/glassdoor
-    )
-    
-    # Check if NaN values are present
-    print("NaN values before transformation:")
-    print(jobs.isna().sum())
-
-    # Replace NaN values with Null
-    jobs = jobs.where(pd.notnull(jobs), None)
-
-    # Fit Schema
-    jobData = []
-    print(f"Found {len(jobs)} jobs")
-
-    
-    for index, row in jobs.iterrows():
+class JobScraper:
+    def dailyScrape(self, search_term, country_indeed):
+        # Only scrapes jobs posted in the last 24 hours
         try:
-            # Check if 'company' field is null or empty
-            if pd.isnull(row['company']) or row['company'].strip() == '':
-                raise ValueError(f"Company name is missing for job ID: {row['id']}") # skip
-        
-            # Ensure 'location' is a string and not empty
-            location_str = str(row['location']) if row['location'] else ''
-
-            # split location. Example: "Edmonton, Alberta, Canada"
-            location_split = location_str.split(',')
-            city = location_split[0].strip() if len(location_split) > 0 else ''
-            state = location_split[1].strip() if len(location_split) > 1 else ''
-            country = location_split[2].strip() if len(location_split) > 2 else ''
-            
-            # Convert salary NaN to None
-            salary = None if pd.isna(row['min_amount']) else row['min_amount']
-
-            data = {
-                'title': row['title'],
-                'company': row['company'],
-                'currency': row['currency'],
-                'postedTime': row['date_posted'].isoformat(),  # Convert date to ISO format string                
-                'description': row['description'],
-                'salary': salary,
-                'JobPostingID': row['id'],
-                'link': row['job_url'],
-                'isRemote': row['is_remote'],
-                'country': country,
-                'state': state,
-                'city': city
-            }
-
-            jobData.append(data)
-
+            jobs = scrape_jobs(
+                search_term=search_term,
+                country_indeed=country_indeed,   # a required field to scrape indeed/glassdoor
+                verbose=0,                       # print errors only
+                hours_old=24,
+                linkedin_fetch_description=True 
+            )
+            self.cleanseData(jobs)
         except Exception as e:
-            print(f"Exception: {e} occurred for job ID: {row['id']}")  
-            continue  # Skip this job and continue with the next one
+            print(f"An error occurred while scraping {search_term}: {e}")
+        
 
-    # Convert jobData to JSON format
-    with open('jobDataJson.json', 'w', encoding='utf-8') as f:
-        json.dump(jobData, f, ensure_ascii=False, indent=4)
+    def scrape(self, search_term, country_indeed):
+        try:
+            jobs = scrape_jobs(
+                search_term=search_term,
+                country_indeed=country_indeed,   # a required field to scrape indeed/glassdoor
+                verbose=0,                       # print errors only
+                linkedin_fetch_description=True 
+            )
+            self.cleanseData(jobs)
+        except Exception as e:
+            print(f"An error occurred while scraping {search_term}: {e}")
+
+
+    def cleanseData(self, jobs):
+
+        # Replace NaN values with Null
+        jobs = jobs.where(pd.notnull(jobs), None)
+
+        # Prepare jobData list
+        jobData = []
+        print(f"Found {len(jobs)} jobs")
+        
+        for index, row in jobs.iterrows():
+            try:
+                # Check if 'company' field is null or empty
+                if pd.isnull(row['company']) or row['company'].strip() == '':
+                    raise ValueError(f"Company name is missing for job ID: {row['id']}") # skip
+            
+                # Ensure 'location' is a string and not empty
+                location_str = str(row['location']) if row['location'] else ''
+
+                # Split the 'location' string. Example: "Chicago, IL, USA"
+                location_split = location_str.split(',')
+                city = location_split[0].strip() if len(location_split) > 0 else ''
+                state = location_split[1].strip() if len(location_split) > 1 else ''
+                country = location_split[2].strip() if len(location_split) > 2 else ''
+
+                # Handle 'date_posted' being None
+                posted_time = row['date_posted'].isoformat() if row['date_posted'] else None
+                
+                # Convert 'salary' NaN to None
+                minSalary = None if pd.isna(row['min_amount']) else row['min_amount']
+                maxSalary = None if pd.isna(row['max_amount']) else row['max_amount']
+
+                # Choose the appropriate link
+                link = row['job_url_direct'] if row['job_url_direct'] else row['job_url'] # job_url_direct: company site. job_url: job board site.
+
+                # Check if 'title', 'company', or 'link' fields are null or empty
+                if pd.isna(row['title']) or row['title'].strip() == '':
+                    raise ValueError("Title is missing")
+                if pd.isna(row['company']) or row['company'].strip() == '':
+                    raise ValueError("Company name is missing")
+                if pd.isna(link) or link.strip() == '':
+                    raise ValueError("Link is missing")
+
+                data = {
+                    'title': row['title'],
+                    'company': row['company'],
+                    'currency': row['currency'],
+                    'postedTime': posted_time,              # Convert date to ISO format string                  
+                    'description': row['description'],
+                    'minSalary': minSalary,
+                    'maxSalary': maxSalary,
+                    'JobPostingID': row['id'],
+                    'link': link,
+                    'isRemote': row['is_remote'],
+                    'country': country,
+                    'state': state,
+                    'city': city
+                }
+
+                jobData.append(data)
+
+            except Exception as e:
+                print(f"Exception: {e} occurred for job ID: {row['id']}")  
+                continue  # Skip this job and continue with the next one
+
+        # Convert jobData to JSON format
+        with open('jobDataJson.json', 'w', encoding='utf-8') as f:
+            json.dump(jobData, f, ensure_ascii=False, indent=4)
 
 
 
-scraper()
+if __name__ == '__main__':
+    search_term = sys.argv[1] # first cmd line argument
+    print(f"Scraping jobs for '{search_term}'...")
+    scraper = JobScraper()
+    scraper.dailyScrape(search_term, 'USA')

@@ -27,7 +27,6 @@ export const jobAutoComplete = async (req, res) => {
     }        
 }
 
-
      
 const exportstuff = async () => {
     // exports a excel info into mongodb

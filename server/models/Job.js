@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 
 const JobSchema = new mongoose.Schema(
     {
-        _id: mongoose.Schema.Types.ObjectId, // Unique identifier for each job posting
         JobPostingID: {
             type: String,
             max: 100,
@@ -25,7 +24,12 @@ const JobSchema = new mongoose.Schema(
             required: true,
             max:50,
         },
-        salary: {
+        minSalary: {
+            type: String,
+            required: false,
+            max:50,
+        },
+        maxSalary: {
             type: String,
             required: false,
             max:50,
