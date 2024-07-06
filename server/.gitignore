@@ -5,7 +5,8 @@
 
 # local files
 config.toml
+./python_scripts/venv/
+./python_scripts/test.py
+./venv/
 
-# static local files 
-./controllers/jobs.csv
-./controllers/titles.xslx
+

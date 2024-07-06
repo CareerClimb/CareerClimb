@@ -3,13 +3,12 @@ import mongoose from 'mongoose';
 
 const JobSchema = new mongoose.Schema(
     {
-        // _id: mongoose.Schema.Types.ObjectId, // Unique identifier for each job posting
-        // JobPostingID: {
-        //     type: String,
-        //     required: true,
-        //     max: 50,
-        //     unique: true,
-        // },
+        JobPostingID: {
+            type: String,
+            max: 100,
+            required: false,
+            unique: true,
+        },
         title: {
             type: String,
             required: true,
@@ -25,6 +24,16 @@ const JobSchema = new mongoose.Schema(
             required: true,
             max:50,
         },
+        minSalary: {
+            type: String,
+            required: false,
+            max:50,
+        },
+        maxSalary: {
+            type: String,
+            required: false,
+            max:50
+        },
         salary: {
             type: String,
             required: false,
@@ -36,6 +45,11 @@ const JobSchema = new mongoose.Schema(
             max:50,
         },
         country: {
+            type: String,
+            required: false,
+            max:50,
+        },
+        state: {
             type: String,
             required: false,
             max:50,
@@ -57,7 +71,7 @@ const JobSchema = new mongoose.Schema(
         link: {
             type: String,
             required: false,
-            max:50,
+            max:150,
         }
     },
     { timestamps: true }

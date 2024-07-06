@@ -1,7 +1,7 @@
 
 class AutofillController {
     /*
-        This class queries public APIs to generate autofill information.
+        Queries public APIs to generate autofill information.
     */
 
     /*  Class attributes   */
