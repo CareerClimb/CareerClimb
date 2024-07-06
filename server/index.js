@@ -12,7 +12,6 @@ import fs from 'fs';
 import toml from 'toml';
 import authRoutes from "./routes/auth.js";
 import autofillRoutes from "./routes/autofill.js"
-import pythonEnv from "./python_scripts/pythonEnv.js"
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);

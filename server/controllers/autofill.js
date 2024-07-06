@@ -28,40 +28,40 @@ export const jobAutoComplete = async (req, res) => {
 }
 
      
-const exportstuff = async () => {
-    // exports a excel info into mongodb
-    const workbook = XLSX.readFile('./titles.xlsx');
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
-    const column = 'A';
-    const range = XLSX.utils.decode_range(sheet['!ref']);
-    const columnData = [];
-    for (let i = range.s.r; i <= range.e.r; i++) {
-        const cellAddress = { c: XLSX.utils.decode_col(column), r: i };
-        const cellRef = XLSX.utils.encode_cell(cellAddress);
-        const cell = sheet[cellRef];
-        if (cell) {
-            columnData.push({jobTitle: cell.v});
-            //console.log('Cell Data:', String(cell.v));
-        }
-    }
+// const exportstuff = async () => {
+//     // exports a excel info into mongodb
+//     const workbook = XLSX.readFile('./titles.xlsx');
+//     const sheetName = workbook.SheetNames[0];
+//     const sheet = workbook.Sheets[sheetName];
+//     const column = 'A';
+//     const range = XLSX.utils.decode_range(sheet['!ref']);
+//     const columnData = [];
+//     for (let i = range.s.r; i <= range.e.r; i++) {
+//         const cellAddress = { c: XLSX.utils.decode_col(column), r: i };
+//         const cellRef = XLSX.utils.encode_cell(cellAddress);
+//         const cell = sheet[cellRef];
+//         if (cell) {
+//             columnData.push({jobTitle: cell.v});
+//             //console.log('Cell Data:', String(cell.v));
+//         }
+//     }
 
-    // bulk insert using insertMany
-    try {
-        await jobTitle.insertMany(columnData);
-        console.log('Data inserted into MongoDB');
-    } catch (err) {
-        console.error('Error inserting data into MongoDB:', err);
-    }
-}
+//     // bulk insert using insertMany
+//     try {
+//         await jobTitle.insertMany(columnData);
+//         console.log('Data inserted into MongoDB');
+//     } catch (err) {
+//         console.error('Error inserting data into MongoDB:', err);
+//     }
+// }
 
-const viewstuff = async () => {
-    // view mongodb collection
-    try {
-        const insertedData = await jobTitle.find({});
-        console.log('Inserted Data:', insertedData);
-    } catch (err) {
-        console.error('Error fetching data from MongoDB:', err);
-    }
+// const viewstuff = async () => {
+//     // view mongodb collection
+//     try {
+//         const insertedData = await jobTitle.find({});
+//         console.log('Inserted Data:', insertedData);
+//     } catch (err) {
+//         console.error('Error fetching data from MongoDB:', err);
+//     }
 
-}
+// }

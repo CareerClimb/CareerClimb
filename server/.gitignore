@@ -5,6 +5,8 @@
 
 # local files
 config.toml
-venv/
+./python_scripts/venv/
+./python_scripts/test.py
+./venv/
 
 
