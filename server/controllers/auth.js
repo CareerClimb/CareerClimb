@@ -1,5 +1,5 @@
 // Import packages
-import bcrypt from 'bcrypt'; // For encryption
+import bcryptjs from 'bcryptjs'; // For encryption
 import jwt from 'jsonwebtoken'; // For authentication
 import User from '../models/User.js'; // User model
 import fs from 'fs';
@@ -18,8 +18,8 @@ export const register = async (req, res) => {
         }
 
         // Generate a salt and hash the password
-        const salt = await bcrypt.genSalt(10); // Ensure a rounds value is provided (default is 10)
-        const hashedPassword = await bcrypt.hash(password, salt); // Ensure password and salt are provided
+        const salt = await bcryptjs.genSalt(10); // Ensure a rounds value is provided (default is 10)
+        const hashedPassword = await bcryptjs.hash(password, salt); // Ensure password and salt are provided
 
         const newUser = new User({
             fullName,
@@ -44,7 +44,7 @@ export const login = async (req, res) => {
             return res.status(404).json({msg: "User not found"});
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);  // Compare the password the user entered with the hashed password in the database
+        const isMatch = await bcryptjs.compare(password, user.password);  // Compare the password the user entered with the hashed password in the database
         if (!isMatch) {
             return res.status(400).json({msg: "Invalid credentials"});
         }

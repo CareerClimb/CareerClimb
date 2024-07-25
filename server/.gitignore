@@ -9,4 +9,3 @@ config.toml
 ./python_scripts/test.py
 ./venv/
 
-
