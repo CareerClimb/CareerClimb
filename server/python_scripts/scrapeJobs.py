@@ -3,7 +3,6 @@ from jobspy import scrape_jobs
 import sys
 import pandas as pd 
 import os
-from pymongo.mongo_client import MongoClient
 
 class JobScraper:
     def dailyScrape(self, search_term, json_file):

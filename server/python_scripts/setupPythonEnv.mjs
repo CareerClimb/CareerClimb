@@ -44,6 +44,7 @@ class PythonEnv {
         let setupCommand;
 
         if (platform === 'darwin' || platform === 'linux') {
+            execSync('chmod +x ./python_scripts/unix.sh');  // Give execute permissions
             setupCommand = `./python_scripts/unix.sh "${jobTitle}"`;
         } else {
             throw new Error('Unsupported OS');

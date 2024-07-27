@@ -9,8 +9,7 @@ if [ ! -d "venv" ]; then
 
   # Install dependencies
   pip install --upgrade pip
-  python -m pip install -U python-jobspy
-  python -m pip install "pymongo[srv]"==4.0
+  pip install -U python-jobspy
 fi
 
 # Activate the virtual environment
