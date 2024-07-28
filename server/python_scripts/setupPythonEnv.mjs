@@ -38,6 +38,18 @@ class PythonEnv {
 
         await this.cleanup();
     }
+    
+    /* Create Indexes on link and JobPostingID 
+       expireAfterSeconds: Automatically deletes a document after specified time
+    */
+    async createIndexes(){
+        console.log("Creating Indexes")
+        await Job.createIndexes([
+            { key: { link: 1}, unique: true},
+            { key: {JobPostingID: 1}, unique: true},
+            { key: { createdAt: 1 }, expireAfterSeconds: 1814000 } // 21 days * 24 hours * 60 minutes * 60 seconds
+        ]);
+    }
 
     async setupAndRunScript(jobTitle) {
         const platform = os.platform();
@@ -96,7 +108,7 @@ class PythonEnv {
 
         try {
             // Insert data into MongoDB using insertMany and await the result
-            const result = await Job.insertMany(jsonData);
+            const result = await Job.insertMany(jsonData, {ordered: false});
             console.log(`${result.length} documents inserted into MongoDB`);
         } catch (error) {
             console.error('Error exporting data to MongoDB:', error);
