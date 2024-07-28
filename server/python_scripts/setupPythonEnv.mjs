@@ -13,6 +13,8 @@ const { Schema, model } = mongoose;
 
 class PythonEnv {
 
+    
+
     // Run the Python script and read the JSON file
     async main() {
         // Connect to mongodb 
@@ -111,8 +113,14 @@ class PythonEnv {
             const result = await Job.insertMany(jsonData, {ordered: false});
             console.log(`${result.length} documents inserted into MongoDB`);
         } catch (error) {
-            console.error('Error exporting data to MongoDB:', error);
-            throw error; // Rethrow the error to be caught in main()
+            if (error.name === 'MongoBulkWriteError') {
+                const duplicateErrors = error.writeErrors.filter(err => err.code === 11000);
+                console.log(`Number of Duplicates Skipped: ${duplicateErrors.length}`);
+                return;
+            } else {
+                console.error('Error exporting data to MongoDB:', error);
+                throw error; // Rethrow the error to be caught in main()
+            }
         } 
     }
 

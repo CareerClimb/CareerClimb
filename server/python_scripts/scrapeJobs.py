@@ -15,7 +15,7 @@ class JobScraper:
                 hours_old=24,
                 linkedin_fetch_description=True 
             )
-            self.cleanseData(jobs, json_file)
+            self.cleanseData(jobs, json_file, search_term)
         except Exception as e:
             print(f"An error occurred while scraping {search_term}: {e}")
         
@@ -28,12 +28,12 @@ class JobScraper:
                 verbose=0,                         # Print errors only
                 linkedin_fetch_description=True 
             )
-            self.cleanseData(jobs, json_file)
+            self.cleanseData(jobs, json_file, search_term)
         except Exception as e:
             print(f"An error occurred while scraping {search_term}: {e}")
 
 
-    def cleanseData(self, jobs, json_file):
+    def cleanseData(self, jobs, json_file, search_term):
 
         # Replace NaN values with Null
         jobs = jobs.where(pd.notnull(jobs), None)
@@ -84,6 +84,7 @@ class JobScraper:
 
                 data = {
                     'title': row['title'],
+                    'searchTerm': search_term,
                     'company': row['company'],
                     'currency': row['currency'],
                     'postedTime': posted_time,              # Convert date to ISO format string                  

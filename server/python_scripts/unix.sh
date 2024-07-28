@@ -15,5 +15,6 @@ fi
 # Activate the virtual environment
 source venv/bin/activate
 
+
 # Run the Python script
 python3 ./python_scripts/scrapeJobs.py "$1"   # "$1" means first cmdline argument to unix script

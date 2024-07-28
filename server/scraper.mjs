@@ -19,7 +19,7 @@ export const handler = async (event) => {
     };
   }
   
-  return response;
+  // return response;
 };
 
 handler()
