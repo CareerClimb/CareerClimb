@@ -39,6 +39,26 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 const buildPath = path.join(__dirname, '..', 'client', 'build');
 app.use(express.static(buildPath));
 
+/* CONTENT SECURITY POLICY CONFIGURATION */
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: [
+        "'self'",
+        "http://careerclimb.net",
+        "http://localhost",
+        "http://localhost:3001",
+        "https://api.brandfetch.io",
+        "https://us1.locationiq.com"
+      ],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:"],
+    },
+  })
+);
+
 /* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/autocomplete", autofillRoutes);
@@ -57,9 +77,6 @@ mongoose
     })
     .then(() => {
         app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-
-        /* ADD DATA ONE TIME */
-        // Job.insertMany(jobs);
     })
     .catch((error) => console.log(`${error} did not connect`));
 
