@@ -67,7 +67,7 @@ class AutofillController {
          // Customize Query/Request Type
         const options = {method: 'GET', headers: {accept: 'application/json'}}; 
     
-        const response = await fetch("http://localhost:3001/autocomplete/jobAutoComplete?prefix="+prefix, options)
+        const response = await fetch("http://careerclimb.net/autocomplete/jobAutoComplete?prefix="+prefix, options)
             .then(response => response.json()) // extract json 
             .then(response => response.array)  // extract array
             .then(response => response.filter(item => item !== null)) // remove null values
