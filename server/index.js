@@ -48,7 +48,7 @@ app.use(
       connectSrc: [
         "'self'",
         "http://careerclimb.net",
-        "http://localhost",
+        "http://localhost:*",
         "http://localhost:3001",
         "https://api.brandfetch.io",
         "https://us1.locationiq.com"
