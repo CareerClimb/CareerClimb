@@ -15,7 +15,7 @@ const PostsWidget = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://careerclimb.net/jobs');
+        const response = await axios.get('/jobs');
         setJobPosts(response.data);
       } catch (error) {
         console.log('Error fetching job posts:', error);

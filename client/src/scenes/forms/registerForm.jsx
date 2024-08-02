@@ -33,7 +33,7 @@ const RegisterForm = () => {
         }
 
         const savedUserResponse = await fetch(
-            "http://careerclimb.net/auth/register",
+            "/auth/register",
             {
                 method: "POST",
                 headers: {
