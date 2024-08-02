@@ -39,19 +39,22 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 const buildPath = path.join(__dirname, '..', 'client', 'build');
 app.use(express.static(buildPath));
 
-/* CONTENT SECURITY POLICY CONFIGURATION */
 app.use(
   helmet.contentSecurityPolicy({
-    useDefaults: true,
     directives: {
-      defaultSrc: ["'self'"],
+      defaultSrc: [
+        "'self'",
+        "https://api.brandfetch.io",
+        "https://us1.locationiq.com",
+        "http://careerclimb.net",
+        "http://www.careerclimb.net"
+      ],
       connectSrc: [
         "'self'",
-        "http://careerclimb.net",
-        "http://localhost:*",
-        "http://localhost:3001",
         "https://api.brandfetch.io",
-        "https://us1.locationiq.com"
+        "https://us1.locationiq.com",
+        "http://careerclimb.net",
+        "http://www.careerclimb.net"
       ],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:"],
