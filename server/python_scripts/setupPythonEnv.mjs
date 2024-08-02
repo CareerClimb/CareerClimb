@@ -13,6 +13,8 @@ const { Schema, model } = mongoose;
 
 class PythonEnv {
 
+    
+
     // Run the Python script and read the JSON file
     async main() {
         // Connect to mongodb 
@@ -37,6 +39,18 @@ class PythonEnv {
         }
 
         await this.cleanup();
+    }
+    
+    /* Create Indexes on link and JobPostingID 
+       expireAfterSeconds: Automatically deletes a document after specified time
+    */
+    async createIndexes(){
+        console.log("Creating Indexes")
+        await Job.createIndexes([
+            { key: { link: 1}, unique: true},
+            { key: {JobPostingID: 1}, unique: true},
+            { key: { createdAt: 1 }, expireAfterSeconds: 1814000 } // 21 days * 24 hours * 60 minutes * 60 seconds
+        ]);
     }
 
     async setupAndRunScript(jobTitle) {
@@ -96,11 +110,17 @@ class PythonEnv {
 
         try {
             // Insert data into MongoDB using insertMany and await the result
-            const result = await Job.insertMany(jsonData);
+            const result = await Job.insertMany(jsonData, {ordered: false});
             console.log(`${result.length} documents inserted into MongoDB`);
         } catch (error) {
-            console.error('Error exporting data to MongoDB:', error);
-            throw error; // Rethrow the error to be caught in main()
+            if (error.name === 'MongoBulkWriteError') {
+                const duplicateErrors = error.writeErrors.filter(err => err.code === 11000);
+                console.log(`Number of Duplicates Skipped: ${duplicateErrors.length}`);
+                return;
+            } else {
+                console.error('Error exporting data to MongoDB:', error);
+                throw error; // Rethrow the error to be caught in main()
+            }
         } 
     }
 

@@ -33,7 +33,7 @@ const RegisterForm = () => {
         }
 
         const savedUserResponse = await fetch(
-            "http://localhost:3001/auth/register",
+            "/auth/register",
             {
                 method: "POST",
                 headers: {

@@ -15,6 +15,11 @@ const JobSchema = new mongoose.Schema(
             min: 2,
             max: 50,
         },
+        searchTerm: {
+            type: String,
+            min: 2,
+            max: 50
+        },
         postedTime: { 
             type: Date,
             required: false,
