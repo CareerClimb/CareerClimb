@@ -15,7 +15,7 @@ const PostsWidget = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('/jobs');
+        const response = await axios.get('/jobs', { timeout: 90000}); // 100s timeout
         setJobPosts(response.data);
       } catch (error) {
         console.log('Error fetching job posts:', error);
