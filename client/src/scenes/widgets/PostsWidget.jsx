@@ -85,8 +85,8 @@ const PostsWidget = () => {
         padding: '20px',
         backgroundColor: 'background.paper'
         }}
-    >
-      {currentPosts.map((job, index) => (
+          >
+            {currentPosts.map((job, index) => (
         <Box
           key={index}
           sx={{ cursor: 'pointer', marginBottom: '20px' }}
@@ -96,13 +96,13 @@ const PostsWidget = () => {
             title={job.title}
             postedTime={getTimeSincePosted(job.postedTime)}
             company={job.company}
-            location={`${job.country}, ${job.city}`}
+            location={job.city && job.country ? `${job.city}, ${job.country}` : job.city || job.country}
             salary={job.salary}
             description={job.description}
           />
         </Box>
-      ))}
-      {/* Pagination buttons */}
+            ))}
+            {/* Pagination buttons */}
       <Box sx={{ display: 'flex', 
                  justifyContent: 'center', 
                  marginTop: '20px',
