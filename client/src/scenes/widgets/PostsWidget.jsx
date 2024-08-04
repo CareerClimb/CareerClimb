@@ -15,8 +15,10 @@ const PostsWidget = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('/jobs', { timeout: 90000}); // 100s timeout
-        setJobPosts(response.data);
+        const response = await axios.get('http://localhost:3001/jobs', { timeout: 90000}); // 100s timeout
+        const sortedJobs = response.data.sort((a, b) => new Date(b.postedTime) - new Date(a.postedTime));
+        setJobPosts(sortedJobs);
+        // setJobPosts(response.data);
       } catch (error) {
         console.log('Error fetching job posts:', error);
       }
@@ -51,8 +53,12 @@ const PostsWidget = () => {
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
     const months = Math.floor(days / 30);
+    const years = Math.floor(months / 12);
 
-    if (months > 0) {
+
+    if (years > 0) {
+      return `${years} year${years > 1 ? 's' : ''} ago`;
+    } else if (months > 0) {
       return `${months} month${months > 1 ? 's' : ''} ago`;
     } else if (days > 0) {
       return `${days} day${days > 1 ? 's' : ''} ago`;
@@ -81,8 +87,8 @@ const PostsWidget = () => {
         padding: '20px',
         backgroundColor: 'background.paper'
         }}
-    >
-      {currentPosts.map((job, index) => (
+          >
+            {currentPosts.map((job, index) => (
         <Box
           key={index}
           sx={{ cursor: 'pointer', marginBottom: '20px' }}
@@ -92,13 +98,13 @@ const PostsWidget = () => {
             title={job.title}
             postedTime={getTimeSincePosted(job.postedTime)}
             company={job.company}
-            location={`${job.country}, ${job.city}`}
+            location={job.city && job.country ? `${job.city}, ${job.country}` : job.city || job.country}
             salary={job.salary}
             description={job.description}
           />
         </Box>
-      ))}
-      {/* Pagination buttons */}
+            ))}
+            {/* Pagination buttons */}
       <Box sx={{ display: 'flex', 
                  justifyContent: 'center', 
                  marginTop: '20px',
