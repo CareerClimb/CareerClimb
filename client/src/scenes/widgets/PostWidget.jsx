@@ -4,7 +4,18 @@ import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 const PostWidget = ({ title, postedTime, company, location, salary, description }) => {
   const theme = useTheme();
   const isNonMobile = useMediaQuery('(min-width:600px)');
-  
+
+  // Function to truncate the description to 100 words
+  const truncateDescription = (text, wordLimit) => {
+    const words = text.split(' ');
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...';
+    }
+    return text;
+  };
+
+  const truncatedDescription = truncateDescription(description, 100);
+
   return (
     <Box
       sx={{
@@ -54,7 +65,7 @@ const PostWidget = ({ title, postedTime, company, location, salary, description 
         </Typography>
       </Box>
       <Typography variant="body2" component="div" sx={{ padding: '0 10px' }}>
-        {description.slice(0, 250)}
+        {truncatedDescription}
       </Typography>
     </Box>
   );
