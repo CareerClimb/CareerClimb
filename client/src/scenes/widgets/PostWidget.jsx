@@ -54,7 +54,7 @@ const PostWidget = ({ title, postedTime, company, location, salary, description 
         </Typography>
       </Box>
       <Typography variant="body2" component="div" sx={{ padding: '0 10px' }}>
-        {description}
+        {description.slice(0, 250)}
       </Typography>
     </Box>
   );
