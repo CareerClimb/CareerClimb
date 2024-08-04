@@ -23,7 +23,7 @@ const JobDescription = ({ open, handleClose, job }) => {
                     Company: {job.company}
                 </Typography>
                 <Typography variant="body1" gutterBottom sx={{ textAlign: 'center', marginBottom: '16px' }}>
-                    Location: {job.location} 
+                    Location: {job.city && job.country ? `${job.city}, ${job.country}` : job.city || job.country} 
                 </Typography>
                 <Typography variant="body1" gutterBottom sx={{ textAlign: 'justify' }}>
                     Description: {job.description}
