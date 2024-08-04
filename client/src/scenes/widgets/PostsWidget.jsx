@@ -15,7 +15,7 @@ const PostsWidget = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/jobs', { timeout: 90000}); // 100s timeout
+        const response = await axios.get('/jobs', { timeout: 90000}); // 100s timeout
         const sortedJobs = response.data.sort((a, b) => new Date(b.postedTime) - new Date(a.postedTime));
         setJobPosts(sortedJobs);
         // setJobPosts(response.data);
