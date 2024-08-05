@@ -12,10 +12,13 @@ const PostsWidget = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
 
+  // read env variables
+  const env = process.env.REACT_APP_ENV || '';
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('/jobs', { timeout: 90000}); // 100s timeout
+        const response = await axios.get(env+"/jobs", { timeout: 90000}); // 100s timeout. Fixes a bug where cloudflare terminates api calls after 100s.
         const sortedJobs = response.data.sort((a, b) => new Date(b.postedTime) - new Date(a.postedTime));
         setJobPosts(sortedJobs);
         // setJobPosts(response.data);
@@ -30,6 +33,7 @@ const PostsWidget = () => {
   const handleJobClick = (job) => {
     setSelectedJob(job);
     setOpenModal(true);
+    console.log('clicked')
   };
 
   const handleCloseModal = () => {

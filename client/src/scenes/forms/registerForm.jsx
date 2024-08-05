@@ -3,6 +3,9 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 
+// read env variables
+const env = process.env.REACT_APP_ENV || '';
+
 // Define the register schema
 const registerSchema = yup.object().shape({
     fullName: yup.string().required("Full name is required"),
@@ -26,6 +29,9 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const isNonMobile = useMediaQuery("(min-width:600px)");
 
+    // read env variables
+    const env = process.env.REACT_APP_ENV || '';
+
     const register = async (values, onSubmitProps) => {
         const formData = new FormData();
         for (let value in values) {
@@ -33,7 +39,7 @@ const RegisterForm = () => {
         }
 
         const savedUserResponse = await fetch(
-            "/auth/register",
+            "env"+"/auth/register",
             {
                 method: "POST",
                 headers: {
@@ -58,7 +64,7 @@ const RegisterForm = () => {
         
 
         if (savedUser) {
-            navigate("/login");
+            navigate("env"+"/login");
         }
     };
 

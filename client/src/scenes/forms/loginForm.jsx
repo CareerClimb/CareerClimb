@@ -24,8 +24,11 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const isNonMobile = useMediaQuery("(min-width:600px)");
 
+    // read env variables
+    const env = process.env.REACT_APP_ENV || '';
+
     const login = async (values, onSubmitProps) => {
-        const loggedInResponse = await fetch("/auth/login", {
+        const loggedInResponse = await fetch(env+"/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values),

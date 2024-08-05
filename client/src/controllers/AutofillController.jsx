@@ -6,6 +6,7 @@ class AutofillController {
 
     /*  Class attributes   */
     LIMIT = '5';
+    env = process.env.REACT_APP_ENV || ''; // environment variable
 
     /*   Class Methods    */
     isValidInput(inputStr) {
@@ -67,7 +68,7 @@ class AutofillController {
          // Customize Query/Request Type
         const options = {method: 'GET', headers: {accept: 'application/json'}}; 
     
-        const response = await fetch("/autocomplete/jobAutoComplete?prefix="+prefix, options)
+        const response = await fetch(this.env+"/autocomplete/jobAutoComplete?prefix="+prefix, options)
             .then(response => response.json()) // extract json 
             .then(response => response.array)  // extract array
             .then(response => response.filter(item => item !== null)) // remove null values
