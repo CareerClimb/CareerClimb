@@ -35,37 +35,14 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-/* STATIC BUILD PATH */
-const buildPath = path.join(__dirname, '..', 'client', 'build');
-app.use(express.static(buildPath));
-
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: [
-        "'self'",
-        "https://api.brandfetch.io",
-        "https://us1.locationiq.com",
-        "http://careerclimb.net",
-        "http://www.careerclimb.net"
-      ],
-      connectSrc: [
-        "'self'",
-        "https://api.brandfetch.io",
-        "https://us1.locationiq.com",
-        "http://careerclimb.net",
-        "http://www.careerclimb.net"
-      ],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:"],
-    },
-  })
-);
-
 /* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/autocomplete", autofillRoutes);
 app.use('/jobs', jobRoutes);
+
+/* STATIC BUILD PATH */
+const buildPath = path.join(__dirname, '..', 'client', 'build');
+app.use(express.static(buildPath));
 
 /* HANDLE STATIC BUILD */
 app.get('/*', (req, res) => {

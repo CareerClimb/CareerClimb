@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogTitle, Button, Typography, Box, useTheme } from '@mui/material';
+import ReactMarkdown from 'react-markdown';
 
 const JobDescription = ({ open, handleClose, job }) => {
     const { palette } = useTheme();
@@ -10,11 +11,12 @@ const JobDescription = ({ open, handleClose, job }) => {
     }
 
     const handleApplyNow = () => {
+        console.log("User clicked: Apply now")
         window.open(job.link, '_blank'); // Open apply link in a new tab
     };
 
     return (
-        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: '50px' } }}>
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md" PaperProps={{ sx: { borderRadius: '50px' } }}>
             <DialogTitle variant='h3' sx={{ textAlign: 'center', paddingBottom: '0' }}>
                 {job.title}
             </DialogTitle>
@@ -25,9 +27,9 @@ const JobDescription = ({ open, handleClose, job }) => {
                 <Typography variant="body1" gutterBottom sx={{ textAlign: 'center', marginBottom: '16px' }}>
                     Location: {job.city && job.country ? `${job.city}, ${job.country}` : job.city || job.country} 
                 </Typography>
-                <Typography variant="body1" gutterBottom sx={{ textAlign: 'justify' }}>
-                    Description: {job.description}
-                </Typography>
+                <ReactMarkdown>
+                    {job.description}
+                </ReactMarkdown>
                 <Box mt={4} display="flex" justifyContent="center">
                     <Button
                         variant="contained"
