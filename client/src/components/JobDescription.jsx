@@ -16,7 +16,7 @@ const JobDescription = ({ open, handleClose, job }) => {
     };
 
     return (
-        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: '50px' } }}>
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md" PaperProps={{ sx: { borderRadius: '50px' } }}>
             <DialogTitle variant='h3' sx={{ textAlign: 'center', paddingBottom: '0' }}>
                 {job.title}
             </DialogTitle>
