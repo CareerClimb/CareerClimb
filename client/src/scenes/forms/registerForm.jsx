@@ -39,7 +39,7 @@ const RegisterForm = () => {
         }
 
         const savedUserResponse = await fetch(
-            "env"+"/auth/register",
+            env+"/auth/register",
             {
                 method: "POST",
                 headers: {
@@ -64,7 +64,7 @@ const RegisterForm = () => {
         
 
         if (savedUser) {
-            navigate("env"+"/login");
+            navigate(env+"/login");
         }
     };
 
