@@ -33,7 +33,6 @@ const PostsWidget = () => {
   const handleJobClick = (job) => {
     setSelectedJob(job);
     setOpenModal(true);
-    console.log('clicked')
   };
 
   const handleCloseModal = () => {

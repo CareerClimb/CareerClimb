@@ -36,6 +36,8 @@ const CompanyFilter = ({filters, handleFilterChange}) => {
 
         // Update state with new filters object
         handleFilterChange(newFilters);
+
+        console.log("Filters updated")
     }
 
 
