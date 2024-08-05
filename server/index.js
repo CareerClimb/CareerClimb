@@ -40,6 +40,15 @@ app.use("/auth", authRoutes);
 app.use("/autocomplete", autofillRoutes);
 app.use('/jobs', jobRoutes);
 
+/* STATIC BUILD PATH */
+const buildPath = path.join(__dirname, '..', 'client', 'build');
+app.use(express.static(buildPath));
+
+/* HANDLE STATIC BUILD */
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
+});
+
 /* MONGOOSE SETUP */
 mongoose
     .connect(MONGO_URL, {
