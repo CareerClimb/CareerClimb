@@ -15,9 +15,11 @@ const LocationFilter = ({filters, handleFilterChange}) => {
     const [options, setOptions] = useState([]);       // Store autofill options
     const [inputValue, setInputValue] = useState(''); // Store user Input
 
-
+    /*
+        Called when you want to clear the Location Searchbar
+    */
     const clearUI = () => {
-        // Delay to let other asynchronous functions / renderings finish. Fixes a bug where searchbar doesn't clear.
+        // Delay rendering to let other asynchronous functions / renderings finish. Fixes a bug where TextField doesn't clear.
         setTimeout(() => {
             // Clear UI
             setInputValue('');  // Clear SearchBar
@@ -25,6 +27,9 @@ const LocationFilter = ({filters, handleFilterChange}) => {
         }, 15); // ms delay
     }
 
+    /* 
+        Called when location Textfield changes. 
+    */
     const onChangeLocation = async (prefix) => {
         // Save TextField value
         setInputValue(prefix);
@@ -38,23 +43,22 @@ const LocationFilter = ({filters, handleFilterChange}) => {
             console.error(err);
             setOptions([]);
         }
-
     };
 
+    /*
+       Called when the user selects an autofill option
+    */
     const onOptionsClick = (value) => {
-        // Function called when user selects an autofill option or clicks enter
         // Validate Input
-        if (!value) {
-            return;
-        }
+        if (!value) {return;}
         
         // Create a new array of locations
         const newLocations = [...filters.locations, value] // append value 
 
-        // Overwrite locations attribute
+        // Overwrite the locations attribute in Filters state
         const newFilters = {...filters, locations: newLocations}; 
 
-        // Update Filter State
+        // Update Filters State
         handleFilterChange(newFilters);
         
         // Clear SearchBar / Autofill options
@@ -70,11 +74,11 @@ const LocationFilter = ({filters, handleFilterChange}) => {
             }}
         >
             <HeaderTemplate Icon={LocationIconSvg} title={'Location'}/> 
-            <Autocomplete // Wrapper to display autofill options
+            <Autocomplete // A wrapper around TextField to display autofill options
                 freeSolo  // Allow any input value 
                 inputValue = {inputValue} // Value displayed in TextField
                 onInputChange={(e, prefix) => onChangeLocation(prefix)} // user edits textfield input
-                onChange={(e, prefix) => onOptionsClick(prefix)}  // user pressed enter or selected autofill option
+                onChange={(e, prefix) => onOptionsClick(prefix)}  // user selected an autofill option
                 options = {options}
                 fullWidth
                 renderInput={(params) => (

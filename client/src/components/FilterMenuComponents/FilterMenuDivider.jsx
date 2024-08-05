@@ -1,7 +1,12 @@
 import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 
-
+/*
+    Draws a line dividing two sections of a menu:
+              Section 1
+       ------------------------
+              Section 2
+*/
 const FilterMenuDivider = () => {
     const theme = useTheme();
     const { palette } = useTheme();

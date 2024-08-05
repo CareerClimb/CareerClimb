@@ -5,6 +5,10 @@ import { ReactComponent as PlusButtonSVG } from '../../assets/plusbutton.svg'
 const FilterMenu = ( {Icon , title}) => {
     /* 
         Creates a header for the filter types.
+        For Example: 
+        
+                <Icon> Experience: 
+
         Input: Icon (ReactComponent) : is an optional SVG image, 
                title (String) : is a mandatory description of the filter type.
         Returns: a header for the filters.  
@@ -32,6 +36,7 @@ const FilterMenu = ( {Icon , title}) => {
             >
                 {/* // Conditionally Render Icon */}
                 {isIcon && <Icon style={{ width: '18px', height: '18px', fill: palette.text.primary, marginRight: '8px'}} > </Icon> }
+                {/* // Always Render Filter Title */}
                 <Typography variant="h7" sx={{ marginTop: '1px', fontWeight: 'bold'}}>
                         {title}
                 </Typography>

@@ -36,7 +36,7 @@ class AutofillController {
         const options = {method: 'GET', headers: {accept: 'application/json'}};  
 
         // API call for autofill candidates. 
-        const response = await fetch('https://us1.locationiq.com/v1/autocomplete?q='+String(prefix)+'&tag=place%3Acity%2C%20place%3Atown%2C%20place%3A%20country%2C%20place%3A%20province%2C%20place%3A%20state%2C%20place%3A%20region&limit='+this.LIMIT+'&accept-language=en&key='+locationKey, options)
+        const response = await fetch('https://us1.locationiq.com/v1/autocomplete?q='+String(prefix)+'&tag=place%3Acity%2C%20place%3Atown%2C%20place%3A%20country%2C%20place%3A%20province%2C%20place%3A%20state%2C%20place%3A%20region&limit='+this.LIMIT+'&accept-language=en&key='+locationKey, options, { cache: "no-cache" })
             .then(response => response.json())
             .then(response => response.map(doc => doc.display_place)) // extract location name
             .then(response => response.filter(item => item !== null)) // remove null values
@@ -104,7 +104,7 @@ class AutofillController {
             }
           };
           
-        const response = await fetch("https://api.brandfetch.io/v2/search/"+prefix, options)
+        const response = await fetch("https://api.brandfetch.io/v2/search/"+prefix, options, { cache: "no-cache" })
             .then(response => response.json()) // extract json 
             .then(response => response.map(doc => doc.name)) // convert to array
             .then(response => response.filter(item => item !== null)) // remove null values

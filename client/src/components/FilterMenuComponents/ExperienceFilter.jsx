@@ -23,9 +23,9 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
     }
 
     const handleChange = (event) => {
-        // save selection 
+        // save experience selection state
         setSelectedValue(event.target.value);
-        // save filter
+        // save filter state
         filters.experience = event.target.value;
         handleFilterChange(filters);
     };
@@ -39,32 +39,32 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
             }}
         >
             <HeaderTemplate title={'Experience'}/>   
-            <FormControl size="small"             
-                sx = {{
-                    ml: 2,
-                    mb: 1,
-                    mr: 2,
-                    width: '100%'
-                }} 
-            >
-                <Select
-                    labelId="ExperienceList"
-                    id="List"
-                    defaultValue = {filters.experience}
-                    value = {selectedValue}
-                    onChange={handleChange}
-                    MenuProps={{ disableScrollLock: true}}
-                    sx = {{ textAlign: 'left'}} 
-                    renderValue={() => selectedValue} // Renders only what's saved in the state
+                <FormControl size="small"             
+                    sx = {{
+                        ml: 2,
+                        mb: 1,
+                        mr: 2,
+                        width: '100%'
+                    }} 
                 >
-                    {values.map((value) => (  // Maps a list of salary values to menu items
-                        <MenuItem key={value} value={value} sx={{ display: 'flex', justifyContent: 'space-between'}} >
-                                <Box component="span">{value}</Box>
-                                <Box component="span">{valuesMap[value]}</Box>
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+                    <Select
+                        labelId="ExperienceList"
+                        id="List"
+                        defaultValue = {filters.experience}
+                        value = {selectedValue}
+                        onChange={handleChange}
+                        MenuProps={{ disableScrollLock: true}}
+                        sx = {{ textAlign: 'left'}} 
+                        renderValue={() => selectedValue} // Renders only what's saved in the state
+                    >
+                        {values.map((value) => (  // Maps a list of salary values to menu items
+                            <MenuItem key={value} value={value} sx={{ display: 'flex', justifyContent: 'space-between'}} >
+                                    <Box component="span">{value}</Box>
+                                    <Box component="span">{valuesMap[value]}</Box>
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
             <FilterMenuDivider/>
         </Box>
     );

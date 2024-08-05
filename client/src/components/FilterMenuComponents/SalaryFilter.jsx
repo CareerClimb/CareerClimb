@@ -8,21 +8,25 @@ const SalaryFilter = ({filters, handleFilterChange}) => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    
+    // Salary Filter Options
     const startValue = 50000;
     const endValue = 200000;
     const increment = 20000;
     const values = [0]
+    // Populate values for salary dropdown list
+    for (let value = startValue; value <= endValue; value += increment) {
+        values.push(value);
+    }
 
+    /* 
+        Called when user selects a salary option 
+    */
     const handleChange = (event) => {
         // save filter
         filters.salary = event.target.value;
         handleFilterChange(filters);
     };
-    
-    // populate values for salary dropdown list
-    for (let value = startValue; value <= endValue; value += increment) {
-        values.push(value);
-    }
 
     return (
         <Box

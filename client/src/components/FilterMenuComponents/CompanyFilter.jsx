@@ -50,7 +50,7 @@ const CompanyFilter = ({filters, handleFilterChange}) => {
             <HeaderTemplate title={'Company'}/>  
             <Autocomplete // Wrapper to display autofill options
                 freeSolo  // Allow any input value (not restricted to autofill values)
-                onInputChange={(e, prefix) => onChangeCompany(prefix)}
+                onInputChange={(e, prefix) => onChangeCompany(prefix)}  // Display Autofill Options, or process user selection.
                 filterOptions={(x) => x} // disable filtering by this MUI 
                 options = {options}
                 inputValue = {filters.company}
