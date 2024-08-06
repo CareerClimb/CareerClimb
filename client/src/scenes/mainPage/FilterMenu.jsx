@@ -26,18 +26,32 @@ const FilterMenu = ({filters, handleFilterChange}) => {
     return (
         <Box 
             sx={{
+                // display: 'flex',
+                // position: 'absolute',
+                // flexDirection: 'column',
+                // borderRadius: '10px',
+                // pb: '10px',
+                // width: '320px',
+                // zIndex: 5,
+                // mt: '95px', // Add margin top to avoid overlap with TopBar
+                // left : '5%',
+                
+                // // display effects only when filter is toggled on 
+                // boxShadow: checked ? '0 8px 16px rgba(0, 0, 0, 0.1)' : 'none',    
+                // background: checked ? theme.palette.background.default : 'transparent',
+                // border: checked ? `1px solid ${theme.palette.divider}` : 'none',
+
                 display: 'flex',
                 position: 'absolute',
                 flexDirection: 'column',
                 borderRadius: '10px',
                 pb: '10px',
-                width: '320px',
+                width: isMobile ? '100%' : '320px', // Full width on mobile
                 zIndex: 5,
-                mt: '95px', // Add margin top to avoid overlap with TopBar
-                left : '5%',
-                
-                // display effects only when filter is toggled on 
-                boxShadow: checked ? '0 8px 16px rgba(0, 0, 0, 0.1)' : 'none',    
+                mt: isMobile ? '85px' : '95px', // Adjust margin top on mobile
+                left: isMobile ? 0 : '5%', // Adjust position on mobile
+                top: isMobile ? '0' : 'auto',
+                boxShadow: checked ? '0 8px 16px rgba(0, 0, 0, 0.1)' : 'none',
                 background: checked ? theme.palette.background.default : 'transparent',
                 border: checked ? `1px solid ${theme.palette.divider}` : 'none',
             }}  
