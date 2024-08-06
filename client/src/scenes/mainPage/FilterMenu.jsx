@@ -26,21 +26,6 @@ const FilterMenu = ({filters, handleFilterChange}) => {
     return (
         <Box 
             sx={{
-                // display: 'flex',
-                // position: 'absolute',
-                // flexDirection: 'column',
-                // borderRadius: '10px',
-                // pb: '10px',
-                // width: '320px',
-                // zIndex: 5,
-                // mt: '95px', // Add margin top to avoid overlap with TopBar
-                // left : '5%',
-                
-                // // display effects only when filter is toggled on 
-                // boxShadow: checked ? '0 8px 16px rgba(0, 0, 0, 0.1)' : 'none',    
-                // background: checked ? theme.palette.background.default : 'transparent',
-                // border: checked ? `1px solid ${theme.palette.divider}` : 'none',
-
                 display: 'flex',
                 position: 'absolute',
                 flexDirection: 'column',
