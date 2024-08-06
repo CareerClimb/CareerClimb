@@ -35,17 +35,17 @@ const LandingPage = () => {
             justifyContent: 'center',
             alignItems: 'center',
             flex: 1,
-            padding: isMobile ? 2 : 4,
+            paddingTop: isMobile ? 12 : 4,
             position: 'relative', // Position relative for the pseudo-element
             '&::after': {
               content: '""',
               position: isMobile? 'center' : 'absolute',   
-              marginTop: isMobile ? '25px' : 0, 
+              marginTop: isMobile ? '2rem' : 0, 
               right: isMobile ? 'auto' : 0, 
               bottom: isMobile ? 0 : '200px',
-              top: isMobile ? '20px' : 0, 
+              top: isMobile ? '10px' : 0, 
               width: isMobile ? '90%' : '1px', 
-              height: isMobile ? '1px' : null, // Horizontal line on mobile, vertical line on larger screens
+              height: isMobile ? '1px' : null,
               backgroundColor: '#ccc', 
           },
           }}
@@ -63,7 +63,7 @@ const LandingPage = () => {
             marginBottom: isMobile ? '100px' : '0px', // Add margin bottom if mobile
           }}
         >
-          <Typography variant="h1" fontSize='62px' fontWeight='bold' marginBottom="3px">
+          <Typography variant="h1" fontSize={isMobile ? '50px' : '62px'} fontWeight='bold' marginBottom="3px">
             CareerClimb.
           </Typography>
           <Typography variant="h4" marginBottom='1.5rem' fontFamily="Roboto" color={palette.neutral.medium}>

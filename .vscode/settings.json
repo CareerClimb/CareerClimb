@@ -1,0 +1,8 @@
+{
+    
+    "editor.quickSuggestions": true,
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.suggestSelection": "first",
+    "editor.suggest.snippetsPreventQuickSuggestions": false
+
+}
