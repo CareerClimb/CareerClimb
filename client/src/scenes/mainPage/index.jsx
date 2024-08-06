@@ -28,7 +28,8 @@ const MainPage = ({filters, handleFilterChange}) => {
                     flexDirection: 'row',
                     justifyContent: 'center',
                     minHeight: '100vh',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    mt: isMobile ? '30px' : 0, 
                 }}
             >
                 <FilterMenu filters={filters} handleFilterChange={handleFilterChange}/>

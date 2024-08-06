@@ -25,9 +25,10 @@ const initialValuesRegister = {
 
 // Define the RegisterForm component
 const RegisterForm = () => {
+    const theme = useTheme();
     const { palette } = useTheme();
     const navigate = useNavigate();
-    const isNonMobile = useMediaQuery("(min-width:600px)");
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     // read env variables
     const env = process.env.REACT_APP_ENV || '';
@@ -89,7 +90,7 @@ const RegisterForm = () => {
             }) => (
                 <form onSubmit={handleSubmit}>
                     <Box textAlign="center">
-                        <Typography variant="h1" fontSize='62px' fontWeight='bold' marginBottom="3px">
+                        <Typography variant="h1" fontSize={isMobile ? '50px' : '62px'} fontWeight='bold' marginBottom="3px">
                             Register
                         </Typography>
                         <Typography variant="h4" marginBottom='1.5rem' fontFamily="Roboto" color={palette.neutral.medium}>
@@ -100,7 +101,7 @@ const RegisterForm = () => {
                         display="grid"
                         gap="20px"
                         sx={{
-                            width: isNonMobile ? "500px" : "100%",
+                            width: isMobile ? "100%" : "500px",
                         }}
                     >
                         <TextField
