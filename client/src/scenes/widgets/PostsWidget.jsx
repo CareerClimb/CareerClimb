@@ -102,7 +102,7 @@ const PostsWidget = () => {
             postedTime={getTimeSincePosted(job.postedTime)}
             company={job.company}
             location={job.city && job.country ? `${job.city}, ${job.country}` : job.city || job.country}
-            salary={job.salary}
+            salary={job.minSalary && job.maxSalary && job.minSalary !== '0' && job.maxSalary !== '0' ? `${job.minSalary} - ${job.maxSalary}` : job.minSalary || job.maxSalary || "Unavailable"} 
             description={job.description}
           />
         </Box>
