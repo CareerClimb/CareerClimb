@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, MenuItem, Typography, Paper, IconButton } from "@mui/material";
+import { Box, TextField, Button, MenuItem, Typography, Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -21,6 +21,7 @@ const ApplicationPage = () => {
     jobLink: "",
     notes: "",
   });
+
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleChange = (e) => {
@@ -118,8 +119,25 @@ const ApplicationPage = () => {
         </form>
       </Paper>
 
-      <Paper elevation={3} sx={{ height: 400, p: 2 }}>
-        <Box display="flex" justifyContent="flex-end" mb={2}>
+      <Paper elevation={3} sx={{ height: 475, p: 2 }}>
+        <div style={{height: 370}}>
+          <DataGrid
+            rows={applications}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            disableSelectionOnClick
+            onSelectionChange={(newSelectionModel) => {
+                setSelectedRows(newSelectionModel);
+                alert(`Selected Rows: ${selectedRows.length}`);
+              }}
+            // onSelectionModelChange={(newSelectionModel) => {
+            //   setSelectedRows(newSelectionModel);
+            // }}
+          />
+        </div>
+        <Box display="flex" justifyContent="flex-start" mt={4} mb={0}>
           <Button
             variant="contained"
             color="secondary"
@@ -130,17 +148,6 @@ const ApplicationPage = () => {
             Delete Selected
           </Button>
         </Box>
-        <DataGrid
-          rows={applications}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          disableSelectionOnClick
-          onSelectionModelChange={(newSelection) => {
-            setSelectedRows(newSelection);
-          }}
-        />
       </Paper>
     </Box>
   );
