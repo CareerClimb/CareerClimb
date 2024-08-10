@@ -37,16 +37,13 @@ const ApplicationTracker = () => {
     });
   };
 
-  const columns = [
+const columns = [
     { field: "companyName", headerName: "Company Name", flex: 1 },
-    { field: "dateApplied", headerName: "Date Applied", type: "date", flex: 1 },
-    { field: "status", headerName: "Status", flex: 1 },
-    { field: "jobLink", headerName: "Job Posting", flex: 1, renderCell: (params) => (
-        <a href={params.value} target="_blank" rel="noopener noreferrer">Link</a>
-      ),
-    },
-    { field: "notes", headerName: "Notes", flex: 2 },
-  ];
+    { field: 'dateApplied', headerName: 'Date Applied', width: 150 },
+    { field: 'status', headerName: 'Status', width: 150 },
+    { field: 'jobLink', headerName: 'Job Link', width: 250 },
+    { field: 'notes', headerName: 'Notes', width: 200 },
+];
 
   return (
     <Box p={4} display="flex" flexDirection="column" gap={4}>
