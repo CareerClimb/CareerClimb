@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, MenuItem, Typography, Paper } from "@mui/material";
+import { Box, TextField, Button, MenuItem, Typography, Paper, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const statuses = [
   "Submitted",
@@ -11,7 +12,7 @@ const statuses = [
   "Offer",
 ];
 
-const ApplicationTracker = () => {
+const ApplicationPage = () => {
   const [applications, setApplications] = useState([]);
   const [form, setForm] = useState({
     companyName: "",
@@ -20,6 +21,7 @@ const ApplicationTracker = () => {
     jobLink: "",
     notes: "",
   });
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -37,18 +39,24 @@ const ApplicationTracker = () => {
     });
   };
 
-const columns = [
-    { field: "companyName", headerName: "Company Name", flex: 1 },
+  const handleDelete = () => {
+    const updatedApplications = applications.filter((application) => !selectedRows.includes(application.id));
+    setApplications(updatedApplications);
+    setSelectedRows([]);
+  };
+
+  const columns = [
+    { field: "companyName", headerName: "Company Name", width: 300 },
     { field: 'dateApplied', headerName: 'Date Applied', width: 150 },
     { field: 'status', headerName: 'Status', width: 150 },
     { field: 'jobLink', headerName: 'Job Link', width: 250 },
-    { field: 'notes', headerName: 'Notes', width: 200 },
-];
+    { field: 'notes', headerName: 'Notes', flex: 1 },
+  ];
 
   return (
     <Box p={4} display="flex" flexDirection="column" gap={4}>
       <Typography variant="h4" align="center" gutterBottom>
-        Application Tracker
+        Application Page
       </Typography>
 
       <Paper elevation={3} sx={{ p: 3 }}>
@@ -110,7 +118,18 @@ const columns = [
         </form>
       </Paper>
 
-      <Paper elevation={3} sx={{ height: 400 }}>
+      <Paper elevation={3} sx={{ height: 400, p: 2 }}>
+        <Box display="flex" justifyContent="flex-end" mb={2}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleDelete}
+            disabled={selectedRows.length === 0}
+            startIcon={<DeleteIcon />}
+          >
+            Delete Selected
+          </Button>
+        </Box>
         <DataGrid
           rows={applications}
           columns={columns}
@@ -118,10 +137,13 @@ const columns = [
           rowsPerPageOptions={[5]}
           checkboxSelection
           disableSelectionOnClick
+          onSelectionModelChange={(newSelection) => {
+            setSelectedRows(newSelection);
+          }}
         />
       </Paper>
     </Box>
   );
 };
 
-export default ApplicationTracker;
+export default ApplicationPage;

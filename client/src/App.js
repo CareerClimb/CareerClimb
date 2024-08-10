@@ -10,7 +10,7 @@ import LandingPage from "scenes/landingPage";
 import MainPage from "scenes/mainPage";
 import LoginPage from "scenes/loginPage";
 import RegisterPage from "scenes/registerPage";
-import ApplicationTracker from './scenes/applicationsPage'; 
+import ApplicationPage from './scenes/applicationsPage'; 
 import FilterModel from './models/FilterModel';
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
           <Route path="/home" element={<MainPage filters={filters} handleFilterChange={handleFilterChange} />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/applications" element={<ApplicationTracker />} />
+          <Route path="/applications" element={<ApplicationPage />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
