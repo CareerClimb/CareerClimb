@@ -32,7 +32,7 @@ class JobScraper:
             
 
     def scrape(self, search_term, json_file):
-        # Only scrapes jobs posted in the last 24 hours
+        # Without time restrictions
         jobData = []
         countries = ["Canada"]
         for country in countries:
@@ -137,6 +137,6 @@ if __name__ == '__main__':
 
     print(f"Scraping jobs for '{search_term}'...")
     scraper = JobScraper()
-    scraper.scrape(search_term, json_file)
+    scraper.dailyScrape(search_term, json_file)
 
 
