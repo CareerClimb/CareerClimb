@@ -25,7 +25,6 @@ const PostsWidget = ({filters, handleFilterChange}) => {
           timeout: 90000 // ~100s timeout. Fixes a bug where cloudflare terminates api calls after 100s.
         }); 
         const sortedJobs = response.data.sort((a, b) => new Date(b.postedTime) - new Date(a.postedTime));
-        console.log(sortedJobs)
         setJobPosts(sortedJobs);
         // setJobPosts(response.data);
       } catch (error) {

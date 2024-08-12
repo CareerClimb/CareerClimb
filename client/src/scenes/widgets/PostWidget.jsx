@@ -7,6 +7,8 @@ const PostWidget = ({ title, postedTime, company, location, salary, description 
 
   // Function to truncate the description to 100 words
   const truncateDescription = (text, wordLimit) => {
+    if (!text) { return text } // Fix bug if text is null
+    
     const words = text.split(' ');
     if (words.length > wordLimit) {
       return words.slice(0, wordLimit).join(' ') + '...';
