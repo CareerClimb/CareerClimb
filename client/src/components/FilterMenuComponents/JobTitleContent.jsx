@@ -28,7 +28,7 @@ const JobTitleContent = ({filters, handleFilterChange}) => {
                 width: '280px',                
                 ml: 2,
                 mb: 1, // add margin if non-empty
-                mt: 2,
+                mt: 1,
                 gap: 1,
             }}  
         >

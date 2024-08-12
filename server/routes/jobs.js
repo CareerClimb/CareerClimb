@@ -6,14 +6,14 @@ const router = express.Router();
 
 // GET all job postings
 // Filter by user filters (FilterModel) sent from Client
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   // convert FilterModel class to mongodb filters
-  query = getFilters(req) || {}; 
+  const query = getFilters(req.body.filters) || {}; 
   try {
     const jobs = await Job.find(query) // apply user filters
         .sort({createdAt: -1})         // sort by latest
         .limit(150);                   // limit documents
-    res.status(200).json(jobs);
+    res.status(200).json(jobs); // Return filtered jobs
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -22,40 +22,46 @@ router.get('/', async (req, res) => {
 export default router;
 
 
-function getFilters(req) {
+function getFilters(filters) {
   /* 
     Converts our FilterModel class from client
     into mongodb usable filters.
   */
 
   // Extract FilterModel from Client.
-  const filters = req.body;
-  const query = {};  // Instantiate query class.
+  let query = {};  // Instantiate query class.
 
   // Create filter for Company:
-  if (filters.company) { query.company = filters.company }
+  if (filters.company) { query.company = { $regex: filters.company, $options: 'i' } } // Case insensitive. Same as SQL LIKE *company*.
 
   // Create filter for Experience:
-  if (filters.experience) { query.experience = filters.experience }
+  // Currently backend does not have experience
+  // if (filters.experience) { query.experience = filters.experience }
 
   // Create filter for Salary:
-  const salaryQuery = getSalaryFilter(filters);
-
+  let salaryQuery = null;
+  if (filters.salary) { 
+    salaryQuery = getSalaryFilter(filters); 
+  }
+  
   // Create filter for Locations:
-  const locationsQuery = getLocationFilter(filters);
+  let locationsQuery = null;
+  if (filters.locations && filters.locations.length>0) {
+    locationsQuery = getLocationFilter(filters);
+  }
 
   // Create filter for JobTypes:
-  const jobTypesQuery = getJobTypesFilter(filters);
+  let jobTypesQuery = null;
+  if (filters.jobTypes && filters.jobTypes.length>0) {
+    jobTypesQuery = getJobTypesFilter(filters);
+  } 
  
   /* 
     Problem: salary, location, jobtype all use $or internally.
         They don't explicitly reference fields like Job.company to filter from
     Solution: 
       Convert to: query AND (salaryQuery AND locationsQuery AND jobTypesQuery) */
-  andQuery = []
-  if (salaryQuery) {andQuery.push(salaryQuery)}
-  if (locationsQuery) {andQuery.push(locationsQuery)}
-  if (jobTypesQuery) {andQuery.push(jobTypesQuery)}
+  const andQuery = [salaryQuery, locationsQuery, jobTypesQuery].filter(Boolean); // filter removes null
 
   // Apply Conditions 
   if (andQuery.length>0) {
@@ -73,7 +79,7 @@ function getSalaryFilter(filters) {
       into mongodb usable filters.
     */
 
-  const query = {
+      const query = {
     $or: [
       // Either min/max/salary must be >= filters.salary
       // Todo: remove 'salary' from both front+backend and just use min/max.
@@ -97,9 +103,9 @@ function getLocationFilter(filters) {
       $or: filters.locations.map((location) => ({
         // City, State, or Country matches location
         $or: [
-          { city: location },
-          { state: location },
-          { country: location },
+          { city: { $regex: location, $options: 'i' } }, // 'i' option makes it case-insensitive },
+          { state: { $regex: location, $options: 'i' } }, 
+          { country: { $regex: location, $options: 'i' } }, 
         ],
       })),
     };

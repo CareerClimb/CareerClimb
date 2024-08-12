@@ -58,7 +58,7 @@ const FilterMenu = ({filters, handleFilterChange}) => {
                 <LocationFilter filters={filters} handleFilterChange={handleFilterChange}/>
                 <LocationTitleContent filters={filters} handleFilterChange={handleFilterChange}/>
                 <FilterMenuDivider/>
-                <ExperienceFilter filters={filters} handleFilterChange={handleFilterChange}/>
+                {/* <ExperienceFilter filters={filters} handleFilterChange={handleFilterChange}/> */}
                 <SalaryFilter filters={filters} handleFilterChange={handleFilterChange}/>
             </Collapse>
 

@@ -3,8 +3,9 @@ import { Box, Button, useTheme } from '@mui/material';
 import PostWidget from './PostWidget';
 import JobDescription from 'components/JobDescription';
 import axios from 'axios';
+import FilterModel from '../../models/FilterModel'
 
-const PostsWidget = () => {
+const PostsWidget = ({filters, handleFilterChange}) => {
   const { palette } = useTheme();
   const [openModal, setOpenModal] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -15,11 +16,16 @@ const PostsWidget = () => {
   // read env variables
   const env = process.env.REACT_APP_ENV || '';
 
+
   useEffect(() => {
-    const fetchJobs = async () => {
+    const fetchJobs = async (filters) => {
       try {
-        const response = await axios.get(env+"/jobs", { timeout: 90000}); // 100s timeout. Fixes a bug where cloudflare terminates api calls after 100s.
+        const response = await axios.post(env+"/jobs", { 
+          filters, // passing filter object to filter mongodb
+          timeout: 90000 // ~100s timeout. Fixes a bug where cloudflare terminates api calls after 100s.
+        }); 
         const sortedJobs = response.data.sort((a, b) => new Date(b.postedTime) - new Date(a.postedTime));
+        console.log(sortedJobs)
         setJobPosts(sortedJobs);
         // setJobPosts(response.data);
       } catch (error) {
@@ -27,8 +33,8 @@ const PostsWidget = () => {
       }
     };
 
-    fetchJobs();
-  }, []);
+    fetchJobs(filters);
+  }, [filters]); // Refetch jobs when FilterModel changes.
 
   const handleJobClick = (job) => {
     setSelectedJob(job);
