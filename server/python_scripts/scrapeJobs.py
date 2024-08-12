@@ -7,45 +7,64 @@ import os
 class JobScraper:
     def dailyScrape(self, search_term, json_file):
         # Only scrapes jobs posted in the last 24 hours
-        try:
-            jobs = scrape_jobs(
-                search_term=search_term,
-                # country_indeed=country_indeed,  
-                verbose=0,                       # Print errors only
-                hours_old=24,
-                linkedin_fetch_description=True 
-            )
-            self.cleanseData(jobs, json_file, search_term)
-        except Exception as e:
-            print(f"An error occurred while scraping {search_term}: {e}")
+        jobData = []
+        countries = ["USA", "Canada"]
+        for country in countries:
+            try:
+                jobs = scrape_jobs(
+                    search_term=search_term,
+                    country_indeed=country,  
+                    verbose=0,                       # Print errors only
+                    location=country,
+                    hours_old=24,
+                    linkedin_fetch_description=True,
+                    enforce_annual_salary=True
+                )
+                jobData.extend(self.cleanseData(jobs, search_term))
+            except TimeoutError as e:
+                print(f"A timeout error occurred while scraping {search_term}: {e}")
+            except Exception as e:
+                print(f"An error occurred while scraping {search_term}: {e}")
         
+        # Convert jobData to JSON format
+        with open(json_file, 'w', encoding='utf-8') as f:
+            json.dump(jobData, f, ensure_ascii=False, indent=4)
+            
 
     def scrape(self, search_term, json_file):
-        try:
-            jobs = scrape_jobs(
-                search_term=search_term,
-                # country_indeed=country_indeed,   # A required field to scrape indeed/glassdoor
-                verbose=0,                         # Print errors only
-                linkedin_fetch_description=True 
-            )
-            self.cleanseData(jobs, json_file, search_term)
-        except Exception as e:
-            print(f"An error occurred while scraping {search_term}: {e}")
+        # Only scrapes jobs posted in the last 24 hours
+        jobData = []
+        countries = ["Canada"]
+        for country in countries:
+            try:
+                jobs = scrape_jobs(
+                    search_term=search_term,
+                    country_indeed=country,  
+                    verbose=0,                       # Print errors only
+                    results_wanted=50,
+                    location=country,
+                    offset=15,
+                    linkedin_fetch_description=True,
+                    enforce_annual_salary=True
+                )
+                jobData.extend(self.cleanseData(jobs, search_term))
+            except TimeoutError as e:
+                print(f"A timeout error occurred while scraping {search_term}: {e}")
+            except Exception as e:
+                print(f"An error occurred while scraping {search_term}: {e}")
+        
+        # Convert jobData to JSON format
+        with open(json_file, 'w', encoding='utf-8') as f:
+            json.dump(jobData, f, ensure_ascii=False, indent=4)
 
 
-    def cleanseData(self, jobs, json_file, search_term):
+    def cleanseData(self, jobs, search_term):
 
         # Replace NaN values with Null
         jobs = jobs.where(pd.notnull(jobs), None)
 
         # Prepare jobData list
         jobData = []
-        if os.path.exists(json_file):
-            with open(json_file, 'r', encoding='utf-8') as f:
-                try:
-                    jobData = json.load(f)
-                except json.JSONDecodeError:
-                    jobData = []
 
         print(f"Found {len(jobs)} jobs")
         
@@ -98,7 +117,6 @@ class JobScraper:
                     'state': state,
                     'city': city
                 }
-
                 jobData.append(data)
 
             except Exception as e:
@@ -106,7 +124,7 @@ class JobScraper:
                 continue  # Skip this job and continue with the next one
 
         # Convert jobData to JSON format
-        with open(json_file, 'w', encoding='utf-8') as f:
+        with open(json_file, 'a', encoding='utf-8') as f:
             json.dump(jobData, f, ensure_ascii=False, indent=4)
 
 
@@ -119,4 +137,6 @@ if __name__ == '__main__':
 
     print(f"Scraping jobs for '{search_term}'...")
     scraper = JobScraper()
-    scraper.dailyScrape(search_term, json_file)
+    scraper.scrape(search_term, json_file)
+
+

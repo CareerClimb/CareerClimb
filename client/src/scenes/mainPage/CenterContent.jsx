@@ -27,7 +27,7 @@ const CenterContent = ({filters, handleFilterChange}) => {
                 Welcome! Search for the jobs you are looking for.
             </Typography>
             <SearchBar filters={filters} handleFilterChange={handleFilterChange}/>
-            <PostsWidget />
+            <PostsWidget filters={filters} handleFilterChange={handleFilterChange}/>
         </Box>
     );
 };

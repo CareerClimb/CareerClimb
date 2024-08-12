@@ -8,4 +8,5 @@ config.toml
 ./python_scripts/venv/
 ./python_scripts/test.py
 ./venv/
-
+venv/
+./server/venv/

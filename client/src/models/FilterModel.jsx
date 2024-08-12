@@ -2,11 +2,12 @@ class FilterModel {
     /*
         Stores the user's filter information, kept in one class 
         to make access easier.
+
+        server/routes/jobs.js is dependent on this model to convert
+        this FilterModel class into mongodb usable filters.
     */
 
-    /* Attributes:
-        var: indicates private attribute
-    */
+    /* Attributes */
     jobTypes = []; // default values
     company = '';
     locations = [];

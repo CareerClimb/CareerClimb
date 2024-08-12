@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+import { execSync, exec } from 'child_process';
 import mongoose from 'mongoose';
 import os from 'os';
 import fs from 'fs';
@@ -13,7 +13,52 @@ const { Schema, model } = mongoose;
 
 class PythonEnv {
 
+    TIMEOUT_MS = 1000000; // in ms
     
+    // Helper function to run a command with a timeout
+    // https://stackoverflow.com/questions/50477552/how-can-i-always-terminate-a-nodejs-script-with-a-timeout-even-if-the-event-loop
+    runWithTimeout = async (command, timeout = this.TIMEOUT_MS) => {
+        return new Promise((resolve, reject) => {
+            const child = exec(command);
+
+            let stdout = '';
+            let stderr = '';
+
+            // Collect data from stdout
+            child.stdout.on('data', (data) => {
+                stdout += data;
+                process.stdout.write(data); // Print to console
+            });
+
+            // Collect data from stderr
+            child.stderr.on('data', (data) => {
+                stderr += data;
+                process.stderr.write(data); // Print to console
+            });
+
+            // Set up timeout to kill the process
+            const timeoutId = setTimeout(() => {
+                child.kill();
+                reject(new Error('Timeout: Script execution exceeded time limit'));
+            }, timeout);
+
+            // Normal Exit
+            child.on('exit', (code) => {
+                clearTimeout(timeoutId);
+                if (code === 0) {
+                    resolve();
+                } else {
+                    reject(new Error(`Script exited with code ${code}`));
+                }
+            });
+
+            // Eror occurred, exit.
+            child.on('error', (err) => {
+                clearTimeout(timeoutId);
+                reject(err);
+            });
+        });
+    };
 
     // Run the Python script and read the JSON file
     async main() {
@@ -24,16 +69,17 @@ class PythonEnv {
             console.error('Error connecting to MongoDB:', error);
             await this.cleanup();
             return; // Exit the function if an error occurs
-        }
-    
-        const jobsList = this.readJsonFile('./python_scripts/jobTitles.json'); // Array of job titles
+        }    
+
+        const jobsList = await this.readJsonFile('./python_scripts/jobTitles.json'); // Array of job titles
         for (const jobTitle of jobsList) {
             // run script
             try {
-                const jsonData = await this.setupAndRunScript(jobTitle); 
+                await this.setupAndRunScript(jobTitle); 
+                const jsonData = await this.readJsonFile('./jobDataJson.json')
                 await this.exportMongo(jsonData);
             } catch (error) {
-                console.log('Script Error for',jobTitle, ', Error:', error);
+                console.log('Script Error for ', jobTitle, ', Error:', error);
                 continue; // Skip to next job title
             }
         }
@@ -67,19 +113,16 @@ class PythonEnv {
         try {
             // Run script
             console.log('Running script for \'' + jobTitle + '\'...');
-            execSync(setupCommand, { stdio: 'inherit' }); // stdio: send standard in/out to terminal
-            console.log('Reading data...');
-            return this.readJsonFile('jobDataJson.json')
+            // execSync(setupCommand, { stdio: 'inherit' }); // run without timeout
+            await this.runWithTimeout(setupCommand);   // run with timeout 
         } catch (error) {
             console.error('Error executing or reading script:', error);
-            throw error; // Rethrow the error to be caught in main()
+            throw error;
         }
-
-        return {};
         
     }
 
-    readJsonFile(path) {
+    async readJsonFile(path) {
         // Read JSON data from file
         const data = fs.readFileSync(path, 'utf8');
         const jsonData = JSON.parse(data);
@@ -90,7 +133,7 @@ class PythonEnv {
         // Handle the JSON data as needed (e.g., insert into MongoDB)
         const __filename = fileURLToPath(import.meta.url);
         const config = toml.parse(fs.readFileSync('config.toml', 'utf-8'));
-        const PORT = config.PORT || 3001;
+        const PORT = 6001;
         const MONGO_URL = config.MONGO_URL;
         const app = express();
 
@@ -107,7 +150,6 @@ class PythonEnv {
 
     async exportMongo(jsonData) {
         console.log('Exporting Data...');
-
         try {
             // Insert data into MongoDB using insertMany and await the result
             const result = await Job.insertMany(jsonData, {ordered: false});
@@ -116,7 +158,7 @@ class PythonEnv {
             if (error.name === 'MongoBulkWriteError') {
                 const duplicateErrors = error.writeErrors.filter(err => err.code === 11000);
                 console.log(`Number of Duplicates Skipped: ${duplicateErrors.length}`);
-                return;
+                console.log(`Number of Documents Successfully Inserted: ${error.result.insertedCount}`);
             } else {
                 console.error('Error exporting data to MongoDB:', error);
                 throw error; // Rethrow the error to be caught in main()
@@ -127,7 +169,7 @@ class PythonEnv {
     async cleanup() {
         // Delete the jobDataJson.json file
         try {
-            await fs.promises.unlink('jobDataJson.json');
+            // await fs.promises.unlink('jobDataJson.json');
             console.log('Cleanup successful');
         } catch (error) {
             console.error('Error cleaning up: ', error);
@@ -136,6 +178,7 @@ class PythonEnv {
         await mongoose.disconnect();
         process.exit(0); // Exit the process with success status
     }
+
 
 }
 
