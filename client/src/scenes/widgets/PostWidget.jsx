@@ -7,9 +7,7 @@ const PostWidget = ({ title, postedTime, company, location, salary, description 
 
   // Function to truncate the description to 100 words
   const truncateDescription = (text, wordLimit) => {
-    if (!text) { return text } // Fix bug if text is null
-    
-    const words = text.split(' ');
+    const words = text ? text.split(' ') : [];
     if (words.length > wordLimit) {
       return words.slice(0, wordLimit).join(' ') + '...';
     }
@@ -62,9 +60,11 @@ const PostWidget = ({ title, postedTime, company, location, salary, description 
         <Typography variant="body1" component="div">
           {company} ({location})
         </Typography>
-        <Typography variant="body1" component="div">
-          {salary}
-        </Typography>
+        {salary !== 'Unavailable' && (
+          <Typography variant="body1" component="div">
+            ${salary} / yr
+          </Typography>
+        )}
       </Box>
       <Typography variant="body2" component="div" sx={{ padding: '0 10px' }}>
         {truncatedDescription}

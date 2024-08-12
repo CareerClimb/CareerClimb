@@ -1,0 +1,12 @@
+{
+    
+    "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on",
+        "other": "on"
+    },
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.suggestSelection": "first",
+    "editor.suggest.snippetsPreventQuickSuggestions": false
+
+}

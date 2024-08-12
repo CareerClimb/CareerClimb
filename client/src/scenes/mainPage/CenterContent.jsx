@@ -16,11 +16,11 @@ const CenterContent = ({filters, handleFilterChange}) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: '80px',
+                marginTop: isMobile ? '100px' : '80px',
                 textAlign: 'center',
             }}
         >
-            <Typography variant="h1" fontSize='62px' fontWeight='bold' marginBottom="3px">
+            <Typography variant="h1" fontSize={isMobile ? '50px' : '62px'} fontWeight='bold' marginBottom="3px">
                 CareerClimb.
             </Typography>
             <Typography variant="h4" fontFamily="Roboto" color={palette.neutral.medium}>

@@ -35,17 +35,17 @@ const LandingPage = () => {
             justifyContent: 'center',
             alignItems: 'center',
             flex: 1,
-            padding: isMobile ? 2 : 4,
-            // borderRight: isMobile ? 'none' : '1px solid #ccc',
-            // borderBottom: isMobile ? '1px solid #ccc' : 'none',
+            paddingTop: isMobile ? 12 : 4,
             position: 'relative', // Position relative for the pseudo-element
             '&::after': {
-              content: '""', 
-              position: 'absolute',
-              right: 0, 
-              top: 0,
-              bottom: '200px', 
-              width: '1px', 
+              content: '""',
+              position: isMobile? 'center' : 'absolute',   
+              marginTop: isMobile ? '2rem' : 0, 
+              right: isMobile ? 'auto' : 0, 
+              bottom: isMobile ? 0 : '200px',
+              top: isMobile ? '10px' : 0, 
+              width: isMobile ? '90%' : '1px', 
+              height: isMobile ? '1px' : null,
               backgroundColor: '#ccc', 
           },
           }}
@@ -60,9 +60,10 @@ const LandingPage = () => {
             alignItems: 'center',
             flex: 1,
             padding: isMobile ? 2 : 4,
+            marginBottom: isMobile ? '100px' : '0px', // Add margin bottom if mobile
           }}
         >
-          <Typography variant="h1" fontSize='62px' fontWeight='bold' marginBottom="3px">
+          <Typography variant="h1" fontSize={isMobile ? '50px' : '62px'} fontWeight='bold' marginBottom="3px">
             CareerClimb.
           </Typography>
           <Typography variant="h4" marginBottom='1.5rem' fontFamily="Roboto" color={palette.neutral.medium}>
@@ -72,19 +73,19 @@ const LandingPage = () => {
             onClick={() => navigate('/home')}
             type="submit"
               sx={{
-                  backgroundColor: palette.primary.main,
-                  color: palette.background.alt,
-                  borderRadius: "50px",
-                  width: "50%",
-                  height: '56px', 
-                  fontSize: '20px', 
-                  textTransform: 'none',
-                  border: `3px solid ${palette.primary.main}`,
-                  '&:hover': {
-                      color: palette.primary.main,
-                      backgroundColor: palette.background.default,
-                      borderColor: palette.primary.main,
-                  }
+                backgroundColor: palette.primary.main,
+                color: palette.background.alt,
+                borderRadius: "50px",
+                width: isMobile ? "80%" : "50%",
+                height: isMobile ? '40px' : '56px',
+                fontSize:'20px',
+                textTransform: 'none',
+                border: `3px solid ${palette.primary.main}`,
+                '&:hover': {
+                  color: palette.primary.main,
+                  backgroundColor: palette.background.default,
+                  borderColor: palette.primary.main,
+                },
               }}
           >
             Start your Climb Today

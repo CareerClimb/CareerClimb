@@ -95,24 +95,26 @@ const PostsWidget = ({filters, handleFilterChange}) => {
         padding: '20px',
         backgroundColor: 'background.paper'
         }}
+            >
+        {currentPosts.map((job, index) => (
+          <Box
+            key={index}
+            sx={{ cursor: 'pointer', marginBottom: '20px' }}
+            onClick={() => handleJobClick(job)}
           >
-            {currentPosts.map((job, index) => (
-        <Box
-          key={index}
-          sx={{ cursor: 'pointer', marginBottom: '20px' }}
-          onClick={() => handleJobClick(job)}
-        >
-          <PostWidget
-            title={job.title}
-            postedTime={getTimeSincePosted(job.postedTime)}
-            company={job.company}
-            location={job.city && job.country ? `${job.city}, ${job.country}` : job.city || job.country}
-            salary={job.salary}
-            description={job.description}
-          />
-        </Box>
-            ))}
-            {/* Pagination buttons */}
+            <PostWidget
+              title={job.title}
+              postedTime={getTimeSincePosted(job.postedTime)}
+              company={job.company}
+              location={job.city && job.country ? `${job.city}, ${job.country}` : job.city || job.country}
+              salary={job.minSalary && job.maxSalary && job.minSalary !== '0' && job.maxSalary !== '0' ? 
+                      job.minSalary !== job.maxSalary ? `${job.minSalary} - ${job.maxSalary}` : job.minSalary : 
+                      job.minSalary || job.maxSalary || "Unavailable"} 
+              description={job.description}
+            />
+          </Box>
+        ))}
+        {/* Pagination buttons */}
       <Box sx={{ display: 'flex', 
                  justifyContent: 'center', 
                  marginTop: '20px',
