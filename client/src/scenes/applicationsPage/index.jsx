@@ -41,7 +41,7 @@ const ApplicationPage = () => {
   };
 
   const handleDelete = () => {
-    const updatedApplications = applications.filter((application) => !selectedRows.includes(application.id));
+    const updatedApplications = applications.filter((application) => !selectedRows.includes(application.id)); 
     setApplications(updatedApplications);
     setSelectedRows([]);
   };

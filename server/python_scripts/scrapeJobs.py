@@ -41,9 +41,9 @@ class JobScraper:
                     search_term=search_term,
                     country_indeed=country,  
                     verbose=0,                       # Print errors only
-                    results_wanted=50,
+                    results_wanted=100,
                     location=country,
-                    offset=15,
+                    offset=0,
                     linkedin_fetch_description=True,
                     enforce_annual_salary=True
                 )
@@ -123,10 +123,7 @@ class JobScraper:
                 print(f"Exception: {e} occurred for job ID: {row['id']}")  
                 continue  # Skip this job and continue with the next one
 
-        # Convert jobData to JSON format
-        with open(json_file, 'a', encoding='utf-8') as f:
-            json.dump(jobData, f, ensure_ascii=False, indent=4)
-
+        return jobData
 
 
 if __name__ == '__main__':
