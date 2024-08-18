@@ -2,7 +2,7 @@
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { useMemo } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 import { createTheme } from "@mui/material/styles";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { themeSettings } from "theme";
@@ -15,17 +15,32 @@ import FilterModel from './models/FilterModel';
 
 function App() {
   const mode = useSelector((state) => state.mode);
+  const user = useSelector((state) => state.user);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]); // Create a theme object based on the mode
   const isAuth = Boolean(useSelector((state) => state.token)); // Determine if the user is authenticated
   const [filters, setFilters] = useState(new FilterModel());
+  /* 
+      Read environment variables:
+          .env is used when app is deployed from local environment. ex. using npm start
+          .env.production is used when app is deployed from a static build.
+  */
+  const env = process.env.REACT_APP_ENV || ''; 
 
+  /* This function saves the user's filter state */
   const handleFilterChange = (filter) => {
-      // Update filters state
-      setFilters(filter);
-      console.log("App Filters: ", filter)
-
-      // TODO: if logged in, push filter settings to mongodb 
+      setFilters(filter); // Save filters locally
+      if (isAuth && user){ saveFiltersDB(filter, user); } // Save filters to MongoDB
   };
+
+  /* Recieves a FilterModel Class, and saves it into mongodb for a logged in User */
+  const saveFiltersDB = (filter, user) => {
+    const response = fetch(env+"/savestate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({userID: user._id, filter: filter}),
+    })
+  }
+
 
   return <div className="app">
     <BrowserRouter>

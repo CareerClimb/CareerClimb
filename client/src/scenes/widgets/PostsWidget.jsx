@@ -13,7 +13,11 @@ const PostsWidget = ({filters, handleFilterChange}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
 
-  // read env variables
+  /* 
+      Read environment variables:
+        .env is used when app is deployed from local environment. ex. using npm start
+        .env.production is used when app is deployed from a static build.
+  */
   const env = process.env.REACT_APP_ENV || '';
 
 

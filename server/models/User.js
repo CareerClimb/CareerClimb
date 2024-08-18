@@ -20,6 +20,11 @@ const UserSchema = new mongoose.Schema(
             required: true,
             min: 6,
         },
+        filter: {
+            type: Object,
+            default: {},
+            required: true,
+        },
     },
     { timestamps: true }
 );
