@@ -28,38 +28,32 @@ export default router;
 function getFilters(filters) {
 
   let query = {};  // Instantiate query class.
+  let salaryQuery = null;
+  let locationsQuery = null;
+  let jobTypesQuery = null;
 
   // Create filter for Company:
   if (filters.company) { query.company = { $regex: filters.company, $options: 'i' } } // Same as SQL LIKE *company*. 'i' indicates Case insensitive. 
 
-  // Create filter for Experience:
-  // Currently backend does not have experience
+  // Create filter for Experience: // Currently backend does not have experience
   // if (filters.experience) { query.experience = filters.experience }
 
   // Create filter for Salary:
-  let salaryQuery = null;
-  if (filters.salary) { 
-    salaryQuery = getSalaryFilter(filters); 
-  }
+  if (filters.salary) { salaryQuery = getSalaryFilter(filters); }
   
   // Create filter for Locations:
-  let locationsQuery = null;
-  if (filters.locations && filters.locations.length>0) {
-    locationsQuery = getLocationFilter(filters);
-  }
+  if (filters.locations && filters.locations.length>0) { locationsQuery = getLocationFilter(filters); }
 
   // Create filter for JobTypes:
-  let jobTypesQuery = null;
-  if (filters.jobTypes && filters.jobTypes.length>0) {
-    jobTypesQuery = getJobTypesFilter(filters);
-  } 
+  if (filters.jobTypes && filters.jobTypes.length>0) { jobTypesQuery = getJobTypesFilter(filters); } 
  
   /* 
     Problem: salary, location, jobtype all use $or internally.
         They don't explicitly reference fields like Job.company to filter from
     Solution: 
-      Convert to: query AND (salaryQuery AND locationsQuery AND jobTypesQuery) */
-  const andQuery = [salaryQuery, locationsQuery, jobTypesQuery].filter(Boolean); // filter removes null
+      Convert to: query AND (salaryQuery AND locationsQuery AND jobTypesQuery) 
+  */
+  const andQuery = [salaryQuery, locationsQuery, jobTypesQuery].filter(Boolean); // .filter(Boolean) removes null / empty filters
 
   // Apply Conditions 
   if (andQuery.length>0) {
@@ -76,16 +70,14 @@ function getSalaryFilter(filters) {
       converts salary from FilterModel class 
       into mongodb usable filters.
     */
-
-      const query = {
-    $or: [
-      // Either min/max/salary >= filters.salary
-      { minSalary: {$gte: filters.salary.toString() }},
-      { maxSalary: {$gte: filters.salary.toString() }},
-      { salary: {$gte: filters.salary.toString() }}, // Todo: remove 'salary' from backend and just use min/max.
-    ],
-  }  
-
+  const query = {
+    $expr: {
+      $or: [
+        { $gte: [{ $toInt: "$minSalary" }, parseInt(filters.salary)] }, // converts minSalary to Int before comparison.
+        { $gte: [{ $toInt: "$maxSalary" }, parseInt(filters.salary)] }
+      ]
+    }
+  };
   return query
 }
 

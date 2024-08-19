@@ -31,12 +31,11 @@ function App() {
   */
   const env = process.env.REACT_APP_ENV || ''; 
 
-
   /* Solution to: Cached data can leave redux objects as null */
   if (!filter) { // filter in redux state does not exist
     dispatch(setFilters({filter: defaultFilter})); // set to default value
   }
-  if (!applications) {  // Applications in redux state does not exist
+  if (!applications) {  // applications in redux state does not exist
     dispatch(setApplications({ applications: [] }));  // set to default value
   }
 
