@@ -11,9 +11,13 @@ import MainPage from "scenes/mainPage";
 import LoginPage from "scenes/loginPage";
 import RegisterPage from "scenes/registerPage";
 import ApplicationPage from './scenes/applicationsPage'; 
+import saveStateDB from "controllers/saveStateDB";
+import { setApplications, setFilters } from "state";
+import defaultFilter from "models/defaultFilter";
 
 function App() {
   const store = useStore();
+  const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode);
   const user = useSelector((state) => state.user);
   const filter = useSelector((state) => state.filter);
@@ -27,20 +31,20 @@ function App() {
   */
   const env = process.env.REACT_APP_ENV || ''; 
 
+
+  /* Solution to: Cached data can leave redux objects as null */
+  if (!filter) { // filter in redux state does not exist
+    dispatch(setFilters({filter: defaultFilter})); // set to default value
+  }
+  if (!applications) {  // Applications in redux state does not exist
+    dispatch(setApplications({ applications: [] }));  // set to default value
+  }
+
   /* This function saves the user's filter state into mongodb*/
   useEffect(() => {
     console.log("New State:", store.getState());
     if (isAuth && user && filter && applications){ saveStateDB(filter, user, applications); } // If logged in, save State to MongoDB
   }, [filter, applications]);
-
-  /* Saves filter & application states into MongoDB for a User */
-  const saveStateDB = (filter, user, applications) => {
-    const response = fetch(env+"/savestate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({userID: user._id, filter: filter, applications: applications}),
-    })
-  }
 
 
   return <div className="app">

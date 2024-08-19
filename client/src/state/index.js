@@ -1,14 +1,6 @@
 // Import packages
 import { createSlice } from "@reduxjs/toolkit";
-import FilterModel from "models/FilterModel";
-
-const defaultFilter = {                    
-    jobTypes: [],
-    company: '',
-    locations: [],
-    experience: '',
-    salary: 0,
-};
+import defaultFilter from "models/defaultFilter";
 
 const initialState = {
     mode: "light",
