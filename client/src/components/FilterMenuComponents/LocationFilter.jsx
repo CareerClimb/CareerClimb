@@ -1,20 +1,22 @@
 import React from 'react';
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Box, Autocomplete, TextField, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormControl, Select } from '@mui/material';
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
 import { ReactComponent as LocationIconSvg } from '../../assets/locationpin.svg';
 import AutofillController  from '../../controllers/AutofillController';
+import { setFilters } from 'state';
 
 
-
-const LocationFilter = ({filters, handleFilterChange}) => {
+const LocationFilter = () => {
 
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [options, setOptions] = useState([]);       // Store autofill options
     const [inputValue, setInputValue] = useState(''); // Store user Input
-
+    const filter = useSelector((state) => state.filter);
+    const dispatch = useDispatch();
 
     const clearUI = () => {
         // Delay to let other asynchronous functions / renderings finish. Fixes a bug where searchbar doesn't clear.
@@ -48,14 +50,14 @@ const LocationFilter = ({filters, handleFilterChange}) => {
             return;
         }
         
-        // Create a new array of locations
-        const newLocations = [...filters.locations, value] // append value 
-
         // Overwrite locations attribute
-        const newFilters = {...filters, locations: newLocations}; 
+        const newFilters = {
+            ...filter,                              // copy old filters
+            locations: [...filter.locations, value] // append new location 
+        }; 
 
         // Update Filter State
-        handleFilterChange(newFilters);
+        dispatch(setFilters({ filter: newFilters })); // Save filters into local redux store
         
         // Clear SearchBar / Autofill options
         clearUI();

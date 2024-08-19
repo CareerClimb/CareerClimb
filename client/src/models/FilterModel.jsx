@@ -5,6 +5,8 @@ class FilterModel {
 
         server/routes/jobs.js is dependent on this model to convert
         this FilterModel class into mongodb usable filters.
+
+        client/state/index.js is dependent on this model for initializing states
     */
 
     /* Attributes */

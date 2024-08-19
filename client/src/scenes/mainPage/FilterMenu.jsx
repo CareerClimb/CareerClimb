@@ -12,7 +12,7 @@ import JobTitleContent from '../../components/FilterMenuComponents/JobTitleConte
 import LocationTitleContent from '../../components/FilterMenuComponents/LocationTitleContent';
 
 
-const FilterMenu = ({filters, handleFilterChange}) => {
+const FilterMenu = () => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -48,17 +48,17 @@ const FilterMenu = ({filters, handleFilterChange}) => {
                 timeout = {10} // animation in ms
             >
                 {/* content to show/hide  */}
+                <FilterMenuDivider/>  
+                <JobTitleFilter /> 
+                <JobTitleContent /> 
                 <FilterMenuDivider/> 
-                <JobTitleFilter filters={filters}/>
-                <JobTitleContent filters={filters} handleFilterChange={handleFilterChange}/>
+                <CompanyFilter /> 
+                <FilterMenuDivider/> 
+                <LocationFilter />
+                <LocationTitleContent />
                 <FilterMenuDivider/>
-                <CompanyFilter filters={filters} handleFilterChange={handleFilterChange}/>
-                <FilterMenuDivider/>
-                <LocationFilter filters={filters} handleFilterChange={handleFilterChange}/>
-                <LocationTitleContent filters={filters} handleFilterChange={handleFilterChange}/>
-                <FilterMenuDivider/>
-                {/* <ExperienceFilter filters={filters} handleFilterChange={handleFilterChange}/> */}
-                <SalaryFilter filters={filters} handleFilterChange={handleFilterChange}/>
+                {/* <ExperienceFilter /> */}
+                <SalaryFilter />
             </Collapse>
 
 

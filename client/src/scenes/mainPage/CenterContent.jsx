@@ -3,7 +3,7 @@ import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 import SearchBar from 'components/SearchBar';
 import PostsWidget from 'scenes/widgets/PostsWidget';
 
-const CenterContent = ({filters, handleFilterChange}) => {
+const CenterContent = () => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -26,8 +26,8 @@ const CenterContent = ({filters, handleFilterChange}) => {
             <Typography variant="h4" fontFamily="Roboto" color={palette.neutral.medium}>
                 Welcome! Search for the jobs you are looking for.
             </Typography>
-            <SearchBar filters={filters} handleFilterChange={handleFilterChange}/>
-            <PostsWidget filters={filters} handleFilterChange={handleFilterChange}/>
+            <SearchBar />
+            <PostsWidget />
         </Box>
     );
 };

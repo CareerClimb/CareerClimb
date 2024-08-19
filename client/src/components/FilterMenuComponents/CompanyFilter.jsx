@@ -1,17 +1,22 @@
 import React from 'react';
 import { useState } from "react";
 import { Box, Autocomplete, TextField, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormControl, Select } from '@mui/material';
-import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
+import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate';
 import AutofillController  from '../../controllers/AutofillController';
+import { useSelector, useDispatch } from "react-redux";
+import { setFilters } from 'state';
 
 
 
-const CompanyFilter = ({filters, handleFilterChange}) => {
+
+const CompanyFilter = () => {
 
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [options, setOptions] = useState([]);
+    const filter = useSelector((state) => state.filter);
+    const dispatch = useDispatch();
     
 
     const onChangeCompany = async (prefix) => {
@@ -32,12 +37,12 @@ const CompanyFilter = ({filters, handleFilterChange}) => {
         }
 
         // Shallow copy filter and update company
-        const newFilters = {...filters, company: prefix };
+        const newFilters = {...filter, company: prefix };
 
         // Update state with new filters object
-        handleFilterChange(newFilters);
+        dispatch(setFilters({ filter: newFilters })); // Save filters into local redux store
 
-        console.log("Filters updated")
+
     }
 
 
@@ -55,7 +60,7 @@ const CompanyFilter = ({filters, handleFilterChange}) => {
                 onInputChange={(e, prefix) => onChangeCompany(prefix)}
                 filterOptions={(x) => x} // disable filtering by this MUI 
                 options = {options}
-                inputValue = {filters.company}
+                inputValue = {filter.company}
                 renderInput={(params) => (
                     <TextField {...params} variant="outlined" fullWidth size="small"
                         sx = {{

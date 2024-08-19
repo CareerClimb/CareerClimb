@@ -7,13 +7,14 @@ import User from '../models/User.js';
 // Login user
 export const saveState = async (req, res) => {
   try {
-      const { userID, filter } = req.body;
+      const { userID, filter, applications } = req.body;
       const user = await User.findOne({ _id: new mongoose.Types.ObjectId(userID) }); // find user
       if (!user) {
           return res.status(404).json({msg: "User not found"});
       }
-      // save filter object to mongodb
+      // save filter, applications objects to mongodb
       user.filter = filter;
+      user.applications = applications;
       await user.save();
       res.status(200).json({}); 
   } catch (err) {

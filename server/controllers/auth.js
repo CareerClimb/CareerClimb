@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 // Register a new user
 export const register = async (req, res) => {
     try {
-        const { fullName, email, password } = req.body;
+        const { fullName, email, password, filter, applications } = req.body;
         console.log(req.body);
         // Ensure user does not already exist
         const existingUser = await User.findOne({ email: email });
@@ -22,9 +22,11 @@ export const register = async (req, res) => {
         const hashedPassword = await bcryptjs.hash(password, salt); // Ensure password and salt are provided
 
         const newUser = new User({
-            fullName,
-            email,
+            fullName: fullName,
+            email: email,
             password: hashedPassword,
+            filter: filter,
+            applications: applications,
         });
 
         const savedUser = await newUser.save(); // Save the user to the database

@@ -8,7 +8,7 @@ const router = express.Router();
 // Filter by user filters (FilterModel) sent from Client
 router.post('/', async (req, res) => {
   // convert FilterModel class to mongodb filters
-  const query = getFilters(req.body.filters) || {}; 
+  const query = getFilters(req.body.filter) || {}; 
   try {
     const jobs = await Job.find(query) // apply user filters
         .sort({createdAt: -1})         // sort by latest

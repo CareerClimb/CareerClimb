@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Box, TextField, Button, MenuItem, Typography, Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useSelector, useDispatch, useStore } from "react-redux";
+import { setApplications } from "state";
 
 const statuses = [
   "Submitted",
@@ -13,7 +15,8 @@ const statuses = [
 ];
 
 const ApplicationPage = () => {
-  const [applications, setApplications] = useState([]);
+  const applications = useSelector((state) => state.applications); // Fetch applications from redux store
+  const dispatch = useDispatch();
   const [form, setForm] = useState({
     companyName: "",
     dateApplied: "",
@@ -21,7 +24,6 @@ const ApplicationPage = () => {
     jobLink: "",
     notes: "",
   });
-
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleChange = (e) => {
@@ -30,7 +32,9 @@ const ApplicationPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setApplications([...applications, { id: applications.length + 1, ...form }]);
+    console.log("Adding new application!");
+    const updatedApplications = [...applications, { id: applications.length + 1, ...form }]   // Append new application
+    dispatch(setApplications({ applications: updatedApplications }));  // Update applications in redux store
     setForm({
       companyName: "",
       dateApplied: "",
@@ -41,8 +45,8 @@ const ApplicationPage = () => {
   };
 
   const handleDelete = () => {
-    const updatedApplications = applications.filter((application) => !selectedRows.includes(application.id)); 
-    setApplications(updatedApplications);
+    const updatedApplications = applications.filter((application) => !selectedRows.includes(application.id)); // filter out the selected applications
+    dispatch(setApplications({ applications: updatedApplications }));  // Update applications in redux store
     setSelectedRows([]);
   };
 
@@ -128,13 +132,10 @@ const ApplicationPage = () => {
             rowsPerPageOptions={[5]}
             checkboxSelection
             disableSelectionOnClick
-            onSelectionChange={(newSelectionModel) => {
-                setSelectedRows(newSelectionModel);
-                alert(`Selected Rows: ${selectedRows.length}`);
-              }}
-            // onSelectionModelChange={(newSelectionModel) => {
-            //   setSelectedRows(newSelectionModel);
-            // }}
+            rowSelectionModel={selectedRows}                    // Controlled component
+            onRowSelectionModelChange={(newSelectionModel) => { // Handle changes to controlled component
+              setSelectedRows(newSelectionModel);
+            }}
           />
         </div>
         <Box display="flex" justifyContent="flex-start" mt={4} mb={0}>

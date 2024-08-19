@@ -1,13 +1,17 @@
 import React from 'react';
 import { Box, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormControl, Select } from '@mui/material';
 import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
+import { useSelector, useDispatch } from "react-redux";
+import { setFilters } from 'state';
 
 
-const SalaryFilter = ({filters, handleFilterChange}) => {
+const SalaryFilter = () => {
 
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const filter = useSelector((state) => state.filter);
+    const dispatch = useDispatch();
     const startValue = 50000;
     const endValue = 200000;
     const increment = 20000;
@@ -15,8 +19,12 @@ const SalaryFilter = ({filters, handleFilterChange}) => {
 
     const handleChange = (event) => {
         // save filter
-        filters.salary = event.target.value;
-        handleFilterChange(filters);
+        const newFilters = { 
+            ...filter, // copy old filter 
+            salary: event.target.value // replace salary field
+        };
+
+        dispatch(setFilters({ filter: newFilters })); // Save filters into local redux store    };
     };
     
     // populate values for salary dropdown list
@@ -45,7 +53,7 @@ const SalaryFilter = ({filters, handleFilterChange}) => {
                 <Select
                     labelId="SalaryList"
                     id="List"
-                    defaultValue = {filters.salary}
+                    defaultValue = {filter.salary}
                     onChange={handleChange}
                     MenuProps={{ disableScrollLock: true}}
                     sx = {{ textAlign: 'left'}}

@@ -7,7 +7,7 @@ import BottomBar from 'scenes/bottomBar';
 import CenterContent from 'scenes/mainPage/CenterContent';
 import FilterMenu from './FilterMenu';
 
-const MainPage = ({filters, handleFilterChange}) => {
+const MainPage = () => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -32,8 +32,8 @@ const MainPage = ({filters, handleFilterChange}) => {
                     mt: isMobile ? '30px' : 0, 
                 }}
             >
-                <FilterMenu filters={filters} handleFilterChange={handleFilterChange}/>
-                <CenterContent filters={filters} handleFilterChange={handleFilterChange}/>
+                <FilterMenu />
+                <CenterContent />
             </Box>
             <BottomBar />
         </Box>

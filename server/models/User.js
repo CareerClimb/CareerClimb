@@ -1,6 +1,14 @@
 // Import packages
 import mongoose from 'mongoose';
 
+const defaultFilter = {                    
+    jobTypes: [],
+    company: '',
+    locations: [],
+    experience: '',
+    salary: 0,
+};
+
 const UserSchema = new mongoose.Schema(
     {
         fullName: {
@@ -22,7 +30,12 @@ const UserSchema = new mongoose.Schema(
         },
         filter: {
             type: Object,
-            default: {},
+            default: defaultFilter,
+            required: true,
+        },
+        applications: {
+            type: Array,
+            default: [],
             required: true,
         },
     },
