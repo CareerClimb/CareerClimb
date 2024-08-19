@@ -1,15 +1,19 @@
 import React from 'react';
 import { useState } from "react";
 import { Box, MenuItem, InputLabel, Typography, useTheme, useMediaQuery, FormControl, Select } from '@mui/material';
-import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate'
+import HeaderTemplate from 'components/FilterMenuComponents/HeaderTemplate';
 import FilterMenuDivider from './FilterMenuDivider';
+import { useSelector, useDispatch } from "react-redux";
+import { setFilters } from 'state';
 
-const ExperienceFilter = ({filters, handleFilterChange}) => {
+const ExperienceFilter = () => {
 
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [selectedValue, setSelectedValue] = useState('');
+    const filter = useSelector((state) => state.filter);
+    const dispatch = useDispatch();
 
     // Experience Labels
     const values = ['Internship', 'Entry Level', 'Intermediate', 'Senior Level', 'Director', 'Executive'];
@@ -26,9 +30,13 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
         // save selection 
         setSelectedValue(event.target.value);
         // save filter
-        filters.experience = event.target.value;
-        handleFilterChange(filters);
-    };
+        const newFilters = { 
+            ...filter, // copy old filter 
+            experience: event.target.value
+        };
+
+        dispatch(setFilters({ filter: newFilters })); // Save filters into local redux store    };
+    }
 
     return (
         <Box
@@ -50,7 +58,7 @@ const ExperienceFilter = ({filters, handleFilterChange}) => {
                 <Select
                     labelId="ExperienceList"
                     id="List"
-                    defaultValue = {filters.experience}
+                    defaultValue = {filter.experience}
                     value = {selectedValue}
                     onChange={handleChange}
                     MenuProps={{ disableScrollLock: true}}

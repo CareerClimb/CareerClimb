@@ -3,25 +3,30 @@ import { Box, Button, useTheme } from '@mui/material';
 import PostWidget from './PostWidget';
 import JobDescription from 'components/JobDescription';
 import axios from 'axios';
-import FilterModel from '../../models/FilterModel'
+import { useSelector, useDispatch } from "react-redux";
 
-const PostsWidget = ({filters, handleFilterChange}) => {
+const PostsWidget = () => {
   const { palette } = useTheme();
   const [openModal, setOpenModal] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
   const [jobPosts, setJobPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
+  const filter = useSelector((state) => state.filter);
 
-  // read env variables
+  /* 
+      Read environment variables:
+        .env is used when app is deployed from local environment. ex. using npm start
+        .env.production is used when app is deployed from a static build.
+  */
   const env = process.env.REACT_APP_ENV || '';
 
 
   useEffect(() => {
-    const fetchJobs = async (filters) => {
+    const fetchJobs = async (filter) => {
       try {
         const response = await axios.post(env+"/jobs", { 
-          filters, // passing filter object to filter mongodb
+          filter, // passing filter object to filter mongodb
           timeout: 90000 // ~100s timeout. Fixes a bug where cloudflare terminates api calls after 100s.
         }); 
         const sortedJobs = response.data.sort((a, b) => new Date(b.postedTime) - new Date(a.postedTime));
@@ -32,8 +37,8 @@ const PostsWidget = ({filters, handleFilterChange}) => {
       }
     };
 
-    fetchJobs(filters);
-  }, [filters]); // Refetch jobs when FilterModel changes.
+    fetchJobs(filter);
+  }, [filter]); // Refetch jobs when FilterModel changes.
 
   const handleJobClick = (job) => {
     setSelectedJob(job);

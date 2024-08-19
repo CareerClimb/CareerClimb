@@ -2,13 +2,16 @@ import React from 'react';
 import { useState } from "react";
 import { Box, Autocomplete, Button, TextField, useTheme, useMediaQuery } from '@mui/material';
 import AutofillController from '../controllers/AutofillController';
+import { useSelector, useDispatch } from "react-redux";
+import { setFilters } from 'state';
 
-const SearchBar = ({filters, handleFilterChange}) => {
+const SearchBar = () => {
   const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [options, setOptions] = useState([]);       // Store autofill options
   const [inputValue, setInputValue] = useState(''); // Store user Input
-
+  const currFilter = useSelector((state) => state.filter); // Global filter object
+  const dispatch = useDispatch();
   
   const clearUI = () => {
     // Delay to let other asynchronous functions / renderings finish. Fixes a bug where searchbar doesn't clear.
@@ -34,19 +37,20 @@ const SearchBar = ({filters, handleFilterChange}) => {
     }
   };
 
-  const buttonClick = (value) => {
+  const buttonClick = (newJobTitle) => {
+    // 
     // Validate input: Checks if null/undefined/empty-string
-    if (!value) { 
+    if (!newJobTitle) { 
       console.error("SearchBar Error: Input must be a non-empty string");
       return;
     }
 
     // Create a new array of job types
-    const newJobTypes = [...filters.jobTypes, value]; // append value 
+    const newJobTypes = [...currFilter.jobTypes, newJobTitle]; // append new job title 
 
     // Update filters state with new array
-    const newFilters = {...filters, jobTypes: newJobTypes}; // Overwrite jobTypes attribute
-    handleFilterChange(newFilters);
+    const newFilters = {...currFilter, jobTypes: newJobTypes}; // Overwrite jobTypes attribute
+    dispatch(setFilters({ filter: newFilters })); // Save filters into local redux store
 
     // Clear SearchBar / Autofill options
     clearUI();

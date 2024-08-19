@@ -25,7 +25,11 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    // read env variables
+    /* 
+        Read environment variables:
+            .env is used when app is deployed from local environment. ex. using npm start
+            .env.production is used when app is deployed from a static build.
+    */
     const env = process.env.REACT_APP_ENV || '';
 
     const login = async (values, onSubmitProps) => {

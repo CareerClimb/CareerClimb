@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-import XLSX from 'xlsx';
 import JobTitle from '../models/JobTitle.js';
-const { Schema, model } = mongoose;
 
 /*  Autofill job titles based on a given prefix 
     This is the intermediary function between react and mongodb

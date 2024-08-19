@@ -2,8 +2,14 @@ import { Box, Button, TextField, Typography, useTheme, useMediaQuery } from "@mu
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch, useStore } from "react-redux";
 
-// read env variables
+
+/* 
+    Read environment variables:
+        .env is used when app is deployed from local environment. ex. using npm start
+        .env.production is used when app is deployed from a static build.
+*/
 const env = process.env.REACT_APP_ENV || '';
 
 // Define the register schema
@@ -29,14 +35,25 @@ const RegisterForm = () => {
     const { palette } = useTheme();
     const navigate = useNavigate();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-    // read env variables
+    const filter = useSelector((state) => state.filter);
+    const applications = useSelector((state) => state.applications);
+    /* 
+        Read environment variables:
+            .env is used when app is deployed from local environment. ex. using npm start
+            .env.production is used when app is deployed from a static build.
+    */
     const env = process.env.REACT_APP_ENV || '';
 
     const register = async (values, onSubmitProps) => {
         const formData = new FormData();
         for (let value in values) {
             formData.append(value, values[value]);
+        }
+
+        const requestData = {
+            ...values,  // copy old fields
+            filter: filter,
+            applications: applications,
         }
 
         const savedUserResponse = await fetch(
@@ -46,7 +63,7 @@ const RegisterForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(values),
+                body: JSON.stringify(requestData),
             }   
         );
         
@@ -65,7 +82,7 @@ const RegisterForm = () => {
         
 
         if (savedUser) {
-            navigate(env+"/login");
+            navigate("/login");
         }
     };
 

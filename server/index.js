@@ -13,8 +13,8 @@ import toml from 'toml';
 import authRoutes from "./routes/auth.js";
 import autofillRoutes from "./routes/autofill.js"
 import jobRoutes from './routes/jobs.js';
-import Job from "./models/Job.js";
-import { jobs } from "./data/index.js";
+import saveRoutes from './routes/save-state.js'
+import Job from './models/Job.js'
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -39,6 +39,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 app.use("/auth", authRoutes);
 app.use("/autocomplete", autofillRoutes);
 app.use('/jobs', jobRoutes);
+app.use('/savestate', saveRoutes);
 
 /* STATIC BUILD PATH */
 const buildPath = path.join(__dirname, '..', 'client', 'build');
@@ -49,6 +50,27 @@ app.get('/*', (req, res) => {
     res.sendFile(path.join(buildPath, 'index.html'));
 });
 
+
+async function removeOldestDocuments() {
+    try {
+        // Find the 10,000 oldest documents
+        const oldestDocs = await Job.find({})
+            .sort({ createdAt: 1 }) // Sort in ascending order to get the oldest first
+            .limit(10000) // Limit to the 10,000 oldest documents
+            .exec();
+
+        // Extract the _id values of the documents to be deleted
+        const idsToDelete = oldestDocs.map(doc => doc._id);
+
+        // Remove the documents
+        await Job.deleteMany({ _id: { $in: idsToDelete } });
+
+        console.log('Removed 10,000 oldest documents successfully.');
+    } catch (error) {
+        console.error('Error removing documents:', error);
+    }
+}
+
 /* MONGOOSE SETUP */
 mongoose
     .connect(MONGO_URL, {
@@ -57,6 +79,7 @@ mongoose
     })
     .then(() => {
         app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+        //removeOldestDocuments();
     })
     .catch((error) => console.log(`${error} did not connect`));
 

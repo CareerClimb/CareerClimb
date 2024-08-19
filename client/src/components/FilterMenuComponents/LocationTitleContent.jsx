@@ -1,22 +1,28 @@
 import React from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import DeletableChip from 'components/DeletableChip';
+import { useSelector, useDispatch } from "react-redux";
+import { setFilters } from 'state';
 
 
-const LocationTitleContent = ({filters, handleFilterChange}) => {
+
+const LocationTitleContent = () => {
     const theme = useTheme();
     const { palette } = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const filter = useSelector((state) => state.filter);
+    const dispatch = useDispatch();
     
     const handleDelete = (chiplabel) => {
-        // Shallow copy array excluding the deleted element
-        const newLocations = filters.locations.filter((title) => title !== chiplabel); 
-        
+
         // Create new filters object with updated array
-        const newFilters = { ...filters, locations: newLocations };
+        const newFilters = { 
+            ...filter, 
+            locations: filter.locations.filter((title) => title !== chiplabel), // Shallow copy array except the deleted element   
+        };
         
-        // Update state with new filters object
-        handleFilterChange(newFilters);
+        // Update state with new filter object
+        dispatch(setFilters({ filter: newFilters })); // Save filters into local redux store
     };  
 
     return (
@@ -32,8 +38,8 @@ const LocationTitleContent = ({filters, handleFilterChange}) => {
                 gap: 1,
             }}  
         >
-            {   filters.locations && // Render if not undefined/null
-                filters.locations.map((title) => ( // Maps a list of titles into chip components
+            {   filter.locations && // Render if not undefined/null
+                filter.locations.map((title) => ( // Maps a list of titles into chip components
                     <DeletableChip label={title} handleDelete={handleDelete} />
                 ))
             }

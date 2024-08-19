@@ -1,21 +1,29 @@
-
+/*
+    Queries public APIs to generate autofill information.
+*/
 class AutofillController {
-    /*
-        Queries public APIs to generate autofill information.
-    */
 
-    /*  Class attributes   */
+
+    /*  
+                                Class attributes   
+                                                                        */
     LIMIT = '5';
-    env = process.env.REACT_APP_ENV || ''; // environment variable
+    
+    /*  
+                            Environment variables:
+        .env is used when app is deployed from local environment. ex. using npm start
+        .env.production is used when app is deployed from a static build. 
+                                                                        */
+    env = process.env.REACT_APP_ENV || ''; 
 
-    /*   Class Methods    */
+
+    /*  
+                                Class Methods   
+                                                                         */
+
     isValidInput(inputStr) {
         // checks for undefined/null/empty-string
-        if (!inputStr) {
-            return false;
-        }
-
-        return true;
+        return !(!inputStr);
     }
 
     async fetchLocations(prefix) {
