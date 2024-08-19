@@ -33,7 +33,7 @@ const ApplicationPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Adding new application!");
-    const updatedApplications = [...applications, { id: applications.length + 1, ...form }]   // Append new application
+    const updatedApplications = [...applications, { id: Date.now(), ...form }]   // Append new application // Date ensures that Ids are unqiue
     dispatch(setApplications({ applications: updatedApplications }));  // Update applications in redux store
     setForm({
       companyName: "",
