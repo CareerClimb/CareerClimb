@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
-import { ReactComponent as PlusButtonSVG } from '../../assets/plusbutton.svg'
 
 const FilterMenu = ( {Icon , title}) => {
     /* 

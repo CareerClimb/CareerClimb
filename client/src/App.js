@@ -31,16 +31,15 @@ function App() {
   */
   const env = process.env.REACT_APP_ENV || ''; 
 
-
   /* Solution to: Cached data can leave redux objects as null */
   if (!filter) { // filter in redux state does not exist
     dispatch(setFilters({filter: defaultFilter})); // set to default value
   }
-  if (!applications) {  // Applications in redux state does not exist
+  if (!applications) {  // applications in redux state does not exist
     dispatch(setApplications({ applications: [] }));  // set to default value
   }
 
-  /* This function saves the user's filter state into mongodb*/
+  /* This function saves the user's filter and applications state into mongodb*/
   useEffect(() => {
     console.log("New State:", store.getState());
     if (isAuth && user && filter && applications){ saveStateDB(filter, user, applications); } // If logged in, save State to MongoDB

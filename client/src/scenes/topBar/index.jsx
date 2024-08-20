@@ -43,7 +43,7 @@ const TopBar = () => {
     setDrawerOpen(open);
   };
 
-  const drawerContent = (
+  const drawerContent = ( // Header for Mobile
     <Box
       sx={{ width: 250 }}
       role="presentation"
@@ -51,15 +51,20 @@ const TopBar = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
+      <ListItem button onClick={() => navigate('/home')}>
+          <ListItemText primary="Home" />
+        </ListItem>
         <ListItem button onClick={() => navigate('/about')}>
           <ListItemText primary="About" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/register')}>
-          <ListItemText primary="Contact" />
+        <ListItem button onClick={() => navigate('/applications')}>
+          <ListItemText primary="Applications" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/register')}>
-          <ListItemText primary="Register" />
-        </ListItem>
+        { !user && (  // Render if logged out
+          <ListItem button onClick={() => navigate('/register')}>
+            <ListItemText primary="Register" />
+          </ListItem>
+        )}
         <ListItem button onClick={user ? handleLogout : handleLogin}>
           <ListItemText primary={user ? 'Log out' : 'Log in'} />
         </ListItem>
@@ -109,6 +114,18 @@ const TopBar = () => {
         ) : (
           <Box display="flex" alignItems="center" sx={{ gap: '48px', color: theme.palette.mode === "light" ? 'black' : 'white' }}>
             <Box
+              onClick={() => navigate('/home')}
+              sx={{
+                ml: 2,
+                cursor: 'pointer',
+                '&:hover': { color: palette.primary.main }
+              }}
+            >
+              <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
+                Home
+              </Typography>
+            </Box>
+            <Box
               onClick={() => navigate('/about')}
               sx={{
                 ml: 2,
@@ -121,7 +138,7 @@ const TopBar = () => {
               </Typography>
             </Box>
             <Box
-              onClick={() => navigate('/register')}
+              onClick={() => navigate('/applications')}
               sx={{
                 ml: 2,
                 cursor: 'pointer',
@@ -129,21 +146,23 @@ const TopBar = () => {
               }}
             >
               <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
-                Contact
+                Applications
               </Typography>
             </Box>
-            <Box
-              onClick={() => navigate('/register')}
-              sx={{
-                ml: 2,
-                cursor: 'pointer',
-                '&:hover': { color: palette.primary.main }
-              }}
-            >
-              <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
-                Register
-              </Typography>
-            </Box>
+            { !user && ( // Render if logged out
+              <Box
+                onClick={() => navigate('/register')}
+                sx={{
+                  ml: 2,
+                  cursor: 'pointer',
+                  '&:hover': { color: palette.primary.main }
+                }}
+              >
+                <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
+                  Register
+                </Typography>
+              </Box>
+            )}
             <Box textAlign="center">
               <Button
                 onClick={user ? handleLogout : handleLogin}
