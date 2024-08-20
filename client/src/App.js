@@ -39,7 +39,7 @@ function App() {
     dispatch(setApplications({ applications: [] }));  // set to default value
   }
 
-  /* This function saves the user's filter state into mongodb*/
+  /* This function saves the user's filter and applications state into mongodb*/
   useEffect(() => {
     console.log("New State:", store.getState());
     if (isAuth && user && filter && applications){ saveStateDB(filter, user, applications); } // If logged in, save State to MongoDB

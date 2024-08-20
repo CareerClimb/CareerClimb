@@ -4,7 +4,7 @@ import defaultFilter from "models/defaultFilter";
 
 const initialState = {
     mode: "light",
-    user: null,                 
+    user: null,                // if logged in, User contains MongoDB copies of filter & applications.
     token: null,
     filter: defaultFilter,     // local copy of filter
     applications: [],          // local copy of applications
