@@ -2,9 +2,7 @@
 
 This project is a comprehensive job-search platform that finds opportunities across LinkedIn, Glassdoor, Indeed, and Monster. It utilizes a MongoDB database to store all job-related information, AWS EC2 and Cloudwatch to provide up-to-date job posts, and a ReactJS frontend for intuitive user interaction.
 
-## Visit The Site
 
-Feel free to check out the [project here!](https://www.careerclimb.net/home/)
 
 <img width="1905" height="911" alt="image" src="https://github.com/user-attachments/assets/e01a23cc-239d-41f7-aa4b-165e49b3f845" />
 
